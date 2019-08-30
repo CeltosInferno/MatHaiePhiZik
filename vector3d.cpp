@@ -33,36 +33,48 @@ double& Vector3D::operator[](int i) {
 
 //OPERATORS (A DEFINIR)
 
-Vector3D Vector3D::operator+(const Vector3D& u) const { //TODO
-  return Vector3D();
+Vector3D Vector3D::operator+(const Vector3D& u) const {	
+	return Vector3D(coord[0]+u[0], coord[1] + u[1], coord[2] + u[2]);
 }
 
-Vector3D& Vector3D::operator+=(const Vector3D& u) { //TODO
-  return *this;
+Vector3D& Vector3D::operator+=(const Vector3D& u) {
+	coord[0] += u[0];
+	coord[1] += u[1];
+	coord[2] += u[2];
+	return *this;
 }
 
-Vector3D Vector3D::operator-(const Vector3D& u) const { //TODO
-  return Vector3D(); 
+Vector3D Vector3D::operator-(const Vector3D& u) const {
+	return Vector3D(coord[0] - u[0], coord[1] - u[1], coord[2] - u[2]);
 }
 
-Vector3D& Vector3D::operator-=(const Vector3D& u) { //TODO
-  return *this;
+Vector3D& Vector3D::operator-=(const Vector3D& u) {
+	coord[0] -= u[0];
+	coord[1] -= u[1];
+	coord[2] -= u[2];
+	return *this;
 }
 
-Vector3D Vector3D::operator*(double k) const { //TODO
-  return Vector3D();
+Vector3D Vector3D::operator*(double k) const {
+	return Vector3D(k*coord[0], k * coord[1], k * coord[2]);
 }
 
-Vector3D& Vector3D::operator*=(double k) { //TODO
-  return *this;
+Vector3D& Vector3D::operator*=(double k) {
+	coord[0] *= k;
+	coord[1] *= k;
+	coord[2] *= k;
+	return *this;
 }
 
-Vector3D Vector3D::operator*(const Vector3D& u) const { //TODO
-  return Vector3D();
+Vector3D Vector3D::operator*(const Vector3D& u) const {
+	return Vector3D(coord[0] * u[0], coord[1] * u[1], coord[2] * u[2]);
 }
 
-Vector3D& Vector3D::operator*=(const Vector3D& u) { //TODO
-  return *this;
+Vector3D& Vector3D::operator*=(const Vector3D& u) {
+	coord[0] *= u[0];
+	coord[1] *= u[1];
+	coord[2] *= u[2];
+	return *this;
 }
 
 bool Vector3D::operator==(const Vector3D& u) const { //TODO
