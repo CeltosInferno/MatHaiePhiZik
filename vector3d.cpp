@@ -73,8 +73,15 @@ bool Vector3D::operator!=(const Vector3D& u) const {
   return !(*this == u);
 }
 
-Vector3D::operator std::string() const { //TODO
-  return "";
+Vector3D::operator std::string() const {
+	std::string text = "";
+	text.append("x : ");
+	text.append(std::to_string(coord[0]));
+	text.append(" ; y : ");
+	text.append(std::to_string(coord[1]));
+	text.append(" ; z : ");
+	text.append(std::to_string(coord[2]));
+	return text;
 }
 
 //fonctions
