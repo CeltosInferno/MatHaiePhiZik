@@ -87,8 +87,12 @@ double Vector3D::tripleProduct(const Vector3D& u, const Vector3D& v) const {
 	return scalar(u.cross(v));
 }
 
-double Vector3D::scalar(const Vector3D& u) const { //TODO
-  return 0;
+double Vector3D::scalar(const Vector3D& u) const {
+	double scal = 0;
+	for (int i = 0; i < 3; i++) {
+		scal += coord[i] * coord[i];
+	}
+	return scal;
 }
 
 double Vector3D::norm() const {
@@ -102,7 +106,7 @@ double Vector3D::norm() const {
 
 Vector3D Vector3D::normalize() const {
 	double n = norm();
-	if (n != 0) return Vector3D();
+	if (n == 0) return Vector3D();
 	Vector3D normVec(coord[0] / n, coord[1] / n, coord[2] / n);
 	return normVec;
 }
