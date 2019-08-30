@@ -77,8 +77,13 @@ Vector3D& Vector3D::operator*=(const Vector3D& u) {
 	return *this;
 }
 
-bool Vector3D::operator==(const Vector3D& u) const { //TODO
-  return true;
+bool Vector3D::operator==(const Vector3D& u) const {
+	bool res = true;
+	int i = 0;
+	while (res == true && i < 3 && coord[i] == u[i]) {
+		i++;
+	}
+	return res;
 }
 
 bool Vector3D::operator!=(const Vector3D& u) const {
