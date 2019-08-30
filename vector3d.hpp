@@ -35,7 +35,7 @@ namespace m_engine {
 	Vector3D normalize() const;
 	Vector3D cross(const Vector3D& u) const;
 	double distance(const Vector3D& u) const;
-	double tripleProduct(const Vector3D& u, v) const;
+	double tripleProduct(const Vector3D& u, const Vector3D& v) const;
 
 
   private:
