@@ -10,6 +10,11 @@ namespace m_engine {
     Vector3D(double x=0, double y=0, double z=0);
     ~Vector3D();
 
+	//GETTER
+	double operator[] (int i) const;
+
+	//SETTER
+	double& operator[] (int i);
 
 	//OPERATORS OVERRIDE
 	Vector3D operator+(const Vector3D& u) const;
