@@ -44,7 +44,7 @@ namespace m_engine {
 
 
   private:
-	  double coord[3];
+	double coord[3];
   };
 
 }
