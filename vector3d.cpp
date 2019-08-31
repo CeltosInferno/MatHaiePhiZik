@@ -108,13 +108,13 @@ double Vector3D::distance(const Vector3D& u) const {
 }
 
 double Vector3D::tripleProduct(const Vector3D& u, const Vector3D& v) const {
-	return scalar(u.cross(v));
+	return this->scalar(u.cross(v));
 }
 
 double Vector3D::scalar(const Vector3D& u) const {
 	double scal = 0;
 	for (int i = 0; i < 3; i++) {
-		scal += coord[i] * coord[i];
+		scal += coord[i] * u[i];
 	}
 	return scal;
 }
@@ -135,8 +135,8 @@ Vector3D Vector3D::normalize() const {
 	return normVec;
 }
 
-Vector3D Vector3D::cross(const Vector3D& u) const { //TODO
-  return Vector3D();
+Vector3D Vector3D::cross(const Vector3D& u) const {
+	return Vector3D(coord[1]*u[2] - coord[2]*u[1], coord[2]*u[0] - coord[0]*u[2], coord[0]*u[1] - coord[1]*u[0]);
 }
 
 
