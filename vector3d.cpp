@@ -31,7 +31,7 @@ double& Vector3D::operator[](int i) {
 }
 
 
-//OPERATORS (A DEFINIR)
+//OPERATORS
 
 Vector3D Vector3D::operator+(const Vector3D& u) const {	
 	return Vector3D(coord[0]+u[0], coord[1] + u[1], coord[2] + u[2]);
@@ -100,6 +100,7 @@ Vector3D::operator std::string() const {
 	text.append(std::to_string(coord[2]));
 	return text;
 }
+
 
 //fonctions
 

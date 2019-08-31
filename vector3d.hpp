@@ -2,13 +2,9 @@
 #define VECTOR_3D
 
 #include <string>
+#include <iostream>
 
 namespace m_engine {
-
-	class Patate {
-		Patate();
-		~Patate();
-	};
 
   class Vector3D {
   public:
@@ -38,6 +34,10 @@ namespace m_engine {
     bool operator!=(const Vector3D& u) const; 
 
     operator std::string() const;
+	friend std::ostream& operator<<(std::ostream& os, const Vector3D& u) {
+		os << "(" << u[0] << ", " << u[1] << ", " << u[2] << ")";
+		return os;
+	}
 
     //BASIC OPERATIONS ON VECTORS
     double scalar(const Vector3D& u) const;
