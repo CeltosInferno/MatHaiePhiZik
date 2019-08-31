@@ -54,9 +54,14 @@ Vector3D& Vector3D::operator-=(const Vector3D& u) {
 	coord[2] -= u[2];
 	return *this;
 }
+namespace m_engine {
+	Vector3D operator*(Vector3D u, double k) {
+		return Vector3D(k * u[0], k * u[1], k * u[2]);
+	}
 
-Vector3D Vector3D::operator*(double k) const {
-	return Vector3D(k*coord[0], k * coord[1], k * coord[2]);
+	Vector3D operator*(double k, Vector3D u) {
+		return u * k;
+	}
 }
 
 Vector3D& Vector3D::operator*=(double k) {
