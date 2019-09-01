@@ -28,10 +28,10 @@ namespace m_engine {
     Vector3D operator-(const Vector3D& u) const;
     Vector3D& operator-=(const Vector3D& u);
 
-    Vector3D operator* (double k) const;
+    Vector3D operator*(double k) const;
     Vector3D& operator*=(double k);
 
-    Vector3D operator* (const Vector3D& u) const;
+    Vector3D operator*(const Vector3D& u) const;
     Vector3D& operator*=(const Vector3D& u);
 
     bool operator==(const Vector3D& u) const;
