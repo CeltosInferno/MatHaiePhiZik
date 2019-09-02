@@ -27,16 +27,24 @@ double Vector3D::operator[](int i) const {
 
 //SETTER
 double& Vector3D::operator[](int i) {
-  return coord[i];
+	if (i >= 0 && i <= 2) {
+		return coord[i];
+	}
+	else {
+		std::cerr << "Dude, on est en 3D arrête d'être dans le turfu " << i << std::endl;
+		return coord[0];
+	}
 }
 
 
 //OPERATORS
 
+//Adding two vectors
 Vector3D Vector3D::operator+(const Vector3D& u) const {	
   return Vector3D(coord[0]+u[0], coord[1] + u[1], coord[2] + u[2]);
 }
 
+//Storing the addition of two vectors
 Vector3D& Vector3D::operator+=(const Vector3D& u) {
   coord[0] += u[0];
   coord[1] += u[1];
@@ -44,10 +52,12 @@ Vector3D& Vector3D::operator+=(const Vector3D& u) {
   return *this;
 }
 
+//Substract two vectors
 Vector3D Vector3D::operator-(const Vector3D& u) const {
   return Vector3D(coord[0] - u[0], coord[1] - u[1], coord[2] - u[2]);
 }
 
+//Storing the substraction of two vectors
 Vector3D& Vector3D::operator-=(const Vector3D& u) {
   coord[0] -= u[0];
   coord[1] -= u[1];
@@ -55,10 +65,12 @@ Vector3D& Vector3D::operator-=(const Vector3D& u) {
   return *this;
 }
 
+//Multiplication with a scalar
 Vector3D Vector3D::operator*(double k) const {
   return Vector3D(coord[0]*k, coord[1]*k, coord[2]*k);
 }
 
+//Storing the multiplication with a scalar
 Vector3D& Vector3D::operator*=(double k) {
   coord[0] *= k;
   coord[1] *= k;
@@ -66,10 +78,12 @@ Vector3D& Vector3D::operator*=(double k) {
   return *this;
 }
 
+//Multiply each coordinate of two vectors
 Vector3D Vector3D::operator*(const Vector3D& u) const {
   return Vector3D(coord[0] * u[0], coord[1] * u[1], coord[2] * u[2]);
 }
 
+//Storing the multiplication of each coordinate of two vectors
 Vector3D& Vector3D::operator*=(const Vector3D& u) {
   coord[0] *= u[0];
   coord[1] *= u[1];
@@ -77,6 +91,7 @@ Vector3D& Vector3D::operator*=(const Vector3D& u) {
   return *this;
 }
 
+//True if two vectors are equals
 bool Vector3D::operator==(const Vector3D& u) const {
   bool res = true;
   int i = 0;
@@ -86,33 +101,26 @@ bool Vector3D::operator==(const Vector3D& u) const {
   return res;
 }
 
+//True if two vectors are not equals
 bool Vector3D::operator!=(const Vector3D& u) const {
   return !(*this == u);
 }
 
-/*
-Vector3D::operator std::string() const {
-  std::string text = "";
-  text.append("x : ");
-  text.append(std::to_string(coord[0]));
-  text.append(" ; y : ");
-  text.append(std::to_string(coord[1]));
-  text.append(" ; z : ");
-  text.append(std::to_string(coord[2]));
-  return text;
-  }*/
 
 
-//fonctions
+//FUNCTIONS
 
+//Return distance between two points
 double Vector3D::distance(const Vector3D& u) const {
   return (*this - u).norm();
 }
 
+//Return the volume of a Parallelepiped defined by trhee vectors
 double Vector3D::tripleProduct(const Vector3D& u, const Vector3D& v) const {
   return this->scalar(u.cross(v));
 }
 
+//Return the scalar product of two vectors
 double Vector3D::scalar(const Vector3D& u) const {
   double scal = 0;
   for (int i = 0; i < 3; i++) {
@@ -121,15 +129,12 @@ double Vector3D::scalar(const Vector3D& u) const {
   return scal;
 }
 
+//Return the norm of the vector
 double Vector3D::norm() const {
-  /*
-    double s = 0;
-    for (int i = 0; i < 3; i++){
-    s += coord[i] * coord[i];
-    }*/
   return std::sqrt(scalar(*this));
 }
 
+//Return the vector normalized
 Vector3D Vector3D::normalize() const {
   double n = norm();
   if (n == 0) return Vector3D();
@@ -137,39 +142,9 @@ Vector3D Vector3D::normalize() const {
   return normVec;
 }
 
+//Return the wedge product of two vectors
 Vector3D Vector3D::cross(const Vector3D& u) const {
   return Vector3D(coord[1]*u[2] - coord[2]*u[1], coord[2]*u[0] - coord[0]*u[2], coord[0]*u[1] - coord[1]*u[0]);
 }
 
 
-/* Methodes statiques */
-/*
-Vector3D operator* (double k, const Vector3D& v) {
-  return v*k;
-}
-
-double scalar(const Vector3D& v, const Vector3D& u) {
-  return v.scalar(u);
-}
-
-double norm(const Vector3D& v) {
-  return v.norm();
-}
-
-Vector3D normalize(const Vector3D& v) {
-  return v.normalize();
-}
-
-Vector3D cross(const Vector3D& v, const Vector3D& u) {
-  return v.cross(u);
-}
-
-double distance(const Vector3D& v, const Vector3D& u) {
-  return v.distance(u);
-}
-
-double tripleProduct(const Vector3D& v1,
-		     const Vector3D& v2,
-		     const Vector3D& v3) {
-  return v1.tripleProduct(v2, v3);
-  }*/
