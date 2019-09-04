@@ -134,6 +134,11 @@ double Vector3D::norm() const {
   return std::sqrt(scalar(*this));
 }
 
+//Return the square of the norm of the vector
+double Vector3D::sqrNorm() const {
+	return scalar(*this);
+}
+
 //Return the vector normalized
 Vector3D Vector3D::normalize() const {
   double n = norm();

@@ -47,6 +47,8 @@ namespace m_engine {
     double scalar(const Vector3D& u) const;
 	//Return the norm
     double norm() const;
+	//Return the square of the norm
+	double sqrNorm() const;
 	//Return the vector normalized
     Vector3D normalize() const;
 	//Return the cross product
@@ -84,6 +86,11 @@ namespace m_engine {
 	  return v.norm();
   }
   
+  //Return the square of the norm of a vector
+  inline double sqrNorm(const Vector3D& v) {
+	  return v.sqrNorm();
+  }
+
   //Return the normalized vector
   inline Vector3D normalize(const Vector3D& v) {
 	  return v.normalize();
