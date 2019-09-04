@@ -59,7 +59,7 @@ namespace m_engine {
 
   private:
 	//coordinates of 3Dvector
-    double coord[3];
+    double m_coord[3];
   };
 
   //STATIC OPERATORS
