@@ -20,7 +20,7 @@ double Vector3D::operator[](int i) const {
     return coord[i];
   }
   else {
-    std::cerr << "Dude, on est en 3D arrête d'être dans le turfu " << i << std::endl;
+    std::cerr << "Error : can't acces to a dimension over 3 or below 0" << i << std::endl;
     return 0;
   }
 }
@@ -31,7 +31,7 @@ double& Vector3D::operator[](int i) {
 		return coord[i];
 	}
 	else {
-		std::cerr << "Dude, on est en 3D arrête d'être dans le turfu " << i << std::endl;
+		std::cerr << "Error : can't acces to a dimension over 3 or below 0 " << i << std::endl;
 		return coord[0];
 	}
 }
