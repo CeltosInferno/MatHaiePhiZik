@@ -6,7 +6,7 @@ Particle::Particle() : m_inversMass(0), m_pos(), m_vel(), m_acc(){
 
 }
 
-Particle::Particle(double mass, double posX=0, double posY=0, double posZ=0, double velX=0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0) {
+Particle::Particle(double mass, double posX, double posY, double posZ, double velX, double velY, double velZ, double accX, double accY, double accZ) {
 	setMass(mass);
 	setPos(posX, posY, posZ);
 	setVel(velX, velY, velZ);
