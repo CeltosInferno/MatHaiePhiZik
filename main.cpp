@@ -1,11 +1,15 @@
 #include <iostream>
 #include "vector3d.hpp"
+#include "particle.hpp"
 
 using namespace m_engine;
 
 int main() {
 
-  //mieux vaut redefinir un operateur <<
-  std::cout << "potatoe " << (std::string) Vector3D(0,2) << std::endl;
-  return 0;
+	Particle p1();
+	Particle p2(1);
+	Particle p3(2, 0.9, 1, 2, -1);
+
+
+	return 0;
 }
