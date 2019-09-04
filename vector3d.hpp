@@ -27,7 +27,8 @@ namespace m_engine {
     Vector3D& operator+=(const Vector3D& u);
 
 	//Substraction operators
-    Vector3D operator-(const Vector3D& u) const;
+	Vector3D operator-() const;
+	Vector3D operator-(const Vector3D& u) const;
     Vector3D& operator-=(const Vector3D& u);
 
 	//Multiplication with a scalar operators
@@ -37,6 +38,10 @@ namespace m_engine {
 	//Multiplication of each coordinate of two vectors operators
     Vector3D operator*(const Vector3D& u) const;
     Vector3D& operator*=(const Vector3D& u);
+
+	//Division by a scalar operators
+	Vector3D operator/(double k) const;
+	Vector3D& operator/=(double k);
 
 	//Equality operators
     bool operator==(const Vector3D& u) const;
@@ -58,10 +63,12 @@ namespace m_engine {
 	//Return the triple product, ie the volume of the parallelepiped defined by three vectors
     double tripleProduct(const Vector3D& u, const Vector3D& v) const;
 
-
-  private:
+	
+	double x, y, z;
+  /*private:
 	//coordinates of 3Dvector
-    double m_coord[3];
+
+    double m_coord[3];*/
   };
 
   //STATIC OPERATORS
@@ -72,7 +79,7 @@ namespace m_engine {
 
   //Overiding << for printing
   inline std::ostream& operator<<(std::ostream& os, const Vector3D& u) {
-    os << "(" << u[0] << ", " << u[1] << ", " << u[2] << ")";
+    os << "(" << u.x << ", " << u.y << ", " << u.z << ")";
     return os;
   }
   

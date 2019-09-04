@@ -6,10 +6,8 @@ using namespace m_engine;
 
 int main() {
 
-	Particle p1();
-	Particle p2(1);
-	Particle p3(2, 0.9, 1, 2, -1);
+  //mieux vaut redefinir un operateur <<
+  std::cout << "potatoe " << Vector3D(0,2) << std::endl;
+  return 0;
 
-
-	return 0;
 }
