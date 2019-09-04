@@ -14,6 +14,11 @@ namespace m_engine {
 
 		// SETTERS
 
+
+
+		// INTEGRATEUR
+		void integrate(float time);
+
 	private:
 		double m_inversMass;
 		Vector3D m_pos, m_vel, m_acc;
