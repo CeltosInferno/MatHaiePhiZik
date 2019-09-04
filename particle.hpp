@@ -11,7 +11,7 @@ namespace m_engine {
 	public:
 
 		Particle();
-		Particle(double mass, double posX = 0, double posY = 0, double posZ = 0, double velX = 0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0);
+		Particle(double mass, double damping = 1, double posX = 0, double posY = 0, double posZ = 0, double velX = 0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0);
 		~Particle();
 
 		// GETTERS
@@ -19,6 +19,7 @@ namespace m_engine {
 
 		// SETTERS
 		void setMass(double mass);
+		void setDamping(double damping);
 		void setPos(Vector3D pos);
 		void setVel(Vector3D vel);
 		void setAcc(Vector3D acc);
@@ -28,10 +29,11 @@ namespace m_engine {
 
 
 		// INTEGRATEUR
-		void integrate(float time);
+		void integrate(double time);
 
 	private:
 		double m_inversMass;
+		double m_damping;
 		Vector3D m_pos, m_vel, m_acc;
 	};
 }

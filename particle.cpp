@@ -1,13 +1,15 @@
 #include "particle.hpp"
+#include <cmath>
 
 using namespace m_engine;
 
-Particle::Particle() : m_inversMass(0), m_pos(), m_vel(), m_acc(){
+Particle::Particle() : m_inversMass(0), m_damping(1), m_pos(), m_vel(), m_acc(){
 
 }
 
-Particle::Particle(double mass, double posX, double posY, double posZ, double velX, double velY, double velZ, double accX, double accY, double accZ) {
+Particle::Particle(double mass, double damping, double posX, double posY, double posZ, double velX, double velY, double velZ, double accX, double accY, double accZ) {
 	setMass(mass);
+	setDamping(damping);
 	setPos(posX, posY, posZ);
 	setVel(velX, velY, velZ);
 	setAcc(accX, accY, accZ);
@@ -35,6 +37,12 @@ void Particle::setMass(double mass) {
 	}
 }
 
+void Particle::setDamping(double damping) {
+	if (damping <= 1 && damping >= 0) {
+		m_damping = damping;
+	}
+}
+
 void Particle::setPos(Vector3D pos) {
 	m_pos = pos;
 }
@@ -57,4 +65,17 @@ void Particle::setVel(double x, double y, double z) {
 
 void Particle::setAcc(double x, double y, double z) {
 	m_acc = Vector3D(x, y, z);
+}
+
+
+// INTEGRATEUR
+
+void Particle::integrate(double time) {
+
+	//update of pos
+	m_pos += m_vel * time;
+
+	//update of vel
+	m_vel = m_vel * pow(m_damping, time) + m_acc * time;
+
 }
