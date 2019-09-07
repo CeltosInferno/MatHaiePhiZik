@@ -1,5 +1,6 @@
 #include "particle.hpp"
 #include <cmath>
+#include <iostream>
 
 using namespace m_engine;
 
@@ -9,10 +10,10 @@ Particle::Particle() : m_inversMass(0), m_damping(1), m_pos(), m_vel(), m_acc(){
 
 Particle::Particle(double mass, double damping, double posX, double posY, double posZ, double velX, double velY, double velZ, double accX, double accY, double accZ) {
 	setMass(mass);
-	setDamping(damping);
-	setPos(posX, posY, posZ);
-	setVel(velX, velY, velZ);
-	setAcc(accX, accY, accZ);
+	m_damping = damping;
+	m_pos = Vector3D(posX, posY, posZ);
+	m_vel = Vector3D(velX, velY, velZ);
+	m_acc = Vector3D(accX, accY, accZ);
 }
 
 
@@ -70,12 +71,16 @@ void Particle::setAcc(double x, double y, double z) {
 
 // INTEGRATEUR
 
-void Particle::integrate(double time) {
-
+void Particle::integrate(long time) {
+	
 	//update of pos
-	m_pos += m_vel * time;
+	this->m_pos += m_vel * time;
 
 	//update of vel
 	m_vel = m_vel * pow(m_damping, time) + m_acc * time;
 
+}
+
+void Particle::render() {
+	std::cout << m_pos << " " << m_vel << std::endl;
 }

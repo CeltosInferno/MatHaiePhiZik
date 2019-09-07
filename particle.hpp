@@ -29,7 +29,9 @@ namespace m_engine {
 
 
 		// INTEGRATEUR
-		void integrate(double time);
+		void integrate(long time);
+
+		void render();
 
 	private:
 		double m_inversMass;

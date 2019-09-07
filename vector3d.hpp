@@ -48,18 +48,25 @@ namespace m_engine {
     bool operator!=(const Vector3D& u) const; 
 
     //BASIC OPERATIONS ON VECTORS
+
 	//Return the scalar product
     double scalar(const Vector3D& u) const;
+
 	//Return the norm
     double norm() const;
+
 	//Return the square of the norm
 	double sqrNorm() const;
+
 	//Return the vector normalized
     Vector3D normalize() const;
+
 	//Return the cross product
     Vector3D cross(const Vector3D& u) const;
+
 	//Return the distance between the two points represented by vectors
     double distance(const Vector3D& u) const;
+
 	//Return the triple product, ie the volume of the parallelepiped defined by three vectors
     double tripleProduct(const Vector3D& u, const Vector3D& v) const;
 
