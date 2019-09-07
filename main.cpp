@@ -8,6 +8,8 @@ int main() {
 
   //mieux vaut redefinir un operateur <<
   std::cout << "potatoe " << Vector3D(0,2) << std::endl;
+  std::string test;
+  std::cin >> test;
   return 0;
 
 }
