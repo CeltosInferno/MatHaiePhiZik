@@ -1,5 +1,6 @@
 #include "particle.hpp"
 #include <cmath>
+#include <iostream>
 
 using namespace m_engine;
 
@@ -52,12 +53,16 @@ void Particle::setDamping(double damping) {
 
 // INTEGRATEUR
 
-void Particle::integrate(double time) {
-
+void Particle::integrate(long time) {
+	
   //update of pos
-  m_pos += m_vel * time;
+  this->m_pos += m_vel * time;
 
   //update of vel
   m_vel = m_vel * pow(m_damping, time) + m_acc * time;
 
+}
+ 
+void Particle::render() {
+	std::cout << m_pos << " " << m_vel << std::endl;
 }

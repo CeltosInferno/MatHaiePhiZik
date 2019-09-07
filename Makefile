@@ -1,7 +1,7 @@
-CPPFLAGS=-g -O0 -Wall -Werror
+CPPFLAGS=-g -std=c++11 -O0 -Wall -Werror
 SRC=src
 BLD=build
-NECESSARY= vector3d.o particle.o
+NECESSARY= vector3d.o particle.o world.o
 
 TEST=test_vector3d test_particle
 
