@@ -42,27 +42,12 @@ double& Vector3D::operator[](int i) {
 
 //OPERATORS
 
-//Adding two vectors
-Vector3D Vector3D::operator+(const Vector3D& u) const {	
-  return Vector3D(x+u.x, y + u.y, z + u.z);
-}
-
 //Storing the addition of two vectors
 Vector3D& Vector3D::operator+=(const Vector3D& u) {
   x += u.x;
   y += u.y;
   z += u.z;
   return *this;
-}
-
-//return the opposite of this vector
-Vector3D Vector3D::operator-() const {
-	return Vector3D(-x, -y, -z);
-}
-
-//Substract two vectors
-Vector3D Vector3D::operator-(const Vector3D& u) const {
-  return Vector3D(x - u.x, y - u.y, z - u.z);
 }
 
 //Storing the substraction of two vectors
@@ -73,22 +58,12 @@ Vector3D& Vector3D::operator-=(const Vector3D& u) {
   return *this;
 }
 
-//Multiplication with a scalar
-Vector3D Vector3D::operator*(double k) const {
-  return Vector3D(x*k, y*k, z*k);
-}
-
 //Storing the multiplication with a scalar
 Vector3D& Vector3D::operator*=(double k) {
   x *= k;
   y *= k;
   z *= k;
   return *this;
-}
-
-//Multiply each m_coordinate of two vectors
-Vector3D Vector3D::operator*(const Vector3D& u) const {
-  return Vector3D(x * u.x, y * u.y, z * u.z);
 }
 
 //Storing the multiplication of each m_coordinate of two vectors
@@ -99,29 +74,12 @@ Vector3D& Vector3D::operator*=(const Vector3D& u) {
   return *this;
 }
 
-//Division by a scalar operators
-Vector3D Vector3D::operator/(double k) const {
-	return Vector3D(x / k, y / k, z / k);
-}
-
 Vector3D& Vector3D::operator/=(double k) {
 	x /= k;
 	y /= k;
 	z /= k;
 	return *this;
 }
-
-//True if two vectors are equals
-bool Vector3D::operator==(const Vector3D& u) const {
-	return (x == u.x && y == u.y && z == u.z);
-}
-
-//True if two vectors are not equals
-bool Vector3D::operator!=(const Vector3D& u) const {
-  return !(*this == u);
-}
-
-
 
 //FUNCTIONS
 
@@ -154,13 +112,10 @@ double Vector3D::sqrNorm() const {
 Vector3D Vector3D::normalize() const {
   double n = norm();
   if (n == 0) return Vector3D();
-  Vector3D normVec(x / n, y / n, z / n);
-  return normVec;
+  return (*this / n);
 }
 
 //Return the wedge product of two vectors
 Vector3D Vector3D::cross(const Vector3D& u) const {
   return Vector3D(y*u.z - z*u.y, z*u.x - x*u.z, x*u.y - y*u.x);
 }
-
-

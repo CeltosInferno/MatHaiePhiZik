@@ -12,69 +12,79 @@ namespace m_engine {
     ~Vector3D();
     
     //GETTER
-	//Access coordinate 'i' by writing vector[i]
-	//Return 0 if i outbounded
+    //Access coordinate 'i' by writing vector[i]
+    //Return 0 if i outbounded
     double operator[] (int i) const;
 
     //SETTER
-	//Writing coordinate 'i' by writing vector[i]
-	//Return vector[0] if i outbounded
+    //Writing coordinate 'i' by writing vector[i]
+    //Return vector[0] if i outbounded
     double& operator[] (int i);
 
     //OPERATORS OVERRIDE
-	//Additions operators
-    Vector3D operator+(const Vector3D& u) const;
+    //Additions operators
+    inline Vector3D operator+(const Vector3D& u) const {
+      return Vector3D(x+u.x, y + u.y, z + u.z);
+    }
     Vector3D& operator+=(const Vector3D& u);
 
-	//Substraction operators
-	Vector3D operator-() const;
-	Vector3D operator-(const Vector3D& u) const;
+    //Substraction operators
+    inline Vector3D operator-() const {return Vector3D(-x,-y,-z);}
+    inline Vector3D operator-(const Vector3D& u) const {
+      return Vector3D(x - u.x, y - u.y, z - u.z);
+    }
     Vector3D& operator-=(const Vector3D& u);
 
-	//Multiplication with a scalar operators
-    Vector3D operator*(double k) const;
+    //Multiplication with a scalar operators
+    inline Vector3D operator*(double k) const {
+      return Vector3D(x*k, y*k, z*k);
+    }
     Vector3D& operator*=(double k);
 
-	//Multiplication of each coordinate of two vectors operators
-    Vector3D operator*(const Vector3D& u) const;
+    //Multiplication of each coordinate of two vectors operators
+    inline Vector3D operator*(const Vector3D& u) const {
+      return Vector3D(x * u.x, y * u.y, z * u.z);
+    }
     Vector3D& operator*=(const Vector3D& u);
 
-	//Division by a scalar operators
-	Vector3D operator/(double k) const;
-	Vector3D& operator/=(double k);
+    //Division by a scalar operators
+    inline Vector3D operator/(double k) const {
+      return Vector3D(x / k, y / k, z / k);
+    }
+    Vector3D& operator/=(double k);
 
-	//Equality operators
-    bool operator==(const Vector3D& u) const;
-    bool operator!=(const Vector3D& u) const; 
+    //Equality operators
+    inline bool operator==(const Vector3D& u) const {
+      return (x == u.x && y == u.y && z == u.z);
+    }
+    inline bool operator!=(const Vector3D& u) const {
+      return !(*this == u);
+    }
 
     //BASIC OPERATIONS ON VECTORS
-	//Return the scalar product
+    //Return the scalar product
     double scalar(const Vector3D& u) const;
-	//Return the norm
+    //Return the norm
     double norm() const;
-	//Return the square of the norm
-	double sqrNorm() const;
-	//Return the vector normalized
+    //Return the square of the norm
+    double sqrNorm() const;
+    //Return the vector normalized
     Vector3D normalize() const;
-	//Return the cross product
+    //Return the cross product
     Vector3D cross(const Vector3D& u) const;
-	//Return the distance between the two points represented by vectors
+    //Return the distance between the two points represented by vectors
     double distance(const Vector3D& u) const;
-	//Return the triple product, ie the volume of the parallelepiped defined by three vectors
+    //Return the triple product, ie the volume of the parallelepiped defined by three vectors
     double tripleProduct(const Vector3D& u, const Vector3D& v) const;
 
-	
-	double x, y, z;
-  /*private:
-	//coordinates of 3Dvector
-
-    double m_coord[3];*/
+  public:
+    double x, y, z;
   };
 
   //STATIC OPERATORS
   //Return the result of multiplication of a scalar and a vector
   inline Vector3D operator* (double k, const Vector3D& v) {
-	  return v*k;
+    return v*k;
   }
 
   //Overiding << for printing
@@ -85,35 +95,35 @@ namespace m_engine {
   
   //Return scalar product of two vectors
   inline double scalar(const Vector3D& v, const Vector3D& u) {
-	  return v.scalar(u);
+    return v.scalar(u);
   }
   
   //Return norm of a vector
   inline double norm(const Vector3D& v) {
-	  return v.norm();
+    return v.norm();
   }
   
   //Return the square of the norm of a vector
   inline double sqrNorm(const Vector3D& v) {
-	  return v.sqrNorm();
+    return v.sqrNorm();
   }
 
   //Return the normalized vector
   inline Vector3D normalize(const Vector3D& v) {
-	  return v.normalize();
+    return v.normalize();
   }
   
   //Return cross product of two vectors
   inline Vector3D cross(const Vector3D& v, const Vector3D& u) {
-	  return v.cross(u);
+    return v.cross(u);
   }
   
   //Return distance between two points
   inline double distance(const Vector3D& v, const Vector3D& u) {
-	  return v.distance(u);
+    return v.distance(u);
   }
   
-  //Return triple product of three vectors, ie the volum of the parallelepiped defined by three vectors
+  //Return triple product of three vectors, ie the volume of the parallelepiped defined by three vectors
   inline double tripleProduct(const Vector3D& v1, const Vector3D& v2, const Vector3D& v3) {
     return v1.tripleProduct(v2,v3);
   }
