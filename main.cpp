@@ -1,5 +1,6 @@
 #include <iostream>
 #include "vector3d.hpp"
+#include "particle.hpp"
 
 using namespace m_engine;
 
@@ -16,4 +17,5 @@ int main() {
   double x = scalar(a,b);
   std::cout << "x " << x << std::endl;
   return 0;
+
 }

@@ -1,14 +1,14 @@
 CPPFLAGS=-g -O0 -Wall -Werror
 SRC=src
 BLD=build
-NECESSARY= main.o vector3d.o
+NECESSARY= main.o vector3d.o particle.o
 
 default: main
 
 main: ${NECESSARY}
 	g++ $^ -o $@ ${CPPFLAGS}
 
-main.o: vector3d.hpp
+main.o: vector3d.hpp particle.hpp
 
 vector3d.o: vector3d.hpp
 
