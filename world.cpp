@@ -24,12 +24,12 @@ void World::update(long time) {
 }
 
 void World::render() {
-	for (Particle particle : particles) {
+	for (Particle& particle : particles) {
 		particle.render();
 	}
 	std::cout << std::endl;
 }
 
-void World::addParticle(Particle part) {
+void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }

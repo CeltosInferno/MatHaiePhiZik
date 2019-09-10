@@ -6,22 +6,20 @@
 
 namespace m_engine {
 
-	class World {
-	public:
-		World();
-		~World();
+  class World {
+  public:
+    World();
+    ~World();
 
-		void start();
-		void update(long time);
-		void render();
+    void start();
+    void update(long time);
+    void render();
 		
-		void addParticle(Particle part);
+    void addParticle(const Particle& part);
 
-	private :
-		std::vector<Particle> particles;
-	};
-
-	
+  private :
+    std::vector<Particle> particles;
+  };
 }
 
 #endif /* WORLD */
