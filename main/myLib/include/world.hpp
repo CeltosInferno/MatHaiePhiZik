@@ -13,7 +13,7 @@ namespace m_engine {
 
     void start();
     void update(long time);
-    void render();
+    void renderBash();
 		
     void addParticle(const Particle& part);
 

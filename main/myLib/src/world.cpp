@@ -23,7 +23,15 @@ void World::update(long time) {
 	}
 }
 
-void World::render() {
+void World::renderBash() {
+	//world initialization
+	char m_world[10][10];
+	for(unsigned int i = 0; i<10; i++ ){
+		for(unsigned int j=0; j<10; j++){
+			m_world[i][j] = ' ';
+		}
+	}
+	
 	for (Particle& particle : particles) {
 		particle.render();
 	}
