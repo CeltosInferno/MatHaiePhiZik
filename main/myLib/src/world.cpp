@@ -33,7 +33,7 @@ void World::renderBash() {
 	}
 	
 	for (Particle& particle : particles) {
-		particle.render();
+		std::cout << particle;
 	}
 	std::cout << std::endl;
 }

@@ -63,6 +63,6 @@ void Particle::integrate(long time) {
 
 }
  
-void Particle::render() {
-	std::cout << m_pos << " " << m_vel << std::endl;
-}
+//void Particle::render() {
+//	std::cout << m_pos << " " << m_vel << std::endl;
+//}
