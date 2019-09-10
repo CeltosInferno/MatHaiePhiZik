@@ -25,7 +25,7 @@ void World::update(long time) {
 
 void World::render() {
 	for (Particle& particle : particles) {
-		particle.render();
+		std::cout << particle;
 	}
 	std::cout << std::endl;
 }

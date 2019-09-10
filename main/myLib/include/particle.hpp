@@ -33,13 +33,19 @@ namespace m_engine {
 
     // INTEGRATEUR
     void integrate(long time);
-  void render();
+    //void renderBash();
 
   private:
     double m_inversMass;
     double m_damping;
     Vector3D m_pos, m_vel, m_acc;
   };
+
+  inline std::ostream& operator<<(std::ostream& os, const Particle& p) {
+    os << "[" << "pos: " << p.getPos() << ", vel: " << p.getVel() << ", acc: " << p.getAcc() << "]";
+    return os;
+  }
+
 }
 
 #endif /* PARTICLE */
