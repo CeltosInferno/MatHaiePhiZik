@@ -37,18 +37,20 @@ namespace m_engine {
     // make the particule move according to its position, velocity and acceleration
     void integrate(double time);
 
-    //OPERATOR OVERRIDE
-    //overrinding << operator
-    inline std::ostream& operator<<(std::ostream& os, const Particle& p) {
-      os << "[" << "pos: " << p.getPos() << ", vel: " << p.getVel() << ", acc: " << p.getAcc() << "]";
-      return os;
-    }
+    
 
   private:
     double m_inversMass;
     double m_damping;
     Vector3D m_pos, m_vel, m_acc;
   };
+
+  //OPERATOR OVERRIDE
+	//overrinding << operator
+  inline std::ostream& operator<<(std::ostream& os, const Particle& p) {
+	  os << "[" << "pos: " << p.getPos() << ", vel: " << p.getVel() << ", acc: " << p.getAcc() << "]";
+	  return os;
+  }
 
 }
 
