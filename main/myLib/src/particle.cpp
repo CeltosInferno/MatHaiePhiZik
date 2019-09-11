@@ -8,6 +8,7 @@ Particle::Particle() : m_inversMass(0), m_damping(1), m_pos(), m_vel(), m_acc(){
 
 }
 
+//Constructor using only doubles
 Particle::Particle(double mass, double damping,
 		   double posX, double posY, double posZ,
 		   double velX, double velY, double velZ,
@@ -18,6 +19,7 @@ Particle::Particle(double mass, double damping,
     m_acc(accX, accY, accZ)
 {}
 
+//Constructor using Vector3D to describe the position, velocity and acceleration of the particule
 Particle::Particle(double mass, double damping, const Vector3D& pos,
 	 const Vector3D& vel, const Vector3D& acc):
   m_inversMass(1/mass), m_damping(damping),
@@ -51,8 +53,8 @@ void Particle::setDamping(double damping) {
 	}
 }
 
-// INTEGRATEUR
-
+// INTEGRATOR
+// make the particule move according to its position, velocity and acceleration
 void Particle::integrate(double time) {
 	
   //update of pos
@@ -62,7 +64,3 @@ void Particle::integrate(double time) {
   m_vel = m_vel * pow(m_damping, time) + m_acc * time;
 
 }
- 
-//void Particle::render() {
-//	std::cout << m_pos << " " << m_vel << std::endl;
-//}

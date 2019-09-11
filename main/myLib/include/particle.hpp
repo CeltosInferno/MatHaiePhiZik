@@ -10,7 +10,9 @@ namespace m_engine {
   class Particle {
   public:
     Particle();
+    //Constructor using only doubles
     Particle(double mass, double damping = 1, double posX = 0, double posY = 0, double posZ = 0, double velX = 0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0);
+    //Constructor using Vector3D to describe the position, velocity and acceleration of the particule
     Particle(double mass, double damping, const Vector3D& pos, const Vector3D& vel, const Vector3D& acc);
     ~Particle();
 
@@ -31,20 +33,22 @@ namespace m_engine {
     inline const Vector3D& getVel() const {return m_vel;}
     inline const Vector3D& getAcc() const {return m_acc;}
 
-    // INTEGRATEUR
+    // INTEGRATOR
+    // make the particule move according to its position, velocity and acceleration
     void integrate(double time);
-    //void renderBash();
+
+    //OPERATOR OVERRIDE
+    //overrinding << operator
+    inline std::ostream& operator<<(std::ostream& os, const Particle& p) {
+      os << "[" << "pos: " << p.getPos() << ", vel: " << p.getVel() << ", acc: " << p.getAcc() << "]";
+      return os;
+    }
 
   private:
     double m_inversMass;
     double m_damping;
     Vector3D m_pos, m_vel, m_acc;
   };
-
-  inline std::ostream& operator<<(std::ostream& os, const Particle& p) {
-    os << "[" << "pos: " << p.getPos() << ", vel: " << p.getVel() << ", acc: " << p.getAcc() << "]";
-    return os;
-  }
 
 }
 
