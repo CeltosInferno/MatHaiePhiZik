@@ -12,8 +12,9 @@ namespace m_engine {
     ~World();
 
     void start();
+    
     void update(double time);
-    void render();
+    void renderBash();
 		
     void addParticle(const Particle& part);
 

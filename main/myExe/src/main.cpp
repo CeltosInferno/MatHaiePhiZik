@@ -14,7 +14,7 @@ int main() {
   
 	World myWorld;
 
-	myWorld.addParticle(Particle(2, 1, 0, 0, 0, 0, 1, 0, 0, -0.0098, 0));
+	myWorld.addParticle(Particle(2, 1, Vector3D(0,0,0), Vector3D(0,1,0), Vector3D(0,-0.0098,0)));
 	myWorld.start();
 
 	//durée (en s) du temps necessaire entre chaque iteration
@@ -41,7 +41,7 @@ int main() {
 		//on met à jour le monde
 		myWorld.update( diff );
 		//on l'affiche
-		myWorld.render();
+		myWorld.renderBash();
 
 		//on recupere le temps que le calcul nous a pris
 		time_point<system_clock> tmp = system_clock::now();
