@@ -20,7 +20,7 @@ int main() {
 
 		//update et render avec la variable duration
 		myWorld.update(duration);
-		myWorld.render();
+		myWorld.renderBash();
 
 		duration = clock() - time;
 		remainingTime = wantedTime - duration;
