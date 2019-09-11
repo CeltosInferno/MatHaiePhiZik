@@ -26,13 +26,13 @@ int main() {
 
 	switch (entry) {
 	case '1' :
-		myWorld.addParticle(Particle(1, 1, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		myWorld.addParticle(Particle(1, 1, Vector3D(0, 0, 0), Vector3D(0, 15, 0), Vector3D(0, -9.8, 0)));
 		break;
 	case '2' :
-		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 15, 0), Vector3D(0, -9.8, 0)));
 		break;
 	case '3':
-		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 15, 0), Vector3D(0, -9.8, 0)));
 		break;
 	}
 
