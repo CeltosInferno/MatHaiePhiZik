@@ -32,7 +32,7 @@ namespace m_engine {
     inline const Vector3D& getAcc() const {return m_acc;}
 
     // INTEGRATEUR
-    void integrate(long time);
+    void integrate(double time);
     //void renderBash();
 
   private:

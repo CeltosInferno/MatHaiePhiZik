@@ -12,7 +12,7 @@ namespace m_engine {
     ~World();
 
     void start();
-    void update(long time);
+    void update(double time);
     void render();
 		
     void addParticle(const Particle& part);

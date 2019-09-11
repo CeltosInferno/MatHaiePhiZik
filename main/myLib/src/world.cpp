@@ -13,11 +13,9 @@ World::~World() {
 
 }
 
-void World::start() {
-	particles.push_back(Particle(2, 1, 0, 0, 0, 0, 30, 0, 0, -0.0098, 0));
-}
+void World::start() {}
 
-void World::update(long time) {
+void World::update(double time) {
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		particles[i].integrate(time);
 	}

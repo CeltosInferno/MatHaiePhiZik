@@ -53,7 +53,7 @@ void Particle::setDamping(double damping) {
 
 // INTEGRATEUR
 
-void Particle::integrate(long time) {
+void Particle::integrate(double time) {
 	
   //update of pos
   this->m_pos += m_vel * time;
