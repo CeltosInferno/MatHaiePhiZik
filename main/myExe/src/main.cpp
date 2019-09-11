@@ -14,8 +14,29 @@ int main() {
   
 	World myWorld;
 
-	myWorld.addParticle(Particle(2, 1, Vector3D(0,0,0), Vector3D(0,1,0), Vector3D(0,-0.0098,0)));
+
 	myWorld.start();
+
+	char entry = 'a';
+	while (entry != '1' && entry != '2' && entry != '3')
+	{
+		std::cout << "choisissez un projetil" << std::endl << "1 : sans damping" << std::endl << "2 : 0.99 de damping" << std::endl << "3 : 0.9 de damping" << std::endl << "choix :";
+		std:: cin >> entry;
+	}
+
+	switch (entry) {
+	case '1' :
+		myWorld.addParticle(Particle(1, 1, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		break;
+	case '2' :
+		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		break;
+	case '3':
+		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 0, 0), Vector3D(0, 1, 0), Vector3D(0, -0.0098, 0)));
+		break;
+	}
+
+
 
 	//durée (en s) du temps necessaire entre chaque iteration
 	double wantedTime = 1. / FPS;
