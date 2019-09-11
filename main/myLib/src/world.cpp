@@ -17,12 +17,19 @@ World::~World() {
 
 void World::start() {}
 
+//Add a particle in the world
+void World::addParticle(const Particle& part) {
+	particles.push_back(part);
+}
+
+//Update all the particles of the world
 void World::update(double time) {
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		particles[i].integrate(time);
 	}
 }
 
+//2D rendering in a terminal
 void World::renderBash() {
 	//world initialization
 	char m_world[LINES][COLUMNS];
@@ -49,8 +56,4 @@ void World::renderBash() {
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
-}
-
-void World::addParticle(const Particle& part) {
-	particles.push_back(part);
 }

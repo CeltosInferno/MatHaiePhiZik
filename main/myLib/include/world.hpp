@@ -12,11 +12,15 @@ namespace m_engine {
     ~World();
 
     void start();
-    
-    void update(double time);
-    void renderBash();
-		
+
+    //Add a particle in the world
     void addParticle(const Particle& part);
+
+    //Update all the particles of the world
+    void update(double time);
+
+    //2D rendering in a terminal
+    void renderBash();
 
   private :
     std::vector<Particle> particles;
