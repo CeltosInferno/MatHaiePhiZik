@@ -376,13 +376,3 @@ if (GLFW_INSTALL)
         set_target_properties(uninstall PROPERTIES FOLDER "GLFW3")
     endif()
 endif()
-
-set(GLFW_SOURCES src/*)
-set(GLFW_HEADERS include/*)
-
-add_library(GlfwLib STATIC ${GLFW_SOURCES} ${GLFW_HEADERS})
-target_include_directories(GlfwLib SYSTEM INTERFACE include)
-target_include_directories(GlfwLib PRIVATE include)
-
-target_link_libraries(GlfwLib PRIVATE)
-

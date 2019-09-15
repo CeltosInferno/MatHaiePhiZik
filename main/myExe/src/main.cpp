@@ -8,6 +8,9 @@
 using namespace m_engine;
 using namespace std::chrono;
 
+#include<glad/glad.h>
+#include<glfw/glfw3.h>
+
 #define FPS 10
 
 int main() {
