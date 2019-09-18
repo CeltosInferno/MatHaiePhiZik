@@ -63,4 +63,14 @@ void Particle::integrate(double time) {
   //update of vel
   m_vel = m_vel * pow(m_damping, time) + m_acc * time;
 
+  m_acc = m_accumForces * m_inversMass;
 }
+
+void Particle::addForce(const Vector3D& f) {
+	m_accumForces += f;
+}
+
+void Particle::cleanAccum() {
+	m_accumForces = Vector3D();
+}
+

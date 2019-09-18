@@ -37,12 +37,17 @@ namespace m_engine {
     // make the particule move according to its position, velocity and acceleration
     void integrate(double time);
 
-    
+	//adds a force to the particle for the next frame
+	void addForce(const Vector3D& f);
+
+	//clean the forces added to the particle
+	void cleanAccum();
 
   private:
     double m_inversMass;
     double m_damping;
     Vector3D m_pos, m_vel, m_acc;
+	Vector3D m_accumForces;
   };
 
   //OPERATOR OVERRIDE
