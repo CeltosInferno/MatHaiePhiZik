@@ -8,7 +8,7 @@ namespace m_engine {
 
 	class ParticleGravityGenerator : public ParticleForceGenerator{
 	public:
-		ParticleGravityGenerator(Vector3D g) : gravity(g) {};
+		ParticleGravityGenerator(const Vector3D& g) : gravity(g) {};
 		~ParticleGravityGenerator() {};
 
 		//generate a force for the particle concerned, time is the duration of a frame (in seconds)
