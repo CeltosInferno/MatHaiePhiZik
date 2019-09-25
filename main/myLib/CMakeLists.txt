@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(MY_LIB_SOURCES src/world.cpp src/particle.cpp src/vector3d.cpp src/forceRegister.cpp src/particleGravityGenerator.cpp)
-set(MY_LIB_HEADERS include/world.hpp include/particle.hpp include/vector3d.hpp include/forceRegister.hpp include/particleForceGenerator.hpp include/particleGravityGenerator.hpp)
+set(MY_LIB_SOURCES src/world.cpp src/particle.cpp src/vector3d.cpp src/forceRegister.cpp src/particleGravityGenerator.cpp src/particleDragGenerator.cpp)
+set(MY_LIB_HEADERS include/world.hpp include/particle.hpp include/vector3d.hpp include/forceRegister.hpp include/particleForceGenerator.hpp include/particleGravityGenerator.hpp include/particleDragGenerator.hpp)
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
 target_include_directories(MyLib SYSTEM INTERFACE include)
