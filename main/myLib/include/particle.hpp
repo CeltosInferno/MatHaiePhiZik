@@ -19,6 +19,10 @@ namespace m_engine {
     // GETTERS
     double getInversMass() const;
 
+	inline const Vector3D& getPos() const { return m_pos; }
+	inline const Vector3D& getVel() const { return m_vel; }
+	inline const Vector3D& getAcc() const { return m_acc; }
+
     // SETTERS
     void setMass(double mass);
     void setDamping(double damping);
@@ -29,9 +33,7 @@ namespace m_engine {
     inline void setVel(double x, double y, double z) {m_vel = Vector3D(x,y,z);}
     inline void setAcc(double x, double y, double z) {m_acc = Vector3D(x,y,z);}
 
-    inline const Vector3D& getPos() const {return m_pos;}
-    inline const Vector3D& getVel() const {return m_vel;}
-    inline const Vector3D& getAcc() const {return m_acc;}
+    
 
     // INTEGRATOR
     // make the particule move according to its position, velocity and acceleration
