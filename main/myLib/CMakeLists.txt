@@ -11,7 +11,8 @@ set(MY_LIB_SOURCES
 	src/particleAnchoredString.cpp 
 	src/particleFloatingGenerator.cpp 
 	src/particleElasticString.cpp 
-	src/particleStiffSpring.cpp)
+	src/particleStiffSpring.cpp
+	src/particleContact.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -25,7 +26,8 @@ set(MY_LIB_HEADERS
 	include/particleAnchoredString.hpp 
 	include/particleFloatingGenerator.hpp 
 	include/particleElasticString.hpp 
-	include/particleStiffSpring.hpp)
+	include/particleStiffSpring.hpp
+	include/particleContact.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
