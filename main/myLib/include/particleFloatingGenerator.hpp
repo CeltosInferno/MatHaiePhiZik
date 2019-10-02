@@ -6,6 +6,10 @@
 
 namespace m_engine {
 
+	/*
+		Represent a force applied by a liquid on a particle
+	*/
+
 	class ParticleFloatingGenerator : public ParticleForceGenerator {
 	public:
 		ParticleFloatingGenerator(double r, double v, double h) : radius(r), volume(v), waterHeight(h) {};
