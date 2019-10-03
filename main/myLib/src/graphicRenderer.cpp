@@ -5,14 +5,43 @@
 #include <algorithm>
 
 #include "vector3D.hpp"
+#include "particle.hpp"
 
 using namespace m_engine;
 
-GraphicRenderer::GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName) {
+// glfw: whenever the window size changed (by OS or user resize) this callback function executes
+// ---------------------------------------------------------------------------------------------
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	// make sure the viewport matches the new window dimensions; note that width and 
+	// height will be significantly larger than specified on retina displays.
+	glViewport(0, 0, width, height);
+}
+
+void processInput(GLFWwindow* window)
+{
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+}
+
+const char* vertexShaderSource = "#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n"
+"void main()\n"
+"{\n"
+"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"}\0";
+const char* fragmentShaderSource = "#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main()\n"
+"{\n"
+"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"}\n\0";
+
+
+GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::string WindowName) {
 	//Attributes assignement
 	SCR_WIDTH = WIDTH;
 	SCR_HEIGHT = HEIGHT;
-
 	//Library initialization
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -22,12 +51,11 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT =
 #ifdef __APPLE__
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
-	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, WindowName, NULL, NULL);
+	window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, WindowName.c_str(), NULL, NULL);
 	if (window == NULL)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
-		return NULL;
 	}
 
 	glfwMakeContextCurrent(window);
@@ -38,7 +66,6 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT =
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
-		return NULL;
 	}
 
 	// build and compile our shader program
@@ -68,7 +95,7 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT =
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
 	// link shaders
-	int shaderProgram = glCreateProgram();
+	shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
@@ -86,11 +113,10 @@ GraphicRenderer::~GraphicRenderer() {
 	glfwTerminate();
 }
 
-GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
+int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	//CONVERT PARTICLES TO CIRCLE
-	particleToCircles(particles);
-
-	float vertices[] = fvertices.data();
+	particleToCircle(particles);
+	const int nb_particles = fvertices.size();
 
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -99,7 +125,7 @@ GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(nb_particles), fvertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -140,44 +166,31 @@ GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-	FAIRE UN RETURN
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
+	return 1;
 }
 
-GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
-	fvertices.flush();
-	for_each(particles.begin(), particles.end(), [] (particle p){
-		
-		vector3D Pos = p.getPos();
+void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
+	fvertices.clear();
+	for_each(particles.begin(), particles.end(), [this](Particle p) {
+		float triangle_size = 0.01;
+		Vector3D Pos = p.getPos();
 		float x = Pos.x * 2 / SCR_HEIGHT;
-		add_point(positionx + 0.01, positiony, positionz);
-		add_point(positionx - 0.01, positiony - 0.01, positionz);
-		add_point(positionx + 0.01, position - 0.01, positionz);
-	})
+		float y = Pos.y * 2 / SCR_WIDTH;
+		//first vertex, top of the triangle
+		fvertices.push_back(x);
+		fvertices.push_back(y + triangle_size);
+		fvertices.push_back(0.0);
+		//bottom left
+		fvertices.push_back(x - triangle_size);
+		fvertices.push_back(y - triangle_size);
+		fvertices.push_back(0.0);
+		//bottom right
+		fvertices.push_back(x + triangle_size);
+		fvertices.push_back(y - triangle_size);
+		fvertices.push_back(0.0);
+	});
 }
-
-
-// glfw: whenever the window size changed (by OS or user resize) this callback function executes
-// ---------------------------------------------------------------------------------------------
-void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-{
-	// make sure the viewport matches the new window dimensions; note that width and 
-	// height will be significantly larger than specified on retina displays.
-	glViewport(0, 0, width, height);
-}
-
-const char* vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char* fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
