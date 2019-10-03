@@ -109,14 +109,24 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	glDeleteShader(fragmentShader);
 }
 
+/*
 GraphicRenderer::~GraphicRenderer() {
+	std::cout << "COUCOU" << std::endl;
 	glfwTerminate();
 }
+*/
 
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+	}
+
 	//CONVERT PARTICLES TO CIRCLE
 	particleToCircle(particles);
-	const int nb_particles = fvertices.size();
+	const int nb_points = fvertices.size();
+	float* vertices = &fvertices[0];
+	int i;
 
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -125,7 +135,7 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(nb_particles), fvertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nb_points, vertices, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -157,7 +167,7 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		// draw our first triangle
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-		glDrawArrays(GL_TRIANGLES, 0, nb_particles*6); // set the count to 6 since we're drawing 6 vertices now (2 triangles); not 3!
+		glDrawArrays(GL_TRIANGLES, 0, nb_points); 
 		// glBindVertexArray(0); // no need to unbind it every time 
 
 
@@ -168,18 +178,19 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	}
 	// optional: de-allocate all resources once they've outlived their purpose:
 	// ------------------------------------------------------------------------
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	//glDeleteVertexArrays(1, &VAO);
+	//glDeleteBuffers(1, &VBO);
 	return 1;
 }
 
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](Particle p) {
-		float triangle_size = 0.01;
+		float triangle_size = 0.10;
 		Vector3D Pos = p.getPos();
 		float x = Pos.x * 2 / SCR_HEIGHT;
 		float y = Pos.y * 2 / SCR_WIDTH;
+
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
 		fvertices.push_back(y + triangle_size);
@@ -192,5 +203,6 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		fvertices.push_back(x + triangle_size);
 		fvertices.push_back(y - triangle_size);
 		fvertices.push_back(0.0);
+
 	});
 }

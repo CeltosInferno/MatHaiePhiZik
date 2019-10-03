@@ -8,7 +8,7 @@
 using namespace m_engine;
 
 World::World() {
-
+	renderer = GraphicRenderer(800, 600, "My World");
 }
 
 World::~World() {
@@ -56,4 +56,9 @@ void World::renderBash() {
 		std::cout << std::endl;
 	}
 	std::cout << std::endl;
+}
+
+//2D rendering in OPenGL Window
+void World::render2DWindow() {
+	renderer.renderCircles(particles);
 }

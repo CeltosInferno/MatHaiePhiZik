@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "particle.hpp"
+#include "graphicRenderer.hpp"
 
 namespace m_engine {
 
@@ -22,8 +23,12 @@ namespace m_engine {
     //2D rendering in a terminal
     void renderBash();
 
+	//2D rendering in OPenGL Window
+	void render2DWindow();
+
   private :
     std::vector<Particle> particles;
+	GraphicRenderer renderer;
   };
 }
 

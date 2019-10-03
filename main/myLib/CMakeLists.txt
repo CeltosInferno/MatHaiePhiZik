@@ -36,4 +36,4 @@ add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
 target_include_directories(MyLib SYSTEM INTERFACE include)
 target_include_directories(MyLib PRIVATE include)
 
-target_link_libraries(MyLib PRIVATE  GladLib glfw)
+target_link_libraries(MyLib PRIVATE GladLib glfw PUBLIC )

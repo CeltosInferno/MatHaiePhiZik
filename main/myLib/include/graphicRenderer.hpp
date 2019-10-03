@@ -17,7 +17,7 @@ namespace m_engine {
 	class GraphicRenderer {
 	public:
 		GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName = "Graphic View");
-		~GraphicRenderer();
+		//~GraphicRenderer();
 		int renderCircles(const std::vector<Particle>&);
 	private:
 		GLFWwindow* window;

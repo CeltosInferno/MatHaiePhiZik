@@ -65,7 +65,7 @@ int main() {
 		//on met à jour le monde
 		myWorld.update( diff );
 		//on l'affiche
-		myWorld.renderBash();
+		myWorld.render2DWindow();
 
 		//on recupere le temps que le calcul nous a pris
 		time_point<system_clock> tmp = system_clock::now();
