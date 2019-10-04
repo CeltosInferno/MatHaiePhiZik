@@ -22,7 +22,7 @@ namespace m_engine {
 	private:
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
-		unsigned int SCR_HEIGHT = 600;
+		unsigned int SCR_HEIGHT;
 		void particleToCircle(const std::vector<Particle>&);
 		std::vector<float> fvertices;
 		int shaderProgram;

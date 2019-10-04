@@ -109,23 +109,11 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	glDeleteShader(fragmentShader);
 }
 
-/*
-GraphicRenderer::~GraphicRenderer() {
-	std::cout << "COUCOU" << std::endl;
-	glfwTerminate();
-}
-*/
-
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-	}
 
 	//CONVERT PARTICLES TO CIRCLE
 	particleToCircle(particles);
 	const int nb_points = fvertices.size();
-	float* vertices = &fvertices[0];
 	int i;
 
 	unsigned int VBO, VAO;
@@ -135,7 +123,7 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, nb_points, vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nb_points * sizeof(float), fvertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
@@ -186,7 +174,7 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](Particle p) {
-		float triangle_size = 0.10;
+		float triangle_size = 0.01;
 		Vector3D Pos = p.getPos();
 		float x = Pos.x * 2 / SCR_HEIGHT;
 		float y = Pos.y * 2 / SCR_WIDTH;
