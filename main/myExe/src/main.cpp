@@ -8,7 +8,7 @@
 using namespace m_engine;
 using namespace std::chrono;
 
-#define FPS 10
+#define FPS 30
 
 int main() {
   
