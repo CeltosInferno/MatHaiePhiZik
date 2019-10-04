@@ -7,9 +7,7 @@
 
 using namespace m_engine;
 
-World::World() {
-	renderer = GraphicRenderer(800, 600, "My World");
-}
+World::World() : renderer(GraphicRenderer(800, 600, "My World")) {};
 
 World::~World() {
 
