@@ -12,7 +12,8 @@ set(MY_LIB_SOURCES
 	src/particleFloatingGenerator.cpp 
 	src/particleElasticString.cpp 
 	src/particleStiffSpring.cpp
-	src/particleContact.cpp)
+	src/particleContact.cpp
+	src/graphicRenderer.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -27,11 +28,12 @@ set(MY_LIB_HEADERS
 	include/particleFloatingGenerator.hpp 
 	include/particleElasticString.hpp 
 	include/particleStiffSpring.hpp
-	include/particleContact.hpp)
+	include/particleContact.hpp
+	include/graphicRenderer.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
 target_include_directories(MyLib SYSTEM INTERFACE include)
 target_include_directories(MyLib PRIVATE include)
 
-target_link_libraries(MyLib PRIVATE)
+target_link_libraries(MyLib PRIVATE GladLib glfw PUBLIC )
