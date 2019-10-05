@@ -21,15 +21,16 @@ namespace m_engine {
 		//~GraphicRenderer();
 		//return 0 if everithing is OK, 1 if the window should or have close
 		int renderCircles(const std::vector<Particle>&);
-		void OnKeyEvent(std::function<void(enum direction dir)> f);
+		void OnKeyEvent(std::function<void(std::string dir)> f);
 	private:
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
 		unsigned int SCR_HEIGHT;
 		void particleToCircle(const std::vector<Particle>&);
+		void processInput(GLFWwindow* window);
 		std::vector<float> fvertices;
 		int shaderProgram;
-		std::vector<std::function<void(enum direction dir)>> callBackOnArrowKey;
+		std::vector<std::function<void(std::string dir)>> callBackOnArrowKey;
 	};
 
 }

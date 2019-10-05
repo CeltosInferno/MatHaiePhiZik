@@ -7,6 +7,7 @@
 #include "vector3D.hpp"
 #include "particle.hpp"
 
+
 using namespace m_engine;
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -18,12 +19,33 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window)
+void GraphicRenderer::processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("LEFT");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("RIGHT");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("UP");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("DOWN");
+		};
 	}
 }
 
@@ -200,6 +222,6 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	});
 }
 
-void GraphicRenderer::OnKeyEvent(std::function<void(enum direction dir)> f) {
+void GraphicRenderer::OnKeyEvent(std::function<void(std::string dir)> f) {
 	callBackOnArrowKey.push_back(f);
 }
