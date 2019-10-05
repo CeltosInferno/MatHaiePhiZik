@@ -8,8 +8,12 @@
 using namespace m_engine;
 
 void ArrowKeyEffect(std::string dir) {
+	float power = 3.0;
 	if (dir == "LEFT") {
 		std::cout << "A GAUCHE" << std::endl;
+		for (Particle p : particles) {
+			p.addForce(Vector3D(-power));
+		}
 	}
 	else if (dir == "RIGHT"){
 		std::cout << "A DROITE" << std::endl;
