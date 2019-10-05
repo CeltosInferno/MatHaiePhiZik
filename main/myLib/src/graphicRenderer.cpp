@@ -22,6 +22,9 @@ void processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
 }
 
 const char* vertexShaderSource = "#version 330 core\n"
@@ -39,6 +42,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 
 GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::string WindowName) {
+
 	//Attributes assignement
 	SCR_WIDTH = WIDTH;
 	SCR_HEIGHT = HEIGHT;
@@ -163,12 +167,13 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		return 0;
 	}
-	// optional: de-allocate all resources once they've outlived their purpose:
-	// ------------------------------------------------------------------------
-	//glDeleteVertexArrays(1, &VAO);
-	//glDeleteBuffers(1, &VBO);
-	return 1;
+	else {
+		glfwTerminate();
+		return 1;
+	}
+	
 }
 
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
@@ -193,4 +198,8 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		fvertices.push_back(0.0);
 
 	});
+}
+
+void GraphicRenderer::OnKeyEvent(std::function<void(enum direction dir)> f) {
+	callBackOnArrowKey.push_back(f);
 }

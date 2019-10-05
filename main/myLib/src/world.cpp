@@ -57,6 +57,7 @@ void World::renderBash() {
 }
 
 //2D rendering in OPenGL Window
-void World::render2DWindow() {
-	renderer.renderCircles(particles);
+//return 0 if everithing is OK, 1 if window should or have close
+int World::render2DWindow() {
+	return renderer.renderCircles(particles);
 }

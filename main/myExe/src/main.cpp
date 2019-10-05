@@ -55,7 +55,8 @@ int main() {
 							 base_time = system_clock::now();
 
 	previous_time = base_time;
-	while (1) {
+	int windowOK = 0;
+	while (windowOK == 0) {
 		//debut de la frame, on recupere le temps de ref
 		current_time = system_clock::now();
 
@@ -65,7 +66,7 @@ int main() {
 		//on met à jour le monde
 		myWorld.update( diff );
 		//on l'affiche
-		myWorld.render2DWindow();
+		windowOK = myWorld.render2DWindow();
 
 		//on recupere le temps que le calcul nous a pris
 		time_point<system_clock> tmp = system_clock::now();

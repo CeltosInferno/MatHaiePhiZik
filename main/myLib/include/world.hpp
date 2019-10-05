@@ -24,7 +24,7 @@ namespace m_engine {
     void renderBash();
 
 	//2D rendering in OPenGL Window
-	void render2DWindow();
+	int render2DWindow();
 
   private :
     std::vector<Particle> particles;
