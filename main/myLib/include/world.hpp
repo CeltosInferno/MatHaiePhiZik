@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "particle.hpp"
+#include "forceRegister.hpp"
 #include "graphicRenderer.hpp"
 
 namespace m_engine {
@@ -11,6 +12,9 @@ namespace m_engine {
   public:
     World();
     ~World();
+
+	//MainLoop can access non-public attributes such as renderer
+	friend class MainLoop;
 
     void start();
 
@@ -26,9 +30,15 @@ namespace m_engine {
 	//2D rendering in OPenGL Window
 	int render2DWindow();
 
+	//Pour des raisons d'accès lors du travail des forces, 
+	//le tableau est publique
+	//dans le futur, soit faire tableau de ref/pointeurs,
+	//soit mettre des accesseurs
+	std::vector<Particle> particles;
+
   private :
-    std::vector<Particle> particles;
 	GraphicRenderer renderer;
+	ForceRegister m_forceRegister;
   };
 }
 

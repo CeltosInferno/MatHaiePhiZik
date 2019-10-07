@@ -13,7 +13,8 @@ set(MY_LIB_SOURCES
 	src/particleElasticString.cpp 
 	src/particleStiffSpring.cpp
 	src/particleContact.cpp
-	src/graphicRenderer.cpp)
+	src/graphicRenderer.cpp
+	src/mainLoop.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -29,7 +30,8 @@ set(MY_LIB_HEADERS
 	include/particleElasticString.hpp 
 	include/particleStiffSpring.hpp
 	include/particleContact.hpp
-	include/graphicRenderer.hpp)
+	include/graphicRenderer.hpp
+	include/mainLoop.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
