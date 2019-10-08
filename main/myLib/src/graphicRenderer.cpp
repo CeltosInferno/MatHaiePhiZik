@@ -139,8 +139,8 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 
 	//CONVERT PARTICLES TO CIRCLE
 	particleToCircle(particles);
-	const int nb_points = fvertices.size();
-	int i;
+	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
+	//int i;
 
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -201,10 +201,10 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](Particle p) {
-		float triangle_size = 0.01;
-		Vector3D Pos = p.getPos();
-		float x = Pos.x * 2 / SCR_HEIGHT;
-		float y = Pos.z * 2 / SCR_WIDTH;
+		float triangle_size = 0.01f;
+		const Vector3D& Pos = p.getPos();
+		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT;
+		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH;
 
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
