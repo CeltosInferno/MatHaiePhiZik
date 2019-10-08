@@ -204,7 +204,7 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		float triangle_size = 0.01;
 		Vector3D Pos = p.getPos();
 		float x = Pos.x * 2 / SCR_HEIGHT;
-		float y = Pos.y * 2 / SCR_WIDTH;
+		float y = Pos.z * 2 / SCR_WIDTH;
 
 		//first vertex, top of the triangle
 		fvertices.push_back(x);

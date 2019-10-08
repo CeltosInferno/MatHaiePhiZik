@@ -4,10 +4,12 @@
 #include "mainLoop.hpp"
 
 #include "particleGravityGenerator.hpp"
+#include "particleFloatingGenerator.hpp"
 
 using namespace m_engine;
 
 #define _G 9.81
+#define _ArrowIntensity 20
 
 #define FPS 10
 
@@ -15,26 +17,35 @@ World myWorld;
 
 void arrowKeyEffect(std::string dir) {
 	if (dir == "LEFT") {
-		for (Particle p : myWorld.particles) {
-			
+		std::cout << "COUCOU" << std::endl;
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(-_ArrowIntensity,0,0));
 		}
 	}
-	else if (dir == "RIGHT") {
-		std::cout << "A DROITE" << std::endl;
+	if (dir == "RIGHT") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(_ArrowIntensity, 0, 0));
+		}
 	}
-	else if (dir == "UP") {
-		std::cout << "EN HAUT" << std::endl;
+	if (dir == "UP") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(0, 0, _ArrowIntensity));
+		}
 	}
-	else if (dir == "DOWN") {
-		std::cout << "EN BAS" << std::endl;
+	if (dir == "DOWN") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(0, 0, -_ArrowIntensity));
+		}
 	}
 }
 
 bool onStartLoop(double time, int id_iteration) {
-	static ParticleGravityGenerator gravityGenerator(Vector3D(0, -_G, 0));
+	static ParticleGravityGenerator gravityGenerator(Vector3D(0, 0, -_G));
+	//static ParticleFloatingGenerator floatingGenerator();
 
 	for (Particle& p : myWorld.particles) {
-		myWorld.forceRegister.add(&p, &gravityGenerator);
+		//myWorld.forceRegister.add(&p, &gravityGenerator);
+		//myWorld.forceRegister.add(&p, &floatingGenerator);
 	}
 	return true;
 }
@@ -43,6 +54,7 @@ int main() {
 	MainLoop myMainLoop(myWorld, FPS);
 	myMainLoop.setStartFrameFun(onStartLoop);
 
+	myWorld.setInput(arrowKeyEffect);
 	myWorld.start();
 
 	char entry = 'a';
@@ -54,16 +66,16 @@ int main() {
 
 	switch (entry) {
 	case '1' :
-		myWorld.addParticle(Particle(2, 1, Vector3D(0, 0, 0), Vector3D(0, 15, 0), Vector3D(0, -9.8, 0)));
+		myWorld.addParticle(Particle(2, 1, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		break;
 	case '2' :
-		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 1, 0), Vector3D(0, 10, 0), Vector3D(0, -9.8, 0)));
+		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 1, 0), Vector3D(10, 0, 0), Vector3D(0, -9.8, 0)));
 		break;
 	case '3':
-		myWorld.addParticle(Particle(3, 0.9, Vector3D(0, 2, 0), Vector3D(0, 15, 0), Vector3D(0, -9.8, 0)));
+		myWorld.addParticle(Particle(3, 0.9, Vector3D(0, 2, 0), Vector3D(15, 0, 0), Vector3D(0, -9.8, 0)));
 		break;
 	case '4':
-		myWorld.addParticle(Particle(3, 1, Vector3D(0, 2, 0), Vector3D(10, 10, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(3, 1, Vector3D(0, 2, 0), Vector3D(10, 0, 10), Vector3D(0, 0, 0)));
 		break;
 	}
 

@@ -7,9 +7,10 @@
 
 using namespace m_engine;
 
+/*
 void ArrowKeyEffect(std::string dir) {
 	if (dir == "LEFT") {
-		std::cout << "A GAUCHE" << std::endl;
+		std::cout << "BGJF>VKNBGHIJ>FSDKV>FBJGHWIJ>FD?KVSJBNGWDHIGR>SKDV?FKBNWJGI" << std::endl;
 	}
 	else if (dir == "RIGHT"){
 		std::cout << "A DROITE" << std::endl;
@@ -21,16 +22,23 @@ void ArrowKeyEffect(std::string dir) {
 		std::cout << "EN BAS" << std::endl;
 	}
 }
+*/
 
 World::World() : renderer(GraphicRenderer(800, 600, "My World")) {
-	renderer.OnKeyEvent(ArrowKeyEffect);
+	
 };
 
 World::~World() {
 
 }
 
-void World::start() {}
+void World::start() {
+	renderer.OnKeyEvent(ArrowKeyEffect);
+}
+
+void World::setInput(std::function<void(std::string)> f) {
+	ArrowKeyEffect = f;
+}
 
 //Add a particle in the world
 void World::addParticle(const Particle& part) {

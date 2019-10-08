@@ -37,8 +37,11 @@ namespace m_engine {
 	std::vector<Particle> particles;
 	ForceRegister forceRegister;
 
+	void World::setInput(std::function<void(std::string)> f);
+
   private :
 	GraphicRenderer renderer;
+	std::function<void(std::string key)> ArrowKeyEffect;
   };
 }
 
