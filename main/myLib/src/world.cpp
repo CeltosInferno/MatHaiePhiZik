@@ -7,7 +7,24 @@
 
 using namespace m_engine;
 
-World::World() : renderer(GraphicRenderer(800, 600, "My World")) {};
+void ArrowKeyEffect(std::string dir) {
+	if (dir == "LEFT") {
+		std::cout << "A GAUCHE" << std::endl;
+	}
+	else if (dir == "RIGHT"){
+		std::cout << "A DROITE" << std::endl;
+	}
+	else if (dir == "UP") {
+		std::cout << "EN HAUT" << std::endl;
+	}
+	else if (dir == "DOWN") {
+		std::cout << "EN BAS" << std::endl;
+	}
+}
+
+World::World() : renderer(GraphicRenderer(800, 600, "My World")) {
+	renderer.OnKeyEvent(ArrowKeyEffect);
+};
 
 World::~World() {
 
@@ -57,6 +74,7 @@ void World::renderBash() {
 }
 
 //2D rendering in OPenGL Window
-void World::render2DWindow() {
-	renderer.renderCircles(particles);
+//return 0 if everithing is OK, 1 if window should or have close
+int World::render2DWindow() {
+	return renderer.renderCircles(particles);
 }

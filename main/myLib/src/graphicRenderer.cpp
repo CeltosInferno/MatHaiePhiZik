@@ -7,6 +7,7 @@
 #include "vector3D.hpp"
 #include "particle.hpp"
 
+
 using namespace m_engine;
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -18,10 +19,34 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void processInput(GLFWwindow* window)
+void GraphicRenderer::processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("LEFT");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("RIGHT");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("UP");
+		};
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
+		{
+			f("DOWN");
+		};
+	}
 }
 
 const char* vertexShaderSource = "#version 330 core\n"
@@ -39,6 +64,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 
 GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::string WindowName) {
+
 	//Attributes assignement
 	SCR_WIDTH = WIDTH;
 	SCR_HEIGHT = HEIGHT;
@@ -163,12 +189,13 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		return 0;
 	}
-	// optional: de-allocate all resources once they've outlived their purpose:
-	// ------------------------------------------------------------------------
-	//glDeleteVertexArrays(1, &VAO);
-	//glDeleteBuffers(1, &VBO);
-	return 1;
+	else {
+		glfwTerminate();
+		return 1;
+	}
+	
 }
 
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
@@ -193,4 +220,8 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		fvertices.push_back(0.0);
 
 	});
+}
+
+void GraphicRenderer::OnKeyEvent(std::function<void(std::string dir)> f) {
+	callBackOnArrowKey.push_back(f);
 }
