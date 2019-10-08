@@ -8,12 +8,13 @@
 
 using namespace m_engine;
 
-#define _G 9.81
-#define _ArrowIntensity 20
+#define _G 40
+#define _ArrowIntensity 100
 
 #define FPS 10
 
 World myWorld;
+std::vector<ParticleForceGenerator*> all_gen;
 
 void arrowKeyEffect(std::string dir) {
 	if (dir == "LEFT") {
@@ -40,12 +41,11 @@ void arrowKeyEffect(std::string dir) {
 }
 
 bool onStartLoop(double time, int id_iteration) {
-	static ParticleGravityGenerator gravityGenerator(Vector3D(0, 0, -_G));
-	//static ParticleFloatingGenerator floatingGenerator();
 
-	for (Particle& p : myWorld.particles) {
-		//myWorld.forceRegister.add(&p, &gravityGenerator);
-		//myWorld.forceRegister.add(&p, &floatingGenerator);
+	for (ParticleForceGenerator* g : all_gen) {
+		for (Particle& p : myWorld.particles) {
+			myWorld.forceRegister.add(&p, g);
+		}
 	}
 	return true;
 }
@@ -54,19 +54,22 @@ int main() {
 	MainLoop myMainLoop(myWorld, FPS);
 	myMainLoop.setStartFrameFun(onStartLoop);
 
-	myWorld.setInput(arrowKeyEffect);
-	myWorld.start();
 
+	static ParticleGravityGenerator gravityGenerator(Vector3D(0, 0, -_G));
+	static ParticleFloatingGenerator floatingGenerator(10, 100, 0);
+	
 	char entry = 'a';
 	while (entry != '1' && entry != '2' && entry != '3' && entry != '4')
 	{
-		std::cout << "choisissez un projetile" << std::endl << "1 : sans damping" << std::endl << "2 : 0.99 de damping" << std::endl << "3 : 0.9 de damping" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
+		std::cout << "choisissez une démonstration" << std::endl << "1 : Floating Generator avec gravité" << std::endl << "2 : 0.99 de damping" << std::endl << "3 : 0.9 de damping" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
 		std:: cin >> entry;
 	}
 
 	switch (entry) {
 	case '1' :
-		myWorld.addParticle(Particle(2, 1, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(2, 0.9, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		all_gen.push_back(&gravityGenerator);
+		all_gen.push_back(&floatingGenerator);
 		break;
 	case '2' :
 		myWorld.addParticle(Particle(1, 0.99, Vector3D(0, 1, 0), Vector3D(10, 0, 0), Vector3D(0, -9.8, 0)));
@@ -78,6 +81,10 @@ int main() {
 		myWorld.addParticle(Particle(3, 1, Vector3D(0, 2, 0), Vector3D(10, 0, 10), Vector3D(0, 0, 0)));
 		break;
 	}
+
+
+	myWorld.setInput(arrowKeyEffect);
+	myWorld.start();
 
 	myMainLoop.execute();
 
