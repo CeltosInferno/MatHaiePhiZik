@@ -9,10 +9,10 @@ void ParticleFloatingGenerator::updateForce(Particle& p, double time) {
 		//f=0
 	}
 	else if (z <= waterHeight - radius) { //particle under the water
-		f[2] = -volume;
+		f[2] = volume;
 	}
 	else {
-		f[2] = -volume * ((waterHeight - z + radius) / (2 * radius));
+		f[2] = volume * ((waterHeight - z + radius) / (2 * radius));
 	}
 	p.addForce(f);
 }
