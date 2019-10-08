@@ -1,7 +1,8 @@
-#include "world.hpp"
 #include <string>
-
 #include <functional>
+
+#include "world.hpp"
+
 
 /* 
    classe qui controle le temps et execute la boucle de jeu, on 

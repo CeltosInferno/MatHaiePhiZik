@@ -39,9 +39,13 @@ void World::addParticle(const Particle& part) {
 
 //Update all the particles of the world
 void World::update(double time) {
+	forceRegister.applyForces(time);
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		particles[i].integrate(time);
+		particles[i].cleanAccum();
 	}
+	forceRegister.clear();
+	//check for collision
 }
 
 //2D rendering in a terminal

@@ -5,6 +5,9 @@ set(MY_EXE_SOURCES src/main.cpp) # src/test_particle.cpp instead if you want to 
 add_executable(MyExe ${MY_EXE_SOURCES})
 target_link_libraries(MyExe PUBLIC MyLib GladLib glfw)
 
+add_executable(ExeV1 src/main_v1.cpp)
+target_link_libraries(ExeV1 PUBLIC MyLib GladLib glfw)
+
 add_executable(TestParticle src/test_particle.cpp)
 target_link_libraries(TestParticle PUBLIC MyLib)
 

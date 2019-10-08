@@ -35,10 +35,10 @@ namespace m_engine {
 	//dans le futur, soit faire tableau de ref/pointeurs,
 	//soit mettre des accesseurs
 	std::vector<Particle> particles;
+	ForceRegister forceRegister;
 
   private :
 	GraphicRenderer renderer;
-	ForceRegister m_forceRegister;
   };
 }
 

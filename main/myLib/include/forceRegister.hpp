@@ -22,6 +22,7 @@ namespace m_engine {
 		typedef std::vector <ForceStored> Register;
 
 		void add(Particle* p, ParticleForceGenerator* Fg);
+		void applyForces(double time);
 		void remove(Particle* p, ParticleForceGenerator* Fg);
 		void clear();
 
