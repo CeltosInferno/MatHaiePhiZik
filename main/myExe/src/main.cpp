@@ -12,7 +12,7 @@ using namespace m_engine;
 #define _G 40
 #define _ArrowIntensity 100
 
-#define FPS 10
+#define FPS 30
 
 World myWorld;
 std::vector<ParticleForceGenerator*> all_gen;
@@ -56,28 +56,6 @@ void stringControl(std::string dir) {
 	}
 }
 
-void blobKeyControl(std::string dir) {
-	if (dir == "LEFT") {
-		for (Particle& p : myWorld.particles) {
-			p.addForce(Vector3D(-_ArrowIntensity, 0, 0));
-		}
-	}
-	if (dir == "RIGHT") {
-		for (Particle& p : myWorld.particles) {
-			p.addForce(Vector3D(_ArrowIntensity, 0, 0));
-		}
-	}
-	if (dir == "UP") {
-		for (Particle& p : myWorld.particles) {
-			p.addForce(Vector3D(0, 0, _ArrowIntensity));
-		}
-	}
-	if (dir == "DOWN") {
-		for (Particle& p : myWorld.particles) {
-			p.addForce(Vector3D(0, 0, -_ArrowIntensity));
-		}
-	}
-}
 
 void string_case() {
 
@@ -86,6 +64,36 @@ void string_case() {
 	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingString1);
 	myWorld.forceRegister.add(&myWorld.particles[1], &bouncingString2);
 }
+
+void blob_case() {
+
+	int Ksubject = 1;
+	int Kqueen = 5;
+
+	static ParticleString bouncingStringto0(myWorld.particles[0], Kqueen, 50);
+	static ParticleString bouncingStringto1(myWorld.particles[1], Ksubject, 50);
+	static ParticleString bouncingStringto2(myWorld.particles[2], Ksubject, 50);
+	static ParticleString bouncingStringto3(myWorld.particles[3], Ksubject, 50);
+	static ParticleString bouncingStringto4(myWorld.particles[4], Ksubject, 50);
+
+
+	//Linking the queen particle
+	
+	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingStringto1);
+	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingStringto2);
+	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingStringto3);
+	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingStringto4);
+	
+	//Linking back the particles
+	
+	myWorld.forceRegister.add(&myWorld.particles[1], &bouncingStringto0);
+	myWorld.forceRegister.add(&myWorld.particles[2], &bouncingStringto0);
+	myWorld.forceRegister.add(&myWorld.particles[3], &bouncingStringto0);
+	myWorld.forceRegister.add(&myWorld.particles[4], &bouncingStringto0);
+	
+}
+
+
 
 bool onStartLoop(double time, int id_iteration) {
 
@@ -101,6 +109,7 @@ bool onStartLoop(double time, int id_iteration) {
 			string_case();
 			break;
 		case '3':
+			blob_case();
 			break;
 	}
 	return true;
@@ -114,9 +123,11 @@ int main() {
 	static ParticleGravityGenerator gravityGenerator(Vector3D(0, 0, -_G));
 	static ParticleFloatingGenerator floatingGenerator(10, 100, 0);
 	
+	int ressort_dumping = 1;
+
 	while (entry != '1' && entry != '2' && entry != '3' && entry != '4')
 	{
-		std::cout << "choisissez une démonstration" << std::endl << "1 : Floating Generator avec gravité" << std::endl << "2 : Deux particules avec ressort" << std::endl << "3 : 0.9 de damping" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
+		std::cout << "choisissez une démonstration" << std::endl << "1 : Floating Generator avec gravité" << std::endl << "2 : Deux particules avec ressort" << std::endl << "3 : Blob" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
 		std:: cin >> entry;
 	}
 
@@ -133,11 +144,12 @@ int main() {
 		myWorld.setInput(stringControl);
 		break;
 	case '3':
-		myWorld.addParticle(Particle(3, 0.9, Vector3D(0, 2, 0), Vector3D(15, 0, 0), Vector3D(0, -9.8, 0)));
-		break;
-	case '4':
-		myWorld.addParticle(Particle(3, 1, Vector3D(0, 2, 0), Vector3D(10, 0, 10), Vector3D(0, 0, 0)));
-		myWorld.setInput(blobKeyControl);
+		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(30, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(-30, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, -30), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, 30), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		myWorld.setInput(stringControl);
 		break;
 	}
 
