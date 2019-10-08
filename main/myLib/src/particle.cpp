@@ -71,6 +71,6 @@ void Particle::addForce(const Vector3D& f) {
 }
 
 void Particle::cleanAccum() {
-	m_accumForces = Vector3D();
+	m_accumForces = Vector3D(0,0,0);
 }
 
