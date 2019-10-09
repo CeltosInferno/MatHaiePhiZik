@@ -3,6 +3,9 @@
 
 #include "particleForceGenerator.hpp"
 
+/*
+	Force representing the gravity
+*/
 
 namespace m_engine {
 

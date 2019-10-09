@@ -3,6 +3,9 @@
 
 #include "particleForceGenerator.hpp"
 
+/*
+	Force representing the friction
+*/
 
 namespace m_engine {
 
