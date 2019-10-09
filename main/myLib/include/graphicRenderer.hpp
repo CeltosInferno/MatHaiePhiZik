@@ -32,6 +32,7 @@ namespace m_engine {
 		std::vector<float> fvertices;
 		int shaderProgram;
 		std::vector<std::function<void(std::string dir)>> callBackOnArrowKey;
+		int zoom;
 	};
 
 }

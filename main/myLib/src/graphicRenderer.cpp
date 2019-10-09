@@ -24,6 +24,14 @@ void GraphicRenderer::processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+		zoom--;
+		if (zoom <= 0) {
+			zoom = 1;
+		}
+	}
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		zoom++;
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
 		{
@@ -136,6 +144,8 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	}
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	zoom = 1;
 }
 
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
@@ -202,9 +212,10 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	for_each(particles.begin(), particles.end(), [this](Particle p) {
 		float triangle_size = 0.01f;
 		const Vector3D& Pos = p.getPos();
-		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT;
-		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH;
-
+		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT * zoom;
+		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH * zoom;
+		triangle_size *= zoom;
+		std::cout << zoom << std::endl;
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
 		fvertices.push_back(y + triangle_size);
