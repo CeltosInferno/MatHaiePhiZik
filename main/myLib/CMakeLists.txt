@@ -15,7 +15,10 @@ set(MY_LIB_SOURCES
 	src/particleContact.cpp
 	src/graphicRenderer.cpp
 	src/mainLoop.cpp
-	src/particleContactResolver.cpp)
+	src/particleContactResolver.cpp
+	src/particleLink.cpp
+	src/particleCable.cpp
+	src/particleRod.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -33,7 +36,11 @@ set(MY_LIB_HEADERS
 	include/particleContact.hpp
 	include/graphicRenderer.hpp
 	include/mainLoop.hpp
-	include/particleContactResolver.hpp)
+	include/particleContactResolver.hpp
+	include/particleContactGenerator.hpp
+	include/particleLink.hpp
+	include/particleCable.hpp
+	include/particleRod.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
