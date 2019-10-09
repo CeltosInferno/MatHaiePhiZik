@@ -5,6 +5,7 @@
 #include "particle.hpp"
 #include "forceRegister.hpp"
 #include "graphicRenderer.hpp"
+#include "particleContactResolver.hpp"
 
 namespace m_engine {
 
@@ -40,6 +41,7 @@ namespace m_engine {
 	void World::setInput(std::function<void(std::string)> f);
 
   private :
+	ParticleContactResolver contactResolver;
 	GraphicRenderer renderer;
 	std::function<void(std::string key)> ArrowKeyEffect;
   };

@@ -14,7 +14,8 @@ set(MY_LIB_SOURCES
 	src/particleStiffSpring.cpp
 	src/particleContact.cpp
 	src/graphicRenderer.cpp
-	src/mainLoop.cpp)
+	src/mainLoop.cpp
+	src/particleContactResolver.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -31,7 +32,8 @@ set(MY_LIB_HEADERS
 	include/particleStiffSpring.hpp
 	include/particleContact.hpp
 	include/graphicRenderer.hpp
-	include/mainLoop.hpp)
+	include/mainLoop.hpp
+	include/particleContactResolver.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
