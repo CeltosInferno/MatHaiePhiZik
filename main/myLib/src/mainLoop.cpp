@@ -39,7 +39,7 @@ MainLoop::MainLoop(World& world, int fps):
 	end_loop(basicEndLoop), 
 	world(world)
 {
-	setControls(basicArrowKeyEffect);
+	//setControls(basicArrowKeyEffect);
 }
 
 void MainLoop::execute() {

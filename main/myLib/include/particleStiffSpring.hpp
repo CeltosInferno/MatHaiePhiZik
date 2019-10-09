@@ -3,6 +3,9 @@
 
 #include "particleForceGenerator.hpp"
 
+/*
+	Force representing an harmonic movement
+*/
 
 namespace m_engine {
 
