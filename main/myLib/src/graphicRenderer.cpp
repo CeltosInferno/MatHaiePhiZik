@@ -19,10 +19,19 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+//This function process the input when they are captured
 void GraphicRenderer::processInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+		zoom--;
+		if (zoom <= 0) {
+			zoom = 1;
+		}
+	}
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		zoom++;
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
 		{
@@ -49,6 +58,8 @@ void GraphicRenderer::processInput(GLFWwindow* window)
 	}
 }
 
+
+//Shader sources
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
@@ -133,6 +144,8 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	}
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+
+	zoom = 1;
 }
 
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
@@ -140,7 +153,6 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	//CONVERT PARTICLES TO CIRCLE
 	particleToCircle(particles);
 	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
-	//int i;
 
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -161,10 +173,6 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
-
-	// uncomment this call to draw in wireframe polygons.
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 	// render loop
 	// -----------
 	if (!glfwWindowShouldClose(window))
@@ -178,11 +186,10 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// draw our first triangle
+		// draw triangles
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 		glDrawArrays(GL_TRIANGLES, 0, nb_points); 
-		// glBindVertexArray(0); // no need to unbind it every time 
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -198,14 +205,17 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	
 }
 
+//turn a vector of particle into vertices to render as triangles
+//return 0 if everithing is OK, 1 if the window should or have close
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](Particle p) {
 		float triangle_size = 0.01f;
 		const Vector3D& Pos = p.getPos();
-		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT;
-		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH;
-
+		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT * zoom;
+		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH * zoom;
+		triangle_size *= zoom;
+		std::cout << zoom << std::endl;
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
 		fvertices.push_back(y + triangle_size);
@@ -222,6 +232,7 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	});
 }
 
+//Add a function to execute when key event detected
 void GraphicRenderer::OnKeyEvent(std::function<void(std::string dir)> f) {
 	callBackOnArrowKey.push_back(f);
 }

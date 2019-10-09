@@ -45,6 +45,7 @@ void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }
 
+
 //Update all the particles of the world
 void World::update(double time) {
 	//std::cout << "time " << time << std::endl;

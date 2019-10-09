@@ -3,5 +3,5 @@
 using namespace m_engine;
 
 void ParticleGravityGenerator::updateForce(Particle& p, double time) {
-	p.addForce(p.getInversMass() * gravity);
+	p.addForce(p.getInversMass() * gravity); //F=mg
 }

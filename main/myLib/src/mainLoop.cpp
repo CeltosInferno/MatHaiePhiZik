@@ -8,21 +8,6 @@
 using namespace m_engine;
 using namespace std::chrono;
 
-void basicArrowKeyEffect(std::string dir) {
-	if (dir == "LEFT") {
-		std::cout << "A GAUCHE" << std::endl;
-	}
-	else if (dir == "RIGHT") {
-		std::cout << "A DROITE" << std::endl;
-	}
-	else if (dir == "UP") {
-		std::cout << "EN HAUT" << std::endl;
-	}
-	else if (dir == "DOWN") {
-		std::cout << "EN BAS" << std::endl;
-	}
-}
-
 bool basicStartLoop(double time, int id_iteration) {
 	std::cout << "start of loop " << id_iteration << " on time " << time << std::endl;
 	return true;
@@ -39,7 +24,6 @@ MainLoop::MainLoop(World& world, int fps):
 	end_loop(basicEndLoop), 
 	world(world)
 {
-	setControls(basicArrowKeyEffect);
 }
 
 void MainLoop::execute() {

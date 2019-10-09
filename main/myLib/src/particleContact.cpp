@@ -6,10 +6,10 @@ ParticleContact::ParticleContact(Particle* p1, Particle* p2, double c, double pe
 	//si p1 NULL, renvoie une erreur
 	particles[0] = p1;
 	particles[1] = p2;
-	if (p2 != NULL) {
+	if (p2 != NULL) { // cas normal
 		n = (particles[0]->getPos() - particles[1]->getPos()).normalize();
 	}
-	else {
+	else { // cas du sol
 		n = Vector3D(0, 0, 1);
 	}
 
@@ -17,15 +17,15 @@ ParticleContact::ParticleContact(Particle* p1, Particle* p2, double c, double pe
 
 double ParticleContact::calculVs() const {
 
-	if (particles[1] != NULL) {
-		double va = particles[0]->getVel().scalar(n);
-		double vb = particles[1]->getVel().scalar(n);
+	if (particles[1] != NULL) { // cas normal
+		double va = particles[0]->getVel().scalar(n); //vitesse de la particule a
+		double vb = particles[1]->getVel().scalar(n); //vitesse de la particule b
 
 		return (va - vb);
 	}
 	else {
 		//cas du sol (on considère le sol à z=0)
-		double va = particles[0]->getVel().scalar(n);
+		double va = particles[0]->getVel().scalar(n); //vitesse de la particule
 		
 		return va;
 	}
@@ -34,31 +34,40 @@ double ParticleContact::calculVs() const {
 }
 
 void ParticleContact::resolve(double time) {
+	// on résout les impulsions puis les interpénétrations
 	resolveVelocity(time);
 	resolvePenetration(time);
 }
 
 void ParticleContact::resolveVelocity(double time) {
 	Vector3D vs = -restitutionCoeff * calculVs() * n;
-	if (particles[1] != NULL) { //cas sans sol
-		Vector3D delta = particles[0]->getInversMass() / particles[1]->getInversMass() * vs;
-		particles[0]->setVel(particles[0]->getVel() + delta);
+	if (particles[1] != NULL) { //cas normal
+		double m0 = 1/particles[0]->getInversMass();
+		double m1 = 1 / particles[1]->getInversMass();
+
+		//application de la formule des impuslions
+		particles[0]->setVel(particles[0]->getVel() + 2*m1/(m0+m1) * vs); 
+		particles[1]->setVel(particles[1]->getVel() - 2*m0/(m0+m1) * vs);
 	}
 	else { // cas du sol
-		//TODO
+		particles[0]->setVel(particles[0]->getVel() + 2 * vs);
 	}
 }
 
 void ParticleContact::resolvePenetration(double time) {
-	Vector3D delta;
 	if (particles[1] == NULL) { //cas du sol : le sol ne bouge pas
-		delta = penetration*n;
+		particles[0]->setPos(particles[0]->getPos() + penetration*n);
 	}
-	else {
+	else { //cas normal
 		double ma = 1 / particles[0]->getInversMass();
 		double mb = 1 / particles[1]->getInversMass();
-		delta = mb / (ma + mb) * penetration * n;
+		Vector3D delta0 = mb / (ma + mb) * penetration * n;
+		Vector3D delta1 = -ma / (ma + mb) * penetration * n;
+
+		//déplacement des 2 particules
+		particles[0]->setPos(particles[0]->getPos() + delta0);
+		particles[1]->setPos(particles[1]->getPos() + delta1);
 	}
 	
-	particles[0]->setPos(particles[0]->getPos() + delta);
+	
 }
