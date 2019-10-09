@@ -18,6 +18,8 @@ World myWorld;
 std::vector<ParticleForceGenerator*> all_gen;
 static char entry = 'a';
 
+
+//This function can be bind with the graphic renderer to assign what to do whith each arrow
 void arrowKeyEffect(std::string dir) {
 	if (dir == "LEFT") {
 		for (Particle& p : myWorld.particles) {
@@ -41,6 +43,8 @@ void arrowKeyEffect(std::string dir) {
 	}
 }
 
+
+//This function can be bind with the graphic renderer to assign what to do whith each arrow
 void stringControl(std::string dir) {
 	if (dir == "LEFT") {
 			myWorld.particles[0].addForce(Vector3D(-_ArrowIntensity, 0, 0));
@@ -57,14 +61,15 @@ void stringControl(std::string dir) {
 }
 
 
+//This function define what to do for the Basic String demonstration
 void string_case() {
-
 	static ParticleString bouncingString1(myWorld.particles[1], 0.5, 490);
 	static ParticleString bouncingString2(myWorld.particles[0], 0.5, 490);
 	myWorld.forceRegister.add(&myWorld.particles[0], &bouncingString1);
 	myWorld.forceRegister.add(&myWorld.particles[1], &bouncingString2);
 }
 
+//This function define what to do for the Blob demonstration
 void blob_case() {
 
 	int Ksubject = 1;
@@ -94,10 +99,11 @@ void blob_case() {
 }
 
 
-
+//This function will be bind with the main loop and will be executed at the beginning of each frame
 bool onStartLoop(double time, int id_iteration) {
 
 	switch (entry) {
+		//Case of float demonstratino
 		case '1':
 			for (ParticleForceGenerator* g : all_gen) {
 				for (Particle& p : myWorld.particles) {
@@ -105,9 +111,11 @@ bool onStartLoop(double time, int id_iteration) {
 				}
 			}
 			break;
+		//case of string demonstration
 		case'2':
 			string_case();
 			break;
+		//case of blob demonstration
 		case '3':
 			blob_case();
 			break;
@@ -115,8 +123,12 @@ bool onStartLoop(double time, int id_iteration) {
 	return true;
 }
 
+
+//The main
 int main() {
+	//Creating the main loop
 	MainLoop myMainLoop(myWorld, FPS);
+	//Setting up the main loop
 	myMainLoop.setStartFrameFun(onStartLoop);
 
 
@@ -125,6 +137,7 @@ int main() {
 	
 	int ressort_dumping = 1;
 
+	//Displaying in a terminal the demonstrations options
 	while (entry != '1' && entry != '2' && entry != '3' && entry != '4')
 	{
 		std::cout << "choisissez une démonstration" << std::endl << "1 : Floating Generator avec gravité" << std::endl << "2 : Deux particules avec ressort" << std::endl << "3 : Blob" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
@@ -132,31 +145,42 @@ int main() {
 	}
 
 	switch (entry) {
+	//Floating demonstration
 	case '1' :
+		//setting up particles
 		myWorld.addParticle(Particle(2, 0.9, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		//recording force generators
 		all_gen.push_back(&gravityGenerator);
 		all_gen.push_back(&floatingGenerator);
+		//setting up input's reaction
 		myWorld.setInput(arrowKeyEffect);
 		break;
+	//String demonstration
 	case '2' :
+		//Setting up particles
 		myWorld.addParticle(Particle(1, 1, Vector3D(250, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		myWorld.addParticle(Particle(1, 1, Vector3D(-250, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		//setting up input's reaction
 		myWorld.setInput(stringControl);
 		break;
+	//Blob demonstration
 	case '3':
+		//Setting up particles
 		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(30, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(-30, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, -30), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		myWorld.addParticle(Particle(3, ressort_dumping, Vector3D(0, 0, 30), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
+		//Setting up input's reaction
 		myWorld.setInput(stringControl);
 		break;
 	}
 
 
-	
+	//starting the world
 	myWorld.start();
 
+	//starting execution
 	myMainLoop.execute();
 
 	return 0;
