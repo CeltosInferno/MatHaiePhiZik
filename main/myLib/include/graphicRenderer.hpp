@@ -18,9 +18,10 @@ namespace m_engine {
 	class GraphicRenderer {
 	public:
 		GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName = "Graphic View");
-		//~GraphicRenderer();
+		//turn a vector of particle into vertices to render as triangles
 		//return 0 if everithing is OK, 1 if the window should or have close
 		int renderCircles(const std::vector<Particle>&);
+		//Add a callback function reaction to arrow key event
 		void OnKeyEvent(std::function<void(std::string dir)> f);
 	private:
 		GLFWwindow* window;
