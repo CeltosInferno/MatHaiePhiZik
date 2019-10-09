@@ -15,6 +15,7 @@ using namespace m_engine;
 #define FPS 30
 
 World myWorld;
+
 std::vector<ParticleForceGenerator*> all_gen;
 static char entry = 'a';
 
@@ -140,7 +141,12 @@ int main() {
 	//Displaying in a terminal the demonstrations options
 	while (entry != '1' && entry != '2' && entry != '3' && entry != '4')
 	{
-		std::cout << "choisissez une démonstration" << std::endl << "1 : Floating Generator avec gravité" << std::endl << "2 : Deux particules avec ressort" << std::endl << "3 : Blob" << std::endl << "4 : 0.5 de damping sans gravité" << std::endl << "choix :";
+		std::cout << "choisissez une démonstration" << std::endl 
+			<< "1 : Floating Generator avec gravité" << std::endl 
+			<< "2 : Deux particules avec ressort" << std::endl 
+			<< "3 : Blob" << std::endl 
+			<< "4 : 0.5 de damping sans gravité" << std::endl <
+			< "choix :";
 		std:: cin >> entry;
 	}
 
