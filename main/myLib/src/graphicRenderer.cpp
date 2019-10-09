@@ -215,7 +215,6 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT * zoom;
 		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH * zoom;
 		triangle_size *= zoom;
-		std::cout << zoom << std::endl;
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
 		fvertices.push_back(y + triangle_size);

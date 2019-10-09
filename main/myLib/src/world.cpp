@@ -7,22 +7,6 @@
 
 using namespace m_engine;
 
-/*
-void ArrowKeyEffect(std::string dir) {
-	if (dir == "LEFT") {
-		std::cout << "BGJF>VKNBGHIJ>FSDKV>FBJGHWIJ>FD?KVSJBNGWDHIGR>SKDV?FKBNWJGI" << std::endl;
-	}
-	else if (dir == "RIGHT"){
-		std::cout << "A DROITE" << std::endl;
-	}
-	else if (dir == "UP") {
-		std::cout << "EN HAUT" << std::endl;
-	}
-	else if (dir == "DOWN") {
-		std::cout << "EN BAS" << std::endl;
-	}
-}
-*/
 
 World::World() : renderer(GraphicRenderer(800, 600, "My World")) {
 	
