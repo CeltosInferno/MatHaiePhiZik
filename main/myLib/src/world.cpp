@@ -39,6 +39,7 @@ void World::update(double time) {
 	}
 	forceRegister.clear();
 	//check for collision
+	contactResolver.resolveCollisions(time, particles);
 }
 
 //2D rendering in a terminal

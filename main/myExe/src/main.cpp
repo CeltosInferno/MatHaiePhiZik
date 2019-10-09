@@ -122,6 +122,7 @@ bool onStartLoop(double time, int id_iteration) {
 			break;
 		//case of collision demonstration
 		case '4':
+		case '5':
 			for (ParticleForceGenerator* g : all_gen) {
 				for (Particle& p : myWorld.particles) {
 					myWorld.forceRegister.add(&p, g);
@@ -148,14 +149,15 @@ int main() {
 
 	//Displaying in a terminal the demonstrations options
 	while (entry!= '0' && entry != '1' && entry != '2' 
-		&& entry != '3' && entry != '4')
+		&& entry != '3' && entry != '4' && entry != '5')
 	{
 		std::cout << "choisissez une démonstration" << std::endl
 			<< "0 : Quitter" << std::endl
 			<< "1 : Floating Generator avec gravité" << std::endl 
 			<< "2 : Deux particules avec ressort" << std::endl 
 			<< "3 : Blob" << std::endl 
-			<< "4 : Test de collision avec le sol" << std::endl
+			<< "4 : Test de collision avec le sol avec 2 particules de meme masse" << std::endl
+			<< "5 : Test de collision entre 2 particules poids differents" << std::endl
 			<< "choix :";
 		std:: cin >> entry;
 	}
@@ -192,12 +194,21 @@ int main() {
 		myWorld.setInput(stringControl);
 		break;
 	case '4':
-		myMainLoop.setZoom(15);
+		myMainLoop.setZoom(12);
 		//add particules with a radius
-		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(-1, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1));
-		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1));
+		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(-10, 0, 0), Vector3D(2, 0, 0), Vector3D(0, 0, 0), 1));
+		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(10, 0, 0), Vector3D(-2, 0, 0), Vector3D(0, 0, 0), 1.2));
 		//recording force generators
-		//all_gen.push_back(&gravityGenerator);
+		all_gen.push_back(&gravityGenerator);
+		myWorld.setInput(arrowKeyEffect);
+		break;
+	case '5':
+		myMainLoop.setZoom(12);
+		//add particules with a radius
+		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(-10, 0, 0), Vector3D(2, 0, 0), Vector3D(0, 0, 0), 1));
+		myWorld.addParticle(Particle(20, ressort_dumping, Vector3D(10, 0, 0), Vector3D(-5, 0, 0), Vector3D(0, 0, 0), 2));
+		//recording force generators
+		all_gen.push_back(&gravityGenerator);
 		myWorld.setInput(arrowKeyEffect);
 		break;
 	default:

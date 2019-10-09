@@ -6,9 +6,14 @@
 
 namespace m_engine {
 
-	// cette classe décrit un contact entre 2 particules, et le résout. Si contact avec le sol, la 2è particule est NULL
+	// cette classe décrit un contact entre 2 particules, et le résout. 
+	//Si contact avec le sol, la 2è particule est Floor
 	class ParticleContact {
 	public:
+		//on defini le sol comme suit
+		static Particle Floor;
+		static Vector3D NormalFloor;
+
 		ParticleContact(Particle* p1, Particle* p2, double c, double penetration);
 		~ParticleContact() {};
 

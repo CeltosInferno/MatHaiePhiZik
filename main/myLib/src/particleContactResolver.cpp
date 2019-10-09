@@ -1,10 +1,8 @@
 #include "particleContactResolver.hpp"
 
-using namespace m_engine;
+#include <iostream>
 
-//on defini le sol comme suit
-static Particle Floor(1,1, 0,0,-10);
-static Vector3D normalFloor(0,0,1);
+using namespace m_engine;
 
 ParticleContactResolver::ParticleContactResolver() {
 
@@ -17,7 +15,7 @@ bool ParticleContactResolver::resolveCollisions(double time, std::vector<Particl
 		//on regarde les collisions potentielles
 		checkForCollision(particles);
 		if (collisions.size() == 0) return true; //plus de collisions
-
+		std::cout << "got " << collisions.size() << "collisions" << std::endl;
 		//on cherche quelle collision traiter, 
 		//ici celle avec la vitesse de separation la plus
 		//faible (penetration rapide)
@@ -45,8 +43,8 @@ void ParticleContactResolver::checkForCollision(std::vector<Particle>& particles
 	for (int i = 0; i < particles.size(); i++) {
 		//test avec le sol
 		Particle* p1 = &particles[i];
-		if (isColliding(p1, &Floor)) {
-			ParticleContact Pc(p1, &Floor, 1, getPenetration(p1, &Floor));
+		if (isColliding(p1, &ParticleContact::Floor)) {
+			ParticleContact Pc(p1, &ParticleContact::Floor, 1, getPenetration(p1, &ParticleContact::Floor));
 			collisions.push_back(Pc);
 			separationSpeeds.push_back(Pc.calculVs());
 		}
@@ -63,9 +61,9 @@ void ParticleContactResolver::checkForCollision(std::vector<Particle>& particles
 }
 
 double ParticleContactResolver::getPenetration(const Particle* pa, const Particle* pb) {
-	if (pb == &Floor) {
-		double floorHeight = Floor.getPos().scalar(normalFloor);
-		double particuleHeight = pa->getPos().scalar(normalFloor);
+	if (pb == &ParticleContact::Floor) {
+		double floorHeight = ParticleContact::Floor.getPos().scalar(ParticleContact::NormalFloor);
+		double particuleHeight = pa->getPos().scalar(ParticleContact::NormalFloor);
 		return (pa->getRadius() + floorHeight - particuleHeight);
 	}
 	else {
@@ -74,6 +72,14 @@ double ParticleContactResolver::getPenetration(const Particle* pa, const Particl
 }
 
 bool ParticleContactResolver::isColliding(const Particle* pa, const Particle* pb) {
+	/*std::cout << "penetration between :" << pa->getPos() << ", "
+		<< pb->getPos()  << " :" << getPenetration(pa, pb)
+		<< ", dist :" << pa->getPos().distance(pb->getPos()) 
+		<< std::endl;*/
+	//on ne g'ere pas les collisions avec une particule de rayon nul
+	if (pa->getRadius() <= 0 || 
+		(pb != &ParticleContact::Floor && pb->getRadius() <= 0)) 
+		return false;
 	return getPenetration(pa, pb) > 0;
 }
 

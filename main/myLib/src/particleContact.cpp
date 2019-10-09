@@ -2,22 +2,26 @@
 
 using namespace m_engine;
 
+//on defini le niveau du sol a une hauteur de -10
+Particle ParticleContact::Floor(1, 1, 0, 0, -10);
+Vector3D ParticleContact::NormalFloor(0, 0, 1);
+
 ParticleContact::ParticleContact(Particle* p1, Particle* p2, double c, double penetration) : restitutionCoeff(c), penetration(penetration) {
 	//si p1 NULL, renvoie une erreur
 	particles[0] = p1;
 	particles[1] = p2;
-	if (p2 != NULL) { // cas normal
+	if (p2 != &Floor) { // cas normal
 		n = (particles[0]->getPos() - particles[1]->getPos()).normalize();
 	}
 	else { // cas du sol
-		n = Vector3D(0, 0, 1);
+		n = NormalFloor;
 	}
 
 }
 
 double ParticleContact::calculVs() const {
 
-	if (particles[1] != NULL) { // cas normal
+	if (particles[1] != &Floor) { // cas normal
 		double va = particles[0]->getVel().scalar(n); //vitesse de la particule a
 		double vb = particles[1]->getVel().scalar(n); //vitesse de la particule b
 
@@ -41,7 +45,7 @@ void ParticleContact::resolve(double time) {
 
 void ParticleContact::resolveVelocity(double time) {
 	Vector3D vs = -restitutionCoeff * calculVs() * n;
-	if (particles[1] != NULL) { //cas normal
+	if (particles[1] != &Floor) { //cas normal
 		double m0 = 1/particles[0]->getInversMass();
 		double m1 = 1 / particles[1]->getInversMass();
 
@@ -55,7 +59,7 @@ void ParticleContact::resolveVelocity(double time) {
 }
 
 void ParticleContact::resolvePenetration(double time) {
-	if (particles[1] == NULL) { //cas du sol : le sol ne bouge pas
+	if (particles[1] == &Floor) { //cas du sol : le sol ne bouge pas
 		particles[0]->setPos(particles[0]->getPos() + penetration*n);
 	}
 	else { //cas normal
