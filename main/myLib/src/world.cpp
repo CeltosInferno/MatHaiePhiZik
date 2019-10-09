@@ -47,6 +47,7 @@ void World::addParticle(const Particle& part) {
 
 //Update all the particles of the world
 void World::update(double time) {
+	//std::cout << "time " << time << std::endl;
 	forceRegister.applyForces(time);
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		particles[i].integrate(time);

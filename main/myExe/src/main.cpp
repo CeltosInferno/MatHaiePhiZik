@@ -12,7 +12,7 @@ using namespace m_engine;
 #define _G 40
 #define _ArrowIntensity 100
 
-#define FPS 10
+#define FPS 30
 
 World myWorld;
 std::vector<ParticleForceGenerator*> all_gen;

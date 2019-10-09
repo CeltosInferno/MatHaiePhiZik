@@ -4,7 +4,9 @@
 
 using namespace m_engine;
 
-Particle::Particle() : m_inversMass(0), m_damping(1), m_pos(), m_vel(), m_acc(){
+Particle::Particle() : 
+	m_inversMass(0), m_damping(1), m_pos(), 
+	m_vel(), m_acc(), m_radius() {
 
 }
 
@@ -12,18 +14,21 @@ Particle::Particle() : m_inversMass(0), m_damping(1), m_pos(), m_vel(), m_acc(){
 Particle::Particle(double mass, double damping,
 		   double posX, double posY, double posZ,
 		   double velX, double velY, double velZ,
-		   double accX, double accY, double accZ)
+		   double accX, double accY, double accZ, 
+		   double radius)
   : m_inversMass(1/mass), m_damping(damping),
     m_pos(posX, posY, posZ),
     m_vel(velX, velY, velZ),
-    m_acc(accX, accY, accZ)
+    m_acc(accX, accY, accZ), 
+	m_radius(radius)
 {}
 
 //Constructor using Vector3D to describe the position, velocity and acceleration of the particule
 Particle::Particle(double mass, double damping, const Vector3D& pos,
-	 const Vector3D& vel, const Vector3D& acc):
+	 const Vector3D& vel, const Vector3D& acc, double radius):
   m_inversMass(1/mass), m_damping(damping),
-  m_pos(pos), m_vel(vel), m_acc(acc)
+  m_pos(pos), m_vel(vel), m_acc(acc), 
+	m_radius(radius)
 {}
 
 
@@ -68,6 +73,7 @@ void Particle::integrate(double time) {
 
 void Particle::addForce(const Vector3D& f) {
 	m_accumForces += f;
+	//std::cout << "force gotten on particle " << this << ", total : " << f << std::endl;
 }
 
 void Particle::cleanAccum() {

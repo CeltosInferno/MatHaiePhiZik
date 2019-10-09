@@ -11,9 +11,9 @@ namespace m_engine {
   public:
     Particle();
     //Constructor using only doubles
-    Particle(double mass, double damping = 1, double posX = 0, double posY = 0, double posZ = 0, double velX = 0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0);
+    Particle(double mass, double damping = 1, double posX = 0, double posY = 0, double posZ = 0, double velX = 0, double velY = 0, double velZ = 0, double accX = 0, double accY = 0, double accZ = 0, double radius = 0);
     //Constructor using Vector3D to describe the position, velocity and acceleration of the particule
-    Particle(double mass, double damping, const Vector3D& pos, const Vector3D& vel, const Vector3D& acc);
+    Particle(double mass, double damping, const Vector3D& pos, const Vector3D& vel, const Vector3D& acc, double radius = 0);
     ~Particle();
 
     // GETTERS
@@ -22,6 +22,7 @@ namespace m_engine {
 	inline const Vector3D& getPos() const { return m_pos; }
 	inline const Vector3D& getVel() const { return m_vel; }
 	inline const Vector3D& getAcc() const { return m_acc; }
+	inline double getRadius() const { return m_radius; }
 
     // SETTERS
     void setMass(double mass);
@@ -32,7 +33,7 @@ namespace m_engine {
     inline void setPos(double x, double y, double z) {m_pos = Vector3D(x,y,z);}
     inline void setVel(double x, double y, double z) {m_vel = Vector3D(x,y,z);}
     inline void setAcc(double x, double y, double z) {m_acc = Vector3D(x,y,z);}
-
+	inline void setRadius(double radius) { m_radius = radius; }
     
 
     // INTEGRATOR
@@ -50,6 +51,8 @@ namespace m_engine {
     double m_damping;
     Vector3D m_pos, m_vel, m_acc;
 	Vector3D m_accumForces;
+	//used for collision detection
+	double m_radius;
   };
 
   //OPERATOR OVERRIDE
