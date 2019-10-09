@@ -23,6 +23,8 @@ namespace m_engine {
 		int renderCircles(const std::vector<Particle>&);
 		//Add a callback function reaction to arrow key event
 		void OnKeyEvent(std::function<void(std::string dir)> f);
+
+		inline void setZoom(double _zoom) { zoom = _zoom; }
 	private:
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
@@ -32,7 +34,7 @@ namespace m_engine {
 		std::vector<float> fvertices;
 		int shaderProgram;
 		std::vector<std::function<void(std::string dir)>> callBackOnArrowKey;
-		int zoom;
+		double zoom;
 	};
 
 }

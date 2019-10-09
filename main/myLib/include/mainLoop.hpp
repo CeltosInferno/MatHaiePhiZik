@@ -31,6 +31,10 @@ namespace m_engine {
 			end_loop = f;
 		}
 
+		inline void setZoom(double z) {
+			world.renderer.setZoom(z);
+		}
+
 		//lance la boucle principale
 		void execute();
 	private:

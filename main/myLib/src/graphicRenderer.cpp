@@ -25,13 +25,13 @@ void GraphicRenderer::processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
 	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
-		zoom--;
+		zoom-=1;
 		if (zoom <= 0) {
 			zoom = 1;
 		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-		zoom++;
+		zoom+=1;
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
 		{
@@ -209,24 +209,26 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 //return 0 if everithing is OK, 1 if the window should or have close
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
-	for_each(particles.begin(), particles.end(), [this](Particle p) {
-		float triangle_size = 0.01f;
+	for_each(particles.begin(), particles.end(), [this](const Particle& p) {
+		float radius = static_cast<float>(p.getRadius());
+		if (radius <= 0.001f) radius = 7; //taille negligeable
+		float triangle_size = zoom*radius;//0.01f*radius;
 		const Vector3D& Pos = p.getPos();
-		float x = static_cast<float>(Pos.x) * 2 / SCR_HEIGHT * zoom;
-		float y = static_cast<float>(Pos.z) * 2 / SCR_WIDTH * zoom;
-		triangle_size *= zoom;
-		std::cout << zoom << std::endl;
+		float x = static_cast<float>(Pos.x) * 2 / SCR_WIDTH * zoom;
+		float y = static_cast<float>(Pos.z) * 2 / SCR_HEIGHT * zoom;
+		float triangle_size_x = triangle_size / SCR_WIDTH;
+		float triangle_size_y = triangle_size / SCR_HEIGHT;
 		//first vertex, top of the triangle
 		fvertices.push_back(x);
-		fvertices.push_back(y + triangle_size);
+		fvertices.push_back(y + triangle_size_y);
 		fvertices.push_back(0.0);
 		//bottom left
-		fvertices.push_back(x - triangle_size);
-		fvertices.push_back(y - triangle_size);
+		fvertices.push_back(x - triangle_size_x);
+		fvertices.push_back(y - triangle_size_y);
 		fvertices.push_back(0.0);
 		//bottom right
-		fvertices.push_back(x + triangle_size);
-		fvertices.push_back(y - triangle_size);
+		fvertices.push_back(x + triangle_size_x);
+		fvertices.push_back(y - triangle_size_y);
 		fvertices.push_back(0.0);
 
 	});

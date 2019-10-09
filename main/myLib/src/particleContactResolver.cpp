@@ -3,7 +3,7 @@
 using namespace m_engine;
 
 //on defini le sol comme suit
-static Particle Floor(1,1, 0,0,0);
+static Particle Floor(1,1, 0,0,-10);
 static Vector3D normalFloor(0,0,1);
 
 ParticleContactResolver::ParticleContactResolver() {

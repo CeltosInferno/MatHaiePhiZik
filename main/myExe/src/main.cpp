@@ -120,6 +120,14 @@ bool onStartLoop(double time, int id_iteration) {
 		case '3':
 			blob_case();
 			break;
+		//case of collision demonstration
+		case '4':
+			for (ParticleForceGenerator* g : all_gen) {
+				for (Particle& p : myWorld.particles) {
+					myWorld.forceRegister.add(&p, g);
+				}
+			}
+			break;
 	}
 	return true;
 }
@@ -139,20 +147,23 @@ int main() {
 	int ressort_dumping = 1;
 
 	//Displaying in a terminal the demonstrations options
-	while (entry != '1' && entry != '2' && entry != '3' && entry != '4')
+	while (entry!= '0' && entry != '1' && entry != '2' 
+		&& entry != '3' && entry != '4')
 	{
-		std::cout << "choisissez une démonstration" << std::endl 
+		std::cout << "choisissez une démonstration" << std::endl
+			<< "0 : Quitter" << std::endl
 			<< "1 : Floating Generator avec gravité" << std::endl 
 			<< "2 : Deux particules avec ressort" << std::endl 
 			<< "3 : Blob" << std::endl 
-			<< "4 : 0.5 de damping sans gravité" << std::endl <
-			< "choix :";
+			<< "4 : Test de collision avec le sol" << std::endl
+			<< "choix :";
 		std:: cin >> entry;
 	}
 
 	switch (entry) {
 	//Floating demonstration
 	case '1' :
+		myMainLoop.setZoom(8);
 		//setting up particles
 		myWorld.addParticle(Particle(2, 0.9, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0)));
 		//recording force generators
@@ -180,6 +191,17 @@ int main() {
 		//Setting up input's reaction
 		myWorld.setInput(stringControl);
 		break;
+	case '4':
+		myMainLoop.setZoom(15);
+		//add particules with a radius
+		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(-1, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1));
+		myWorld.addParticle(Particle(10, ressort_dumping, Vector3D(0, 0, 0), Vector3D(0, 0, 0), Vector3D(0, 0, 0), 1));
+		//recording force generators
+		//all_gen.push_back(&gravityGenerator);
+		myWorld.setInput(arrowKeyEffect);
+		break;
+	default:
+		return 0;
 	}
 
 
