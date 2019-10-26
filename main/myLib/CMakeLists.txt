@@ -18,7 +18,8 @@ set(MY_LIB_SOURCES
 	src/particleContactResolver.cpp
 	src/particleLink.cpp
 	src/particleCable.cpp
-	src/particleRod.cpp)
+	src/particleRod.cpp
+	src/quaternion.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -40,7 +41,8 @@ set(MY_LIB_HEADERS
 	include/particleContactGenerator.hpp
 	include/particleLink.hpp
 	include/particleCable.hpp
-	include/particleRod.hpp)
+	include/particleRod.hpp
+	include/quaternion.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
