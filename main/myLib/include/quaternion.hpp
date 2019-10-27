@@ -17,8 +17,8 @@ namespace m_engine {
 		
 
 		//scaling quaternions methods  with doubles
-		//operator dot
-		inline Quaternion dot(double k) const {
+		//operator *
+		inline Quaternion operator*(double k) const {
 			return Quaternion(w * k, n.x * k, n.y * k, n.z * k);
 		}
 		//operator/
@@ -27,21 +27,26 @@ namespace m_engine {
 		}
 		Quaternion& operator/=(double k);
 
+
+		//Quaternion exponentiation operators
 		//log
 		Quaternion Qlog() const;
 		//exp
 		Quaternion Qexp() const;
 		Quaternion Qexp(double t) const;
 
-		//scalar product
-		double scalar(const Quaternion& q) const;
 
 		//operations methods between quaternions
+
+
+		//scalar product between two quaternions
+		double scalar(const Quaternion& q) const;
 
 		//quaternion multiplication
 		Quaternion operator*(const Quaternion& q) const;
 		Quaternion& operator*=(const Quaternion& q);
 
+		//return the difference between two quaternions
 		Quaternion diff(const Quaternion& b) const;
 
 		//operator-
@@ -50,11 +55,22 @@ namespace m_engine {
 		}
 
 
+		//Methods on one quaternion
 		//Return the norm
-		double norm() const;
+		inline double norm() const {
+			return sqrt(w * w + n.sqrNorm());
+		};
 
 		//Return the square of the norm
-		double sqrNorm() const;
+		inline double sqrNorm() const {
+			return (w * w + n.sqrNorm());
+		};
+
+		
+		Quaternion normalize() const {
+			double normie = norm();
+			return Quaternion(w/normie, n.x/normie, n.y/normie, n.z/normie);
+		}
 
 		//conjugate
 		inline Quaternion conjugate() const {
@@ -62,7 +78,7 @@ namespace m_engine {
 		}
 		//inverse
 		inline Quaternion inverse() const {
-			return conjugate()/ (norm() * norm());
+			return conjugate()/ (sqrNorm());
 		}
 
 
@@ -79,9 +95,42 @@ namespace m_engine {
 		return os;
 	}
 
-	//inline Quaternion operator* (const Quaternion q1, const Quaternion q2) {
-	//	return q1 * q2;
-	//}
+	
+	inline Quaternion Qlog(const Quaternion& q){
+		return q.Qlog();
+	}
+	
+	inline Quaternion Qexp(const Quaternion& q) {
+		return q.Qexp();
+	}
+
+	inline Quaternion Qexp(const Quaternion& q, double t) {
+		return q.Qexp(t);
+	}
+
+	inline double scalar(const Quaternion& q1, const Quaternion& q2) {
+		return q1.scalar(q2);
+	}
+
+	inline Quaternion diff(const Quaternion& q1, const Quaternion& q2) {
+		return q1.diff(q2);
+	}
+
+	inline double norm(const Quaternion& q) {
+		return q.norm();
+	}
+
+	inline Quaternion normalize(const Quaternion& q) {
+		return q.normalize();
+	}
+
+	inline Quaternion conjugate(const Quaternion& q) {
+		return q.conjugate();
+	}
+
+	inline Quaternion inverse(const Quaternion& q) {
+		return q.inverse();
+	}
 }
 
 

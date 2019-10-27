@@ -39,11 +39,18 @@ Quaternion Quaternion::Qexp() const {
 
 Quaternion Quaternion::Qexp(double t) const {
 	Quaternion Qresult = Qlog();
-	Qresult = Qresult.dot(t);
+	Qresult = Qresult*(t);
 	return Qresult.Qexp();
 }
 
 
+//scalar product
+double Quaternion::scalar(const Quaternion& q) const {
+	return ((w * q.w) + (n.scalar(q.n)));
+};
+
+
+//Multiplication of two quaternions
 Quaternion Quaternion::operator*(const Quaternion& q) const{
 	double new_w = w * q.w - n.scalar(q.n);
 	Vector3D new_n = w * q.n + q.w * n + n.cross(q.n);
@@ -55,3 +62,10 @@ Quaternion& Quaternion::operator*=(const Quaternion& q) {
 	n = w * q.n + q.w * n + n.cross(q.n);
 	return *this;
 }
+
+//return the difference between two quaternions
+Quaternion Quaternion::diff(const Quaternion& b) const {
+	return b * inverse();
+};
+
+
