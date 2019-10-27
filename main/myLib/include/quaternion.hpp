@@ -11,21 +11,21 @@ namespace m_engine {
 		//instanciating each parameter
 		Quaternion(double w = 0, double x = 0, double y = 0, double z = 0);
 		//instanciating with an angle and a normal vector
-		Quaternion(double theta = 0, Vector3D n = Vector3D());
+		Quaternion(double theta, Vector3D n);
 		//destructor
 		~Quaternion();
 		
 
 		//scaling quaternions methods  with doubles
 		//operator dot
-		inline Quaternion dot(const double k) const {
+		inline Quaternion dot(double k) const {
 			return Quaternion(w * k, n.x * k, n.y * k, n.z * k);
 		}
 		//operator/
-		inline Quaternion operator/(const double k) const {
+		inline Quaternion operator/(double k) const {
 			return Quaternion(w / k, n.x / k, n.y / k, n.z / k);
 		}
-		Quaternion& operator/=(const double k);
+		Quaternion& operator/=(double k);
 
 		//log
 		Quaternion Qlog() const;
@@ -34,15 +34,15 @@ namespace m_engine {
 		Quaternion Qexp(double t) const;
 
 		//scalar product
-		double scalar(const Quaternion q) const;
+		double scalar(const Quaternion& q) const;
 
 		//operations methods between quaternions
 
 		//quaternion multiplication
-		Quaternion operator*(const Quaternion q) const;
-		Quaternion& operator*=(const Quaternion q);
+		Quaternion operator*(const Quaternion& q) const;
+		Quaternion& operator*=(const Quaternion& q);
 
-		Quaternion diff(const Quaternion b) const;
+		Quaternion diff(const Quaternion& b) const;
 
 		//operator-
 		inline Quaternion operator-() const {
@@ -62,14 +62,14 @@ namespace m_engine {
 		}
 		//inverse
 		inline Quaternion inverse() const {
-			return conjugate()/norm();
+			return conjugate()/ (norm() * norm());
 		}
 
 
 		double w;
 		Vector3D n;
 
-	private:
+	//private:
 	};
 
 	//STATIC OPERATORS
@@ -79,9 +79,9 @@ namespace m_engine {
 		return os;
 	}
 
-	inline Quaternion operator* (const Quaternion q1, const Quaternion q2) {
-		return q1 * q2;
-	}
+	//inline Quaternion operator* (const Quaternion q1, const Quaternion q2) {
+	//	return q1 * q2;
+	//}
 }
 
 
