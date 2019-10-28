@@ -2,7 +2,6 @@
 #define QUATERNION
 
 #include "vector3d.hpp"
-#include <cmath>
 
 namespace m_engine {
 
@@ -17,6 +16,7 @@ namespace m_engine {
 		~Quaternion();
 
 		//generate a quaternion from the axis angle defined by angle and axe of rotation
+		//angle must be given in rad
 		inline static Quaternion FormAxisAngle(double theta, Vector3D n) {
 			return Quaternion(cos(theta / 2), n * sin(theta / 2));
 		}
@@ -47,8 +47,12 @@ namespace m_engine {
 
 
 		//operations methods between quaternions
-
-
+		inline bool operator==(const Quaternion& q) const {
+			return (w==q.w && n == q.n);
+		}
+		inline bool operator!=(const Quaternion& q) const {
+			return !(w == q.w && n == q.n);
+		}
 		//scalar product between two quaternions
 		double scalar(const Quaternion& q) const;
 
@@ -161,6 +165,14 @@ namespace m_engine {
 
 	inline bool isNormalized(const Quaternion& q) {
 		return q.isNormalized();
+	}
+
+	inline bool equal(const Quaternion& q1, const Quaternion& q2) {
+		return q1 == q2;
+	}
+
+	inline bool not_equal(const Quaternion& q1, const Quaternion& q2) {
+		return !(q1 == q2);
 	}
 }
 
