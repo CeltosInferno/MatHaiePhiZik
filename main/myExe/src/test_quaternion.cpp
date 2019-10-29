@@ -239,10 +239,10 @@ void test_basic_operators() {
 	//inverse
 	cout << "." << flush;
 	Quaternion q8 = Quaternion(-8,-4,4,-2).inverse();
-	assert(abs(q8.w + 8.0/10.0) < EPSILON);
-	assert(abs(q8.n.x - 4.0/10.0) < EPSILON);
-	assert(abs(q8.n.y + 4.0 / 10.0) < EPSILON);
-	assert(abs(q8.n.z - 2.0 / 10.0) < EPSILON);
+	assert(abs(q8.w + 8.0/100.0) < EPSILON);
+	assert(abs(q8.n.x - 4.0/100.0) < EPSILON);
+	assert(abs(q8.n.y + 4.0 / 100.0) < EPSILON);
+	assert(abs(q8.n.z - 2.0 / 100.0) < EPSILON);
 	cout << ".OK" << endl;
 };
 
@@ -267,6 +267,13 @@ void test_quaternions_operations() {
 	assert(q4.n.z == 8);
 	//diff
 	cout << "." << flush;
+	Quaternion qa(-2, 4, -8, 4);
+	Quaternion qb(-1, 2, 3, 4);
+	Quaternion q10 = qa.diff(qb);
+	assert(abs(q10.w - 0.02) < EPSILON);
+	assert(abs(q10.n.x - -0.44) < EPSILON);
+	assert(abs(q10.n.y - -0.22)<EPSILON);
+	assert(abs(q10.n.z - 0.24) < EPSILON);
 	//+
 	cout << "." << flush;
 	Quaternion q5 = q1 + q2;

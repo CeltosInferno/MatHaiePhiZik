@@ -97,7 +97,10 @@ namespace m_engine {
 
 		
 		inline Quaternion normalize() const {
-			return  *this / norm();
+			if (w == 0 && n.x == 0 && n.y == 0 && n.z == 0)
+				return *this;
+			else
+				return  *this / norm();
 		}
 
 		//return true if the quaternion is a rotation (ie norm = 1)
