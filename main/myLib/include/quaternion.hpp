@@ -20,6 +20,10 @@ namespace m_engine {
 		inline static Quaternion FormAxisAngle(double theta, Vector3D n) {
 			return Quaternion(cos(theta / 2), n * sin(theta / 2));
 		}
+
+		inline static Quaternion Identity() {
+			return Quaternion(1, 0, 0, 0);
+		}
 		
 
 		//scaling quaternions methods  with doubles

@@ -31,7 +31,7 @@ Quaternion& Quaternion::operator/=(double k) {
 Quaternion Quaternion::Qlog() const {
 	double new_w = log(norm());
 	//if n = 0, should be 0
-	Vector3D new_n = n.normalize() * acos(w / norm());
+	Vector3D new_n = n.normalize() * acos(w / n.norm());
 	return Quaternion(new_w, new_n);
 }
 
