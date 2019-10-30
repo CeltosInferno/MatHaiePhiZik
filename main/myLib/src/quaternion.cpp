@@ -27,6 +27,17 @@ Quaternion& Quaternion::operator/=(double k) {
 	return *this;
 }
 
+
+//rotate the quaternion according to v
+Quaternion Quaternion::rotateByVector(const Vector3D& v) {
+	return *this * Quaternion(0, v.x, v.y, v.z);
+}
+
+//Update angular velocity
+void Quaternion::updateAngularVelocity(const Vector3D& v, double deltat) {
+	*this = *this + (deltat/2 * Quaternion(0, v) * (*this)) ;
+}
+
 //log for quaternion
 Quaternion Quaternion::Qlog() const {
 	double new_w = log(norm());
@@ -74,12 +85,14 @@ Quaternion& Quaternion::operator*=(const Quaternion& q) {
 	return *this;
 }
 
+//Addition of two quaternions
 Quaternion& Quaternion::operator+=(const Quaternion& q) {
 	w += q.w;
 	n += q.n;
 	return *this;
 }
 
+//Substraction of two quaternions
 Quaternion& Quaternion::operator-=(const Quaternion& q) {
 	w -= q.w;
 	n -= q.n;

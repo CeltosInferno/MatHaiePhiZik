@@ -26,7 +26,7 @@ namespace m_engine {
 		}
 		
 
-		//scaling quaternions methods  with doubles
+		//scaling quaternions methods  with doubles or vector
 		//operator *
 		inline Quaternion operator*(double k) const {
 			return Quaternion(w * k, n * k);
@@ -38,6 +38,11 @@ namespace m_engine {
 		}
 		Quaternion& operator/=(double k);
 
+		//rotate the quaternion according to v
+		Quaternion rotateByVector(const Vector3D& v);
+
+		//Update angular velocity
+		void updateAngularVelocity(const Vector3D& v, double);
 
 		//Quaternion exponentiation operators
 		//return log(q)
