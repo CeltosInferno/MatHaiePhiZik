@@ -13,3 +13,6 @@ target_link_libraries(TestParticle PUBLIC MyLib)
 
 add_executable(TestVector3D src/test_vector3d.cpp)
 target_link_libraries(TestVector3D PUBLIC MyLib)
+
+add_executable(TestMatrix src/test_matrix.cpp)
+target_link_libraries(TestMatrix PUBLIC MyLib)
