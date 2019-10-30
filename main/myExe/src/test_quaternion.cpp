@@ -1,5 +1,6 @@
 #define _USE_MATH_DEFINES
-#define EPSILON 0.00000000001
+#define EPSILON 1e-11
+//0.00000000001
 
 #include <iostream>
 #include "quaternion.hpp"
@@ -168,6 +169,31 @@ void test_exponentiation() {
 	assert(abs(q10.n.y - n2.y) < EPSILON);
 	assert(abs(q10.n.z - n2.z) < EPSILON);
 
+	//Qexp double
+	cout << "." << flush;
+	Quaternion listQ[5];
+	listQ[1] = Quaternion::FormAxisAngle(theta, n).Qexp(1.0 / 2.0);
+	listQ[2] = Quaternion(1,0.5);
+	listQ[3] = Quaternion(0, 0.8, 0.92, -1.45);
+	listQ[4] = Quaternion(67.21, Vector3D(-2,34.4,5));
+	for (int i = 0; i < 5; ++i) {
+		Quaternion& _q = listQ[i];
+		Quaternion sqrQ1(_q.Qexp(2));
+		Quaternion sqrQ2(_q.Qexp(Quaternion(2,0,0,0)));
+		Quaternion qResult(_q * _q);
+		//cout << endl << _q << " " << sqrQ1 << " " << sqrQ2 << " " << qResult << endl;
+		assert(abs(qResult.w - sqrQ1.w) < EPSILON);
+		assert(abs(qResult.n.x - sqrQ1.n.x) < EPSILON);
+		assert(abs(qResult.n.y - sqrQ1.n.y) < EPSILON);
+		assert(abs(qResult.n.z - sqrQ1.n.z) < EPSILON);
+		cout << "." << flush;
+		assert(abs(qResult.w - sqrQ2.w) < EPSILON);
+		assert(abs(qResult.n.x - sqrQ2.n.x) < EPSILON);
+		assert(abs(qResult.n.y - sqrQ2.n.y) < EPSILON);
+		assert(abs(qResult.n.z - sqrQ2.n.z) < EPSILON);
+		cout << "." << flush;
+	}
+
 	//Qexp Quaternion
 	//Probably lack of precision make those tests fail
 	/*
@@ -181,6 +207,8 @@ void test_exponentiation() {
 	QexpQResultV = QexpQResultV.normalize();
 	QexpQResultV *= sin(sqrt(33) / 15);
 	
+	cout << QexpQResultV << endl;
+	cout << q11 << endl;
 	assert(abs(q11.w - cos(sqrt(33)/15)*exp(-2/15)) < EPSILON);
 	assert(abs(q11.n.x - QexpQResultV.x) < EPSILON);
 	assert(abs(q11.n.y - QexpQResultV.y) < EPSILON);
