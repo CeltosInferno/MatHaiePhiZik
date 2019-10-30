@@ -2,7 +2,7 @@
 
 using namespace m_engine;
 
-Matrix3::Matrix3(double a = 1, double b = 0, double c = 0, double d = 0, double e = 1, double f = 0, double g = 0, double h = 0, double i = 1) {
+Matrix3::Matrix3(double a, double b, double c, double d, double e, double f, double g, double h, double i) {
 	data[0] = a;
 	data[1] = b;
 	data[2] = c;
@@ -76,16 +76,24 @@ Matrix3 Matrix3::operator*(const Matrix3& M) const {
 }
 
 Matrix3& Matrix3::operator*=(const Matrix3& M) {
-	return Matrix3(data[0] * M[0] + data[1] * M[3] + data[2] * M[6],
-		data[0] * M[1] + data[1] * M[4] + data[2] * M[7],
-		data[0] * M[2] + data[1] * M[5] + data[2] * M[8],
-		data[3] * M[0] + data[4] * M[3] + data[5] * M[6],
-		data[3] * M[1] + data[4] * M[4] + data[5] * M[7],
-		data[3] * M[2] + data[4] * M[5] + data[5] * M[8],
-		data[6] * M[0] + data[7] * M[3] + data[8] * M[6],
-		data[6] * M[1] + data[7] * M[4] + data[8] * M[7],
-		data[6] * M[2] + data[7] * M[5] + data[8] * M[8]
-	);
+
+	double aux[9];
+
+	aux[0] = data[0] * M[0] + data[1] * M[3] + data[2] * M[6];
+	aux[1] = data[0] * M[1] + data[1] * M[4] + data[2] * M[7];
+	aux[2] = data[0] * M[2] + data[1] * M[5] + data[2] * M[8];
+	aux[3] = data[3] * M[0] + data[4] * M[3] + data[5] * M[6];
+	aux[4] = data[3] * M[1] + data[4] * M[4] + data[5] * M[7];
+	aux[5] = data[3] * M[2] + data[4] * M[5] + data[5] * M[8];
+	aux[6] = data[6] * M[0] + data[7] * M[3] + data[8] * M[6];
+	aux[7] = data[6] * M[1] + data[7] * M[4] + data[8] * M[7];
+	aux[8] = data[6] * M[2] + data[7] * M[5] + data[8] * M[8];
+	
+	for (int i = 0; i < 9; i++) {
+		data[i] = aux[i];
+	}
+
+	return (*this);
 }
 
 //Multiplication with a Vector3D
@@ -96,9 +104,37 @@ Vector3D Matrix3::operator*(const Vector3D& v) const {
 					);
 }
 
-Vector3D& Matrix3::operator*=(const Vector3D& v) {
-	return Vector3D(data[0] * v[0] + data[1] * v[1] + data[2] * v[2],
-					data[3] * v[0] + data[4] * v[1] + data[5] * v[2],
-					data[6] * v[0] + data[7] * v[1] + data[8] * v[2]
-					);
+
+//calcul of the det
+double Matrix3::det() const {
+	return data[0] * data[4] * data[8]
+		+ data[3] * data[7] * data[2]
+		+ data[6] * data[1] * data[5]
+		- data[0] * data[7] * data[5]
+		- data[6] * data[5] * data[2]
+		- data[3] * data[1] * data[8];
+}
+
+Matrix3 Matrix3::inverse() const {
+	double det = this->det();
+	if (det != 0) {
+		return Matrix3(data[4] * data[8] - data[5] * data[7],
+			data[2] * data[7] - data[1] * data[8],
+			data[1] * data[5] - data[2] * data[4],
+			data[5] * data[6] - data[3] * data[8],
+			data[0] * data[8] - data[2] * data[6],
+			data[2] * data[3] - data[0] * data[5],
+			data[3] * data[7] - data[4] * data[6],
+			data[1] * data[6] - data[0] * data[7],
+			data[0] * data[4] - data[1] * data[3]
+			) / det;
+	}
+	else {
+		std::cerr << "Error : the det of the matrix is 0, there is no inverse" << std::endl;
+		return -1;
+	}
+}
+
+Matrix3 Matrix3::t() const {
+	return Matrix3(data[0], data[3], data[6], data[1], data[4], data[7], data[2], data[5], data[8]);
 }

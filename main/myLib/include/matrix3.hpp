@@ -65,9 +65,15 @@ namespace m_engine {
 
 		//Multiplication with a Vector3D
 		Vector3D operator*(const Vector3D& v) const;
-		Vector3D& operator*=(const Vector3D& v);
 
+		//calcul af the det
+		double det() const;
 
+		//return the inverse of the matrix, if it exists
+		Matrix3 inverse() const;
+
+		//return the transposed of the matrix
+		Matrix3 t() const;
 
 	private:
 
