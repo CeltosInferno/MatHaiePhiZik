@@ -29,8 +29,10 @@ Quaternion& Quaternion::operator/=(double k) {
 
 
 //rotate the quaternion according to v
-Quaternion Quaternion::rotateByVector(const Vector3D& v) {
-	return *this * Quaternion(0, v.x, v.y, v.z);
+void Quaternion::rotateByVector(const Vector3D& v) {
+	Quaternion new_result = *this *Quaternion(0, v.x, v.y, v.z);
+	w = new_result.w;
+	n = new_result.n;
 }
 
 //Update angular velocity
