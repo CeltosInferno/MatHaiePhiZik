@@ -20,7 +20,8 @@ set(MY_LIB_SOURCES
 	src/particleCable.cpp
 	src/particleRod.cpp
 	src/quaternion.cpp
-	src/matrix3.cpp)
+	src/matrix3.cpp
+	src/matrix4.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -44,7 +45,8 @@ set(MY_LIB_HEADERS
 	include/particleCable.hpp
 	include/particleRod.hpp
 	include/quaternion.hpp
-	include/matrix3.hpp)
+	include/matrix3.hpp
+	include/matrix4.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})

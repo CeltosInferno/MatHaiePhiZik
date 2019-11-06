@@ -111,7 +111,7 @@ double Matrix3::det() const {
 		+ data[3] * data[7] * data[2]
 		+ data[6] * data[1] * data[5]
 		- data[0] * data[7] * data[5]
-		- data[6] * data[5] * data[2]
+		- data[6] * data[4] * data[2]
 		- data[3] * data[1] * data[8];
 }
 
@@ -135,6 +135,8 @@ Matrix3 Matrix3::inverse() const {
 	}
 }
 
+
+//return the transposed of the matrix
 Matrix3 Matrix3::t() const {
 	return Matrix3(data[0], data[3], data[6], data[1], data[4], data[7], data[2], data[5], data[8]);
 }
