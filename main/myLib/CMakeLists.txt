@@ -44,7 +44,8 @@ set(MY_LIB_HEADERS
 	include/particleCable.hpp
 	include/particleRod.hpp
 	include/quaternion.hpp
-	include/matrix3.hpp)
+	include/matrix3.hpp
+	include/rigidBody.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
