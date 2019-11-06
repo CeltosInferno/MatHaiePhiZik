@@ -8,7 +8,9 @@ namespace m_engine {
 	class Matrix3 {
 	public:
 		//Renvoie la matrice identité par défaut
-		Matrix3(double a = 1, double b = 0, double c = 0, double d = 0, double e = 1, double f = 0, double g = 0, double h = 0, double i = 1);
+		Matrix3(double a = 1, double b = 0, double c = 0, 
+				double d = 0, double e = 1, double f = 0, 
+				double g = 0, double h = 0, double i = 1);
 		~Matrix3() {};
 
 		//GETTER
@@ -49,11 +51,10 @@ namespace m_engine {
 
 		//Equality operators
 		inline bool operator==(const Matrix3& u) const {
-			bool res = true;
 			for (int i = 0; i < 9; i++) {
-				res &= data[i] == u[i];
+				if (data[i] != u[i]) return false;
 			}
-			return res;
+			return true;
 		}
 		inline bool operator!=(const Matrix3& u) const {
 			return !(*this == u);
@@ -80,6 +81,23 @@ namespace m_engine {
 		double data[9];
 
 	};
+
+
+	inline Matrix3 operator* (double k, const Matrix3& M) {
+		return M * k;
+	}
+
+	//Overiding << for printing
+	std::ostream& operator<<(std::ostream& os, const Matrix3& M);
+
+	inline Matrix3 inverse(const Matrix3& M) {
+		return M.inverse();
+	}
+
+	inline double det(const Matrix3& M) {
+		return M.det();
+	}
+
 }
 
 #endif

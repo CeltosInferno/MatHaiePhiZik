@@ -61,6 +61,13 @@ Matrix3& Matrix3::operator*=(double k) {
 	return *this;
 }
 
+Matrix3& Matrix3::operator/=(double k) {
+	for (int i = 0; i < 9; i++) {
+		data[i] /= k;
+	}
+	return *this;
+}
+
 //Multiplication with an other Matrix3
 Matrix3 Matrix3::operator*(const Matrix3& M) const {
 	return Matrix3(data[0] * M[0] + data[1] * M[3] + data[2] * M[6],
@@ -137,4 +144,17 @@ Matrix3 Matrix3::inverse() const {
 
 Matrix3 Matrix3::t() const {
 	return Matrix3(data[0], data[3], data[6], data[1], data[4], data[7], data[2], data[5], data[8]);
+}
+
+std::ostream& operator<<(std::ostream& os, const Matrix3& M) {
+	os << "[ ";
+	for (int i = 0; i < 9; i++) {
+		os << M[i];
+		if (i < 8) {
+			os << ",";
+			if (i%3 == 2) os << std::endl;
+		}
+	}
+	os << "]";
+	return os;
 }
