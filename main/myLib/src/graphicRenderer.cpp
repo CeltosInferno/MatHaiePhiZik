@@ -73,7 +73,6 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\n\0";
 
-
 GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::string WindowName) {
 
 	//Attributes assignement
@@ -169,6 +168,8 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	
+
 	// You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
@@ -206,11 +207,11 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 }
 
 //turn a vector of particle into vertices to render as triangles
-//return 0 if everithing is OK, 1 if the window should or have close
+//return 0 if everything is OK, 1 if the window should or have close
 void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](const Particle& p) {
-		float radius = static_cast<float>(p.getRadius());
+		/*float radius = static_cast<float>(p.getRadius());
 		if (radius <= 0.001f) radius = 7; //taille negligeable
 		float triangle_size = zoom*radius;//0.01f*radius;
 		const Vector3D& Pos = p.getPos();
@@ -229,12 +230,46 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		//bottom right
 		fvertices.push_back(x + triangle_size_x);
 		fvertices.push_back(y - triangle_size_y);
-		fvertices.push_back(0.0);
+		fvertices.push_back(0.0);*/
 
+		double a = 1;//p.getRadius(); //half-ridge of our cube
+		Vector3D ref = p.getPos();
+
+		Vector3D cubePoints[4];
+		cubePoints[0] = Vector3D(a, -a, a);
+		cubePoints[1] = Vector3D(-a, a, a);
+		cubePoints[2] = Vector3D(a, -a, -a);
+		cubePoints[3] = Vector3D(a, a, -a);
+		for (int j = 0; j < 4; j++) {
+			Vector3D& firstPoint = cubePoints[j];
+			for (int i = 0; i < 3; i++) {
+				Vector3D point2 = firstPoint;
+				Vector3D point3 = point2 + ref;
+				fvertices.push_back(static_cast<float>(point3.x));
+				fvertices.push_back(static_cast<float>(point3.y));
+				fvertices.push_back(static_cast<float>(point3.z));
+
+				point2[(i + 1)% 3] *= -1;
+				point3 = point2 + ref;
+				fvertices.push_back(static_cast<float>(point3.x));
+				fvertices.push_back(static_cast<float>(point3.y));
+				fvertices.push_back(static_cast<float>(point3.z));
+
+				point2[(i + 1) % 3] *= -1;
+				point2[(i + 2) % 3] *= -1;
+				point3 = point2 + ref;
+				fvertices.push_back(static_cast<float>(point3.x));
+				fvertices.push_back(static_cast<float>(point3.y));
+				fvertices.push_back(static_cast<float>(point3.z));
+			}
+		}
 	});
+
 }
 
 //Add a function to execute when key event detected
 void GraphicRenderer::OnKeyEvent(std::function<void(std::string dir)> f) {
 	callBackOnArrowKey.push_back(f);
 }
+
+
