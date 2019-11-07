@@ -2,6 +2,8 @@
 #define QUATERNION
 
 #include "vector3d.hpp"
+#include "matrix3.hpp"
+//#include "matrix4.hpp"
 
 namespace m_engine {
 
@@ -120,6 +122,8 @@ namespace m_engine {
 			return conjugate()/ (sqrNorm());
 		}
 
+		//transform Quaternion to a rotation matrix
+		Matrix3 toMatrix() const;
 
 		double w;
 		Vector3D n;

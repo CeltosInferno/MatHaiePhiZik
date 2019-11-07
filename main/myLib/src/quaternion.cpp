@@ -110,3 +110,31 @@ bool Quaternion::isNormalized() const {
 	//TODO
 	return (abs(norm() - 1) < 0.000000000000001);
 }
+
+Matrix3 Quaternion::toMatrix() const{
+	double x=n.x;
+	double y=n.y;
+	double z=n.z;
+	double a=1 - (2*y*y  +  2*z*z);
+	double b=2*x*y + 2*z*w;
+	double c=2*x*z - 2*y*w;
+
+	double d=2*x*y - 2*z*w;
+	double e=1 - (2*x*x + 2*z*z);
+	double f=2*y*z + 2*x*w;
+
+	double g=2*x*z + 2*y*w;
+	double h=2*y*z - 2*x*w;
+	double i=1- (2*x*x + 2*y*y);
+
+	return Matrix3(
+		a,b,c,
+		d,e,f,
+		g,h,i
+	);
+}
+
+/*Matrix4 Quaternion::toMatrix() const{
+	Matrix3 M=toMatrix();
+	return(Matrix4(M,Vector3D(n.x,n.y,n.z)))
+}*/
