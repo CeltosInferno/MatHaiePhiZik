@@ -11,7 +11,8 @@ namespace m_engine {
 	public:
 
         // CONSTRUCTORS
-        RigidBody(double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D m_rotation = Vector3D(0,0,0));
+        RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0));
+        RigidBody(double dx, double dy, double dz, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0));
         ~RigidBody();
 
         // GETTERS
@@ -31,7 +32,7 @@ namespace m_engine {
         inline void setVel(double x, double y, double z) {m_vel = Vector3D(x,y,z);}
         inline void setOrientation(const Quaternion& orientation) {m_orientation = orientation;}
         void setInertialTensorBox(double dx, double dy, double dz);
-        void setIntertialTensorSphere(double r);
+        void setInertialTensorSphere(double r);
 
         //update object characteristics
         void integrate(double time);
@@ -47,8 +48,6 @@ namespace m_engine {
         void addForceAtBodyPoint(const Vector3D& F);
         //add a Torque on object
         void addTorque(const Vector3D& torque);
-        //update data
-        void computeUpdate();
     private:        
         double m_inversMass;
         double m_linearDamping;
