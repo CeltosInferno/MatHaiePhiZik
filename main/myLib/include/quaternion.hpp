@@ -3,7 +3,6 @@
 
 #include "vector3d.hpp"
 #include "matrix3.hpp"
-//#include "matrix4.hpp"
 
 namespace m_engine {
 
@@ -28,7 +27,7 @@ namespace m_engine {
 		}
 		
 
-		//scaling quaternions methods  with doubles or vector
+		//scaling quaternions methods  with doubles
 		//operator *
 		inline Quaternion operator*(double k) const {
 			return Quaternion(w * k, n * k);
@@ -40,11 +39,6 @@ namespace m_engine {
 		}
 		Quaternion& operator/=(double k);
 
-		//rotate the quaternion according to v
-		void rotateByVector(const Vector3D& v);
-
-		//Update angular velocity
-		void updateAngularVelocity(const Vector3D& v, double);
 
 		//Quaternion exponentiation operators
 		//return log(q)
@@ -122,8 +116,7 @@ namespace m_engine {
 			return conjugate()/ (sqrNorm());
 		}
 
-		//transform Quaternion to a rotation matrix
-		Matrix3 toMatrix() const;
+		inline Matrix
 
 		double w;
 		Vector3D n;
