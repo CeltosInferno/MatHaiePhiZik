@@ -30,7 +30,10 @@ namespace m_engine {
         inline void setPos(double x, double y, double z) {m_pos = Vector3D(x,y,z);}
         inline void setVel(double x, double y, double z) {m_vel = Vector3D(x,y,z);}
         inline void setOrientation(const Quaternion& orientation) {m_orientation = orientation;}
+        void setInertialTensorBox(double dx, double dy, double dz);
+        void setIntertialTensorSphere(double r);
 
+        //update object characteristics
         void integrate(double time);
         //clean both accumulators
         void cleanAccum();
@@ -55,7 +58,8 @@ namespace m_engine {
         Quaternion m_orientation;
         Vector3D m_rotation;
         Matrix3 m_transformMatrix;
-        Matrix3 m_InversInertialTensor;
+        Matrix3 m_globalInversInertialTensor;
+        Matrix3 m_localInversInterialTensor;
 
         Vector3D m_accumForce;
         Vector3D m_accumTorque;
