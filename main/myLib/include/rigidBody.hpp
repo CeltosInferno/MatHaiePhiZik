@@ -15,23 +15,23 @@ namespace m_engine {
         ~RigidBody();
 
         // GETTERS
-        double getInversMass() const { return m_inversMass};
+        double getInversMass() const { return m_inversMass;};
 
         inline const Vector3D& getPos() const { return m_pos; }
         inline const Vector3D& getVel() const { return m_vel; }
         inline const Quaternion& getOrientation() const { return m_orientation;}
 
         // SETTERS
-        void setMass(double mass);
-        void setLinearDamping(double damping);
-        void setAngularDampung(double damping);
+        inline void setMass(double mass) {m_inversMass = 1.0/mass;};
+        inline void setLinearDamping(double damping) {m_linearDamping = damping;};
+        inline void setAngularDampung(double damping) {m_angularDamping = damping;};
         inline void setPos(const Vector3D& pos) {m_pos = pos;}
         inline void setVel(const Vector3D& vel) {m_vel = vel;}
         inline void setPos(double x, double y, double z) {m_pos = Vector3D(x,y,z);}
         inline void setVel(double x, double y, double z) {m_vel = Vector3D(x,y,z);}
         inline void setOrientation(const Quaternion& orientation) {m_orientation = orientation;}
 
-        void integrate();
+        void integrate(double time);
         //clean both accumulators
         void cleanAccum();
         //clean Force accumulator
