@@ -23,7 +23,8 @@ set(MY_LIB_SOURCES
 	src/matrix3.cpp
 	src/rigidBody.cpp
 	src/rigidBodyGravityGenerator.cpp
-	src/rigidBodyAnchoredString.cpp)
+	src/rigidBodyAnchoredString.cpp
+	src/rigidBodyDragGenerator.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -51,7 +52,8 @@ set(MY_LIB_HEADERS
 	include/rigidBody.hpp
 	include/rigidBodyForceGenerator.hpp
 	include/rigidBodyGravityGenerator.hpp
-	include/rigidBodyAnchoredString.hpp)
+	include/rigidBodyAnchoredString.hpp
+	include/rigidBodyDragGenerator.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
