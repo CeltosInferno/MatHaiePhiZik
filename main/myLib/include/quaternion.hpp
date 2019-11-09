@@ -25,7 +25,9 @@ namespace m_engine {
 		inline static Quaternion Identity() {
 			return Quaternion(1, 0, 0, 0);
 		}
-		
+
+		//convert quaternion into matrix
+		Matrix3 toMatrix() const;
 
 		//scaling quaternions methods  with doubles
 		//operator *
@@ -39,6 +41,9 @@ namespace m_engine {
 		}
 		Quaternion& operator/=(double k);
 
+		void rotateByVector(const Vector3D& v);
+
+		void updateAngularVelocity(const Vector3D& v, double deltat);
 
 		//Quaternion exponentiation operators
 		//return log(q)
@@ -115,8 +120,6 @@ namespace m_engine {
 		inline Quaternion inverse() const {
 			return conjugate()/ (sqrNorm());
 		}
-
-		inline Matrix
 
 		double w;
 		Vector3D n;
