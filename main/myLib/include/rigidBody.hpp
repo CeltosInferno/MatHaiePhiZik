@@ -42,8 +42,10 @@ namespace m_engine {
         void cleanForceAccum();
         //clean torque accumulator
         void cleanTorqueAccum();
-        //add a Force applied to a point of the object in local referentiel
-        void addForceAtPoint(const Vector3D& F, const Vector3D& point);
+        //add a Force applied to a point of the object in global referentiel
+        void addForceAtGlobalPoint(const Vector3D& F, const Vector3D& point);
+		//add a Force applied to a point of the object in local referentiel
+		void addForceAtLocalPoint(const Vector3D& F, const Vector3D& point);
         //add a Force applied to an object as an entity
         void addForceAtBodyPoint(const Vector3D& F);
         //add a Torque on object
@@ -58,6 +60,7 @@ namespace m_engine {
         Vector3D m_vel;
         Quaternion m_orientation;
         Vector3D m_rotation;
+		//Matrix local --> global
         Matrix3 m_transformMatrix;
         Matrix3 m_globalInversInertialTensor;
         Matrix3 m_localInversInterialTensor;

@@ -1,4 +1,5 @@
 #include "rigidBody.hpp"
+#include "rigidBody.hpp"
 
 using namespace m_engine;
 
@@ -62,15 +63,22 @@ void RigidBody::cleanTorqueAccum(){
 };
 
 
-//add a Force applied to a point of the object in local referentiel
-void RigidBody::addForceAtPoint(const Vector3D& F, const Vector3D& point){
+//add a Force applied to a point of the object in global referentiel
+void RigidBody::addForceAtGlobalPoint(const Vector3D& F, const Vector3D& point){
     //Convert point to relative coordinates
-    Vector3D local_point = m_orientation.toMatrix() * (point - m_pos);
+    Vector3D local_point = m_transformMatrix.inverse() * (point + m_pos);
     //update accumForce
     m_accumForce += F;
     //update accumTorque
     m_accumTorque += cross(local_point,F);
 };
+
+void RigidBody::addForceAtLocalPoint(const Vector3D& F, const Vector3D& point) {
+	//update accumForce
+	m_accumForce += F;
+	//update accumTorque
+	m_accumTorque += cross(point, F);
+}
 //add a Force applied to an object as an entity
 void RigidBody::addForceAtBodyPoint(const Vector3D& F){
     //addForce
