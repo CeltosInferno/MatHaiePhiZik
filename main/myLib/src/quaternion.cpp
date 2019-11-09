@@ -55,12 +55,14 @@ Quaternion Quaternion::Qexp() const {
 }
 
 Quaternion Quaternion::Qexp(double t) const {
+	if (norm() == 0) { return *this; }
 	Quaternion Qresult = Qlog();
 	Qresult *= t;
 	return Qresult.Qexp();
 }
 
 Quaternion Quaternion::Qexp(const Quaternion& q) const {
+	if (norm() == 0) { return *this; }
 	Quaternion Qresult = Qlog();
 	Qresult *= q;
 	return Qresult.Qexp();
