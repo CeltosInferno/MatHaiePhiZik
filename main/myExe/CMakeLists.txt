@@ -19,3 +19,6 @@ target_link_libraries(TestQuaternion PUBLIC MyLib)
 
 add_executable(TestMatrix src/test_matrix.cpp)
 target_link_libraries(TestMatrix PUBLIC MyLib)
+
+add_executable(TestRigidBody src/test_rigidBody.cpp)
+target_link_libraries(TestRigidBody PUBLIC MyLib)

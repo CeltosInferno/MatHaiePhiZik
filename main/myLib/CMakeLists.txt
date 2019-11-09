@@ -20,7 +20,8 @@ set(MY_LIB_SOURCES
 	src/particleCable.cpp
 	src/particleRod.cpp
 	src/quaternion.cpp
-	src/matrix3.cpp)
+	src/matrix3.cpp
+	src/rigidBody.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
