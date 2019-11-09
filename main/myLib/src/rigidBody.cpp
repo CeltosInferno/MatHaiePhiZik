@@ -24,7 +24,7 @@ void RigidBody::integrate(double time){
     Vector3D theta = m_globalInversInertialTensor * m_accumTorque;
     //update linear velocity
     m_vel = m_vel * pow(m_linearDamping, time) + a * time;
-    //update angular velocity
+    //update anguJ'ailar velocity
     m_rotation = m_rotation  * pow(m_linearDamping, time)  + time * theta;
     //update position
     m_pos += m_vel * time;
