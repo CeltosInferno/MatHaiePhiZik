@@ -3,18 +3,21 @@
 using namespace m_engine;
 
 //Constructor
-RigidBody::RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0)):
+RigidBody::RigidBody(double r, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation ,Vector3D rotation):
     m_inversMass(1/mass), m_linearDamping(linearDamping), m_angularDamping(angularDamping), m_pos(pos), m_vel(vel),m_orientation(orientation),m_rotation(rotation)
 {
     setInertialTensorSphere(r);
 };
 
-RigidBody::RigidBody(double dx, double dy, double dz, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0)):
+RigidBody::RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation,Vector3D rotation):
     m_inversMass(1/mass), m_linearDamping(linearDamping), m_angularDamping(angularDamping), m_pos(pos), m_vel(vel),m_orientation(orientation),m_rotation(rotation)
 {
     setInertialTensorBox(dx,dy,dz);
 };
              
+RigidBody::~RigidBody() {
+
+}
 
 //update object
 void RigidBody::integrate(double time){
@@ -85,4 +88,8 @@ void RigidBody::setInertialTensorBox(double dx, double dy, double dz){
 };
 void RigidBody::setInertialTensorSphere(double r){
     m_localInversInterialTensor =  Matrix3() * 2/5 / m_inversMass * r*r;
+};
+
+Vector3D RigidBody::localToGlobal(const Vector3D& localPoint) {
+	return m_transformMatrix * localPoint;
 };

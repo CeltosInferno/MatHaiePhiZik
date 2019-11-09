@@ -12,7 +12,7 @@ namespace m_engine {
 
         // CONSTRUCTORS
         RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0));
-        RigidBody(double dx, double dy, double dz, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0));
+        RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation,Vector3D rotation);
         ~RigidBody();
 
         // GETTERS
@@ -48,6 +48,8 @@ namespace m_engine {
         void addForceAtBodyPoint(const Vector3D& F);
         //add a Torque on object
         void addTorque(const Vector3D& torque);
+		//convert a point into local reference to global reference
+		Vector3D localToGlobal(const Vector3D& localPoint);
     private:        
         double m_inversMass;
         double m_linearDamping;
