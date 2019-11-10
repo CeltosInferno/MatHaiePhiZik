@@ -24,7 +24,8 @@ set(MY_LIB_SOURCES
 	src/rigidBody.cpp
 	src/rigidBodyGravityGenerator.cpp
 	src/rigidBodyAnchoredString.cpp
-	src/rigidBodyDragGenerator.cpp)
+	src/rigidBodyDragGenerator.cpp
+	src/rigidBodyElasticString.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -53,7 +54,8 @@ set(MY_LIB_HEADERS
 	include/rigidBodyForceGenerator.hpp
 	include/rigidBodyGravityGenerator.hpp
 	include/rigidBodyAnchoredString.hpp
-	include/rigidBodyDragGenerator.hpp)
+	include/rigidBodyDragGenerator.hpp
+	include/rigidBodyElasticString.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
