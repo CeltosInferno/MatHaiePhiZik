@@ -62,9 +62,12 @@ void GraphicRenderer::processInput(GLFWwindow* window)
 //Shader sources
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"uniform mat4 model;\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
 "void main()\n"
 "{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   gl_Position = projection * view * model * vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 "}\0";
 const char* fragmentShaderSource = "#version 330 core\n"
 "out vec4 FragColor;\n"
@@ -141,10 +144,12 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+
 
 	zoom = 1;
+
+	//Enable depth tests so that 3D polygons will have the correct depth rendering
+	glEnable(GL_DEPTH_TEST);
 }
 
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
@@ -174,6 +179,7 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
+
 	// render loop
 	// -----------
 	if (!glfwWindowShouldClose(window))
@@ -182,10 +188,33 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		// -----
 		processInput(window);
 
+		// transformations
+		// ---------------
+		// create transformations
+		// We first initialize each matrix to the identity matrix
+		glm::mat4 model = glm::mat4(1.0f); 
+		glm::mat4 view = glm::mat4(1.0f);
+		glm::mat4 projection = glm::mat4(1.0f);
+		// the we apply our transformations
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -zoom));
+		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+
+		//we retrieve the matrix uniform locations
+		unsigned int modelLocation = glGetUniformLocation(shaderProgram, "model");
+		unsigned int viewLocation = glGetUniformLocation(shaderProgram, "view");
+		unsigned int projectionLocation = glGetUniformLocation(shaderProgram, "projection");
+
+		//then we pass each matrix into our shader
+		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &model[0][0]);
+		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
+		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
+
+
 		// render
 		// ------
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// draw triangles
 		glUseProgram(shaderProgram);
@@ -232,7 +261,7 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		fvertices.push_back(y - triangle_size_y);
 		fvertices.push_back(0.0);*/
 
-		double a = 1;//p.getRadius(); //half-ridge of our cube
+		double a = 0.1;//p.getRadius(); //half-ridge of our cube
 		Vector3D ref = p.getPos();
 
 		Vector3D cubePoints[4];
