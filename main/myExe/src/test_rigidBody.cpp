@@ -4,6 +4,7 @@
 #include "rigidBodyDragGenerator.hpp"
 #include "rigidBodyElasticString.hpp"
 #include "rigidBodyFloatingGenerator.hpp"
+#include "rigidBodyStiffSpring.hpp"
 
 using namespace m_engine;
 using namespace std;
@@ -15,13 +16,13 @@ int main() {
 	RigidBodyDragGenerator RBDG = RigidBodyDragGenerator(1,1);
 	RigidBodyElasticString RBES = RigidBodyElasticString(RB, 1, 1, Vector3D(0, 0, 0));
 	RigidBodyFloatingGenerator RBFG = RigidBodyFloatingGenerator(1, 1, 1);
+	RigidBodyStiffSpring RBSS = RigidBodyStiffSpring(Vector3D(0, 0, 0), 1, 1);
 	RGG.updateForce(RB,1.0);
 	RBAS.updateForce(RB, 1.0);
 	RBDG.updateForce(RB, 1.0);
 	RBES.updateForce(RB, 1.0);
 	RBFG.updateForce(RB, 1.0);
-	//particleRod
-	//particleStiffSpring
+	RBSS.updateForce(RB, 1.0);
 	//particleString
 	return 0;
 }
