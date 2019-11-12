@@ -2,6 +2,7 @@
 #define MATRIX4
 
 #include "vector3d.hpp"
+#include "matrix3.hpp"
 
 namespace m_engine {
 
@@ -18,8 +19,11 @@ namespace m_engine {
 		Matrix4(double a = 1, double b = 0, double c = 0, double d = 0, 
 				double e = 0, double f = 1, double g = 0, double h = 0, 
 				double i = 0, double j = 0, double k = 1, double l = 0);
+		//creates a Matrix 3x4 matrix, with left being a Matrix 3x3 and right being a Vector3D
+		Matrix4(const Matrix3& M, const Vector3D& v);
 		//creates a translation Matrix (translation defined by argument)
-		//Matrix4(const Vector3D& v);
+		Matrix4(const Vector3D& v);
+
 		~Matrix4() {};
 
 		static const Matrix4 Identity;

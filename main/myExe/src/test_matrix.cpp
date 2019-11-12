@@ -95,6 +95,21 @@ Matrix3& init_m3_data(const double data[9]) {
 		data[4], data[5], data[6], data[7], data[8]);
 }
 
+#define DATA_M3 10
+
+static double m3_data[DATA_M3][9] = {
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1},
+	{1,0,0,0,1,0,0,0,1}
+};
+
 //test de l'instanciation et l'affectation
 void test_m3_start() {
 	cout << "test_m3_start" << flush;

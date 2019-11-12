@@ -17,6 +17,25 @@ Matrix4::Matrix4(double a, double b, double c, double d, double e, double f, dou
 	data[11] = l;
 }
 
+//creates a Matrix 3x4 matrix, with left being a Matrix 3x3 and right being a Vector3D
+Matrix4::Matrix4(const Matrix3& M, const Vector3D& v) {
+	for (int i = 0; i < 3; ++i) {
+		for (int j = 0; j < 3; ++j) {
+			data[j + i * 4] = M[j + i * 3];
+		}
+	}
+	data[3] = v.x;
+	data[7] = v.y;
+	data[11] = v.z;
+}
+//creates a translation Matrix (translation defined by argument)
+Matrix4::Matrix4(const Vector3D& v) {
+	*this = Identity;
+	data[3] = v.x;
+	data[7] = v.y;
+	data[11] = v.z;
+}
+
 const Matrix4 Matrix4::Identity;
 
 //GETTER
