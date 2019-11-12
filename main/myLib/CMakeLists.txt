@@ -28,7 +28,8 @@ set(MY_LIB_SOURCES
 	src/rigidBodyElasticString.cpp
 	src/rigidBodyFloatingGenerator.cpp
 	src/rigidBodyStiffSpring.cpp
-	src/rigidBodyString.cpp)
+	src/rigidBodyString.cpp
+	src/matrix4.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -61,7 +62,8 @@ set(MY_LIB_HEADERS
 	include/rigidBodyElasticString.hpp
 	include/rigidBodyFloatingGenerator.hpp
 	include/rigidBodyStiffSpring.hpp
-	include/rigidBodyString.hpp)
+	include/rigidBodyString.hpp
+	include/matrix4.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
