@@ -2,10 +2,15 @@
 #define WORLD
 
 #include <vector>
+
 #include "particle.hpp"
-#include "forceRegister.hpp"
-#include "graphicRenderer.hpp"
 #include "particleContactResolver.hpp"
+
+#include "rigidBody.hpp"
+
+#include "forceRegister.hpp"
+
+#include "graphicRenderer.hpp"
 
 namespace m_engine {
 
@@ -22,6 +27,9 @@ namespace m_engine {
     //Add a particle in the world
     void addParticle(const Particle& part);
 
+	//Add a rigidBody in the world
+	void addRigidBody(const RigidBody& rb);
+
     //Update all the particles of the world
     void update(double time);
 
@@ -36,6 +44,7 @@ namespace m_engine {
 	//dans le futur, soit faire tableau de ref/pointeurs,
 	//soit mettre des accesseurs
 	std::vector<Particle> particles;
+	std::vector<RigidBody> rigidbodies;
 	ForceRegister forceRegister;
 
 	void World::setInput(std::function<void(std::string)> f);
