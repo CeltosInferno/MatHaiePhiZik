@@ -184,3 +184,17 @@ Matrix4 Matrix4::inverse() const {
 		return -1;
 	}
 }
+
+std::ostream& m_engine::operator<<(std::ostream& os, const Matrix4& M) {
+	os << "[";
+	for (int i = 0; i < 12; i++) {
+		os << M[i];
+		if (i < 11) {
+			os << ",";
+			if (i % 4 == 3) os << std::endl << " ";
+		}
+	}
+	os << "]";
+	return os;
+}
+

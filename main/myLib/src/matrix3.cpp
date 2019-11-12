@@ -148,13 +148,13 @@ Matrix3 Matrix3::t() const {
 	return Matrix3(data[0], data[3], data[6], data[1], data[4], data[7], data[2], data[5], data[8]);
 }
 
-std::ostream& operator<<(std::ostream& os, const Matrix3& M) {
-	os << "[ ";
+std::ostream& m_engine::operator<<(std::ostream& os, const Matrix3& M) {
+	os << "[";
 	for (int i = 0; i < 9; i++) {
 		os << M[i];
 		if (i < 8) {
 			os << ",";
-			if (i%3 == 2) os << std::endl;
+			if (i%3 == 2) os << std::endl << " ";
 		}
 	}
 	os << "]";

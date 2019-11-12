@@ -4,10 +4,13 @@
 #include "vector3d.hpp"
 
 namespace m_engine {
-
+	/*
+		Represents a Matrix 3x3
+		Can be used for linear operations with Vector3
+	*/
 	class Matrix3 {
 	public:
-		//Renvoie la matrice identité par défaut
+		//constructor, return the Identity Matrix by default
 		Matrix3(double a = 1, double b = 0, double c = 0, 
 				double d = 0, double e = 1, double f = 0, 
 				double g = 0, double h = 0, double i = 1);
@@ -67,7 +70,7 @@ namespace m_engine {
 		//Multiplication with a Vector3D
 		Vector3D operator*(const Vector3D& v) const;
 
-		//calcul af the det
+		//calcul of the determinent
 		double det() const;
 
 		//return the inverse of the matrix, if it exists

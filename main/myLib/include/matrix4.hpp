@@ -5,11 +5,24 @@
 
 namespace m_engine {
 
+	/*
+		Represents a Matrix 3x4 (which is used as a Matrix 4x4
+		with the last line being 0,0,0,1
+
+		Can be used for affine operations with Vector3 
+		(as a Vector4 = (vec3, 1))
+	*/
 	class Matrix4 {
 	public:
-		//Renvoie la matrice identité par défaut
-		Matrix4(double a = 1, double b = 0, double c = 0, double d = 0, double e = 0, double f = 1, double g = 0, double h = 0, double i = 0, double j = 0, double k = 1, double l = 0);
+		//constructor, return the Identity Matrix by default
+		Matrix4(double a = 1, double b = 0, double c = 0, double d = 0, 
+				double e = 0, double f = 1, double g = 0, double h = 0, 
+				double i = 0, double j = 0, double k = 1, double l = 0);
+		//creates a translation Matrix (translation defined by argument)
+		//Matrix4(const Vector3D& v);
 		~Matrix4() {};
+
+		static Matrix4 Identity;
 
 		//GETTER
 		//Access coordinate 'i' by writing vector[i]
@@ -110,10 +123,10 @@ namespace m_engine {
 		//Multiplication with a Vector3D
 		Vector3D operator*(const Vector3D& v) const;
 
-		//Multiplication with a Vector3Dconsidered infinity far
+		//Multiplication with a Vector3Dconsidered infinitly far
 		Vector3D infinityFarMul(const Vector3D& v) const;
 
-		//calcul af the det
+		//calcul of the determinent
 		double det() const;
 
 		//return the inverse of the matrix, if it exists
@@ -124,6 +137,28 @@ namespace m_engine {
 		double data[12];
 
 	};
+
+	//Overiding << for printing
+	std::ostream& operator<<(std::ostream& os, const Matrix4& M);
+	/*{
+		os << "[";
+		for (int i = 0; i < 12; i++) {
+			os << M[i];
+			if (i < 11) {
+				os << ",";
+				if (i % 4 == 3) os << std::endl << " ";
+			}
+		}
+		os << "]";
+		return os;
+	}*/
+	
+	inline double det(const Matrix4& M) {
+		return M.det();
+	}
+	inline Matrix4 inverse(const Matrix4& M) {
+		return M.inverse();
+	}
 }
 
 #endif
