@@ -152,7 +152,7 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	glEnable(GL_DEPTH_TEST);
 }
 
-int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
+int GraphicRenderer::renderCircles(const std::vector<RigidBody>& particles) {
 
 	//CONVERT PARTICLES TO CIRCLE
 	particleToCube(particles);
@@ -192,13 +192,19 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 		// ---------------
 		// create transformations
 		// We first initialize each matrix to the identity matrix
-		glm::mat4 model = glm::mat4(1.0f); 
 		glm::mat4 view = glm::mat4(1.0f);
 		glm::mat4 projection = glm::mat4(1.0f);
 		// the we apply our transformations
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -zoom));
 		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+		RigidBody rb = particles[0];
+		Vector3D pos = rb.getPos().normalize();
+		std::cout << rb.getOrientation() << std::endl;
+		Matrix3 m = rb.getTransform();
+		std::cout << m[0] << " " << m[1] << " " << m[2] << " " << 0 << " " << m[3] << " " << m[4] << " " << m[5] << " " << 0 << " " << m[6] << " " << m[7] << " " << m[8] << " " << std::endl;
+		glm::mat4 model = glm::mat4(m[0], m[1], m[2], 0, m[3], m[4], m[5], 0, m[6], m[7], m[8], 0, 0, 0, 0, 1);
+		//model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
+		//model = glm::rotate(model, 3.0f, glm::vec3(1.0f,0, 0));
 
 		//we retrieve the matrix uniform locations
 		unsigned int modelLocation = glGetUniformLocation(shaderProgram, "model");
@@ -237,9 +243,9 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 
 //turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
-void GraphicRenderer::particleToCube(const std::vector<Particle>& particles) {
+void GraphicRenderer::particleToCube(const std::vector<RigidBody>& particles) {
 	fvertices.clear();
-	for_each(particles.begin(), particles.end(), [this](const Particle& p) {
+	for_each(particles.begin(), particles.end(), [this](const RigidBody& p) {
 		/*float radius = static_cast<float>(p.getRadius());
 		if (radius <= 0.001f) radius = 7; //taille negligeable
 		float triangle_size = zoom*radius;//0.01f*radius;
