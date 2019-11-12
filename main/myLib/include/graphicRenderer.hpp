@@ -15,6 +15,7 @@
 
 
 #include "particle.hpp"
+#include "matrix4.hpp"
 
 
 namespace m_engine {
@@ -33,7 +34,7 @@ namespace m_engine {
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
 		unsigned int SCR_HEIGHT;
-		void particleToCircle(const std::vector<Particle>&);
+		void particleToCube(const std::vector<Particle>&);
 		void processInput(GLFWwindow* window);
 		std::vector<float> fvertices;
 		int shaderProgram;
