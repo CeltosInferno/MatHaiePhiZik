@@ -10,18 +10,18 @@ namespace m_engine {
 	class RigidBody {
 	public:
 
-        // CONSTRUCTORS
-        RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0,0,0), Vector3D vel = Vector3D(0,0,0),Quaternion orientation = Quaternion(0,0,0,0) ,Vector3D rotation = Vector3D(0,0,0));
-        RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation,Vector3D rotation);
-        ~RigidBody();
+		// CONSTRUCTORS
+		RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0, 0, 0), Vector3D vel = Vector3D(0, 0, 0), Quaternion orientation = Quaternion(0, 0, 0, 0), Vector3D rotation = Vector3D(0, 0, 0));
+		RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel, Quaternion orientation, Vector3D rotation);
+		~RigidBody();
 
-        // GETTERS
-        double getInversMass() const { return m_inversMass;};
+		// GETTERS
+		double getInversMass() const { return m_inversMass; };
 
-        inline const Vector3D& getPos() const { return m_pos; }
-        inline const Vector3D& getVel() const { return m_vel; }
-        inline const Quaternion& getOrientation() const { return m_orientation;}
-
+		inline const Vector3D& getPos() const { return m_pos; }
+		inline const Vector3D& getVel() const { return m_vel; }
+		inline const Quaternion& getOrientation() const { return m_orientation; }
+		inline const Matrix3& getTransform() const { return m_transformMatrix; }
         // SETTERS
         inline void setMass(double mass) {m_inversMass = 1.0/mass;};
         inline void setLinearDamping(double damping) {m_linearDamping = damping;};
