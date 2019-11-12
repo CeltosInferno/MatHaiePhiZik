@@ -155,7 +155,7 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 
 	//CONVERT PARTICLES TO CIRCLE
-	particleToCircle(particles);
+	particleToCube(particles);
 	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
 
 	unsigned int VBO, VAO;
@@ -235,9 +235,9 @@ int GraphicRenderer::renderCircles(const std::vector<Particle>& particles) {
 	
 }
 
-//turn a vector of particle into vertices to render as triangles
+//turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
-void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
+void GraphicRenderer::particleToCube(const std::vector<Particle>& particles) {
 	fvertices.clear();
 	for_each(particles.begin(), particles.end(), [this](const Particle& p) {
 		/*float radius = static_cast<float>(p.getRadius());
@@ -265,10 +265,10 @@ void GraphicRenderer::particleToCircle(const std::vector<Particle>& particles) {
 		Vector3D ref = p.getPos();
 
 		Vector3D cubePoints[4];
-		cubePoints[0] = Vector3D(a, -a, a);
-		cubePoints[1] = Vector3D(-a, a, a);
-		cubePoints[2] = Vector3D(a, -a, -a);
-		cubePoints[3] = Vector3D(a, a, -a);
+		cubePoints[0] = Vector3D(-a, -a, a);
+		cubePoints[1] = Vector3D(-a, a, -a);
+		cubePoints[2] = Vector3D(a, a, a);
+		cubePoints[3] = Vector3D(a, -a, -a);
 		for (int j = 0; j < 4; j++) {
 			Vector3D& firstPoint = cubePoints[j];
 			for (int i = 0; i < 3; i++) {
