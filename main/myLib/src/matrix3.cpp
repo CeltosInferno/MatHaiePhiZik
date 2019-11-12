@@ -14,6 +14,7 @@ Matrix3::Matrix3(double a, double b, double c, double d, double e, double f, dou
 	data[8] = i;
 }
 
+const Matrix3 Matrix3::Identity;
 
 //GETTER
 double Matrix3::operator[](int i) const {

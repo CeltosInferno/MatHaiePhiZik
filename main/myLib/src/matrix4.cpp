@@ -17,6 +17,8 @@ Matrix4::Matrix4(double a, double b, double c, double d, double e, double f, dou
 	data[11] = l;
 }
 
+const Matrix4 Matrix4::Identity;
+
 //GETTER
 double Matrix4::operator[](int i) const {
 	if (i >= 0 && i < 12) {

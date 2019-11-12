@@ -22,7 +22,7 @@ namespace m_engine {
 		//Matrix4(const Vector3D& v);
 		~Matrix4() {};
 
-		static Matrix4 Identity;
+		static const Matrix4 Identity;
 
 		//GETTER
 		//Access coordinate 'i' by writing vector[i]

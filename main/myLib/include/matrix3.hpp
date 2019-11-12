@@ -16,6 +16,8 @@ namespace m_engine {
 				double g = 0, double h = 0, double i = 1);
 		~Matrix3() {};
 
+		static const Matrix3 Identity;
+
 		//GETTER
 		//Access coordinate 'i' by writing vector[i]
 		//Return 0 if i outbounded
