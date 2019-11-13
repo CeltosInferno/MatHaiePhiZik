@@ -190,11 +190,8 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 		// -----
 		processInput(window);
 
-
-
+		//managing model
 		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
 
 		//managing view
 		glm::mat4 view = glm::mat4(1.0f);
@@ -227,8 +224,9 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 		
 		for (unsigned int i = 0; i < particles.size(); i++) {
 
-			Quaternion q = Quaternion::FormAxisAngle((float)glfwGetTime() * glm::radians(50.0f), Vector3D(1,0,0));//particles[i].getOrientation();
+			Quaternion q = particles[i].getOrientation();
 			glm::mat4 model = glm::toMat4(glm::quat(q.w,q.n.x,q.n.y,q.n.z));
+
 			Vector3D pos = particles[i].getPos();
 			model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
 			//float angle = 20.0f * i;
