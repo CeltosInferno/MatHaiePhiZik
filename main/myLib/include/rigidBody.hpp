@@ -20,7 +20,8 @@ namespace m_engine {
 
 		inline const Vector3D& getPos() const { return m_pos; }
 		inline const Vector3D& getVel() const { return m_vel; }
-		inline const Quaternion& getOrientation() const { return m_orientation; }
+		inline const Quaternion& getOrientation() const { return m_orientation;
+		}
 		inline const Matrix3& getTransform() const { return m_transformMatrix; }
         // SETTERS
         inline void setMass(double mass) {m_inversMass = 1.0/mass;};
