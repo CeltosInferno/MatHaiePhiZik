@@ -3,6 +3,7 @@
 
 #include "vector3d.hpp"
 #include "matrix3.hpp"
+#include "matrix4.hpp"
 
 namespace m_engine {
 
@@ -27,7 +28,9 @@ namespace m_engine {
 		}
 
 		//convert quaternion into matrix
-		Matrix3 toMatrix() const;
+		Matrix3 toMatrix3() const;
+
+		Matrix4 toMatrix4() const;
 
 		//scaling quaternions methods  with doubles
 		//operator *

@@ -12,6 +12,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 
 #include "particle.hpp"
@@ -27,7 +28,7 @@ namespace m_engine {
 		GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName = "Graphic View");
 		//turn a vector of particle into vertices to render as triangles
 		//return 0 if everithing is OK, 1 if the window should or have close
-		int renderCircles(const std::vector<RigidBody>&);
+		int renderCubes(const std::vector<RigidBody>&);
 		//Add a callback function reaction to arrow key event
 		void OnKeyEvent(std::function<void(std::string dir)> f);
 
@@ -36,7 +37,7 @@ namespace m_engine {
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
 		unsigned int SCR_HEIGHT;
-		void particleToCube(const std::vector<RigidBody>&);
+		void renderCubes(int nbCubes);
 		void processInput(GLFWwindow* window);
 		std::vector<float> fvertices;
 		int shaderProgram;
