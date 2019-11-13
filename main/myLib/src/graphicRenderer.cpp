@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include "graphicRenderer.hpp"
 
 #include <iostream>
@@ -48,7 +50,7 @@ void GraphicRenderer::processInput(GLFWwindow* window)
 		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
 		{
 			f("UP");
-		};
+		}; 
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
 		for (std::function<void(std::string dir)> f : callBackOnArrowKey)
@@ -152,10 +154,10 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	glEnable(GL_DEPTH_TEST);
 }
 
-int GraphicRenderer::renderCircles(const std::vector<RigidBody>& particles) {
+int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 
 	//CONVERT PARTICLES TO CIRCLE
-	particleToCube(particles);
+	renderCubes(particles.size());
 	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
 
 	unsigned int VBO, VAO;
@@ -188,25 +190,22 @@ int GraphicRenderer::renderCircles(const std::vector<RigidBody>& particles) {
 		// -----
 		processInput(window);
 
-		// transformations
-		// ---------------
-		// create transformations
-		// We first initialize each matrix to the identity matrix
+
+
+		glm::mat4 model = glm::mat4(1.0f);
+		//model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
+
+		//managing view
 		glm::mat4 view = glm::mat4(1.0f);
-		glm::mat4 projection = glm::mat4(1.0f);
-		// the we apply our transformations
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -zoom));
+
+		//managing projection
+		glm::mat4 projection = glm::mat4(1.0f);
 		projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-		RigidBody rb = particles[0];
-		Vector3D pos = rb.getPos().normalize();
-		std::cout << rb.getOrientation() << std::endl;
-		Matrix3 m = rb.getTransform();
-		std::cout << m[0] << " " << m[1] << " " << m[2] << " " << 0 << " " << m[3] << " " << m[4] << " " << m[5] << " " << 0 << " " << m[6] << " " << m[7] << " " << m[8] << " " << std::endl;
-		glm::mat4 model = glm::mat4(m[0], m[1], m[2], 0, m[3], m[4], m[5], 0, m[6], m[7], m[8], 0, 0, 0, 0, 1);
-		//model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
-		//model = glm::rotate(model, 3.0f, glm::vec3(1.0f,0, 0));
 
 		//we retrieve the matrix uniform locations
+
 		unsigned int modelLocation = glGetUniformLocation(shaderProgram, "model");
 		unsigned int viewLocation = glGetUniformLocation(shaderProgram, "view");
 		unsigned int projectionLocation = glGetUniformLocation(shaderProgram, "projection");
@@ -225,7 +224,20 @@ int GraphicRenderer::renderCircles(const std::vector<RigidBody>& particles) {
 		// draw triangles
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-		glDrawArrays(GL_TRIANGLES, 0, nb_points); 
+		
+		for (unsigned int i = 0; i < particles.size(); i++) {
+
+			Quaternion q = Quaternion::FormAxisAngle((float)glfwGetTime() * glm::radians(50.0f), Vector3D(1,0,0));//particles[i].getOrientation();
+			glm::mat4 model = glm::toMat4(glm::quat(q.w,q.n.x,q.n.y,q.n.z));
+			Vector3D pos = particles[i].getPos();
+			model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
+			//float angle = 20.0f * i;
+			//model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f,0.3f,0.5f));
+			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &model[0][0]);
+			glDrawArrays(GL_TRIANGLES, 36 * i , 36 * (i+1));
+		}
+		
+		 
 
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
@@ -243,32 +255,11 @@ int GraphicRenderer::renderCircles(const std::vector<RigidBody>& particles) {
 
 //turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
-void GraphicRenderer::particleToCube(const std::vector<RigidBody>& particles) {
+void GraphicRenderer::renderCubes(int nbCubes) {
 	fvertices.clear();
-	for_each(particles.begin(), particles.end(), [this](const RigidBody& p) {
-		/*float radius = static_cast<float>(p.getRadius());
-		if (radius <= 0.001f) radius = 7; //taille negligeable
-		float triangle_size = zoom*radius;//0.01f*radius;
-		const Vector3D& Pos = p.getPos();
-		float x = static_cast<float>(Pos.x) * 2 / SCR_WIDTH * zoom;
-		float y = static_cast<float>(Pos.z) * 2 / SCR_HEIGHT * zoom;
-		float triangle_size_x = triangle_size / SCR_WIDTH;
-		float triangle_size_y = triangle_size / SCR_HEIGHT;
-		//first vertex, top of the triangle
-		fvertices.push_back(x);
-		fvertices.push_back(y + triangle_size_y);
-		fvertices.push_back(0.0);
-		//bottom left
-		fvertices.push_back(x - triangle_size_x);
-		fvertices.push_back(y - triangle_size_y);
-		fvertices.push_back(0.0);
-		//bottom right
-		fvertices.push_back(x + triangle_size_x);
-		fvertices.push_back(y - triangle_size_y);
-		fvertices.push_back(0.0);*/
+	for (int i = 0; i < nbCubes; i++) {
 
-		double a = 0.1;//p.getRadius(); //half-ridge of our cube
-		Vector3D ref = p.getPos();
+		double a = 0.1;
 
 		Vector3D cubePoints[4];
 		cubePoints[0] = Vector3D(-a, -a, a);
@@ -279,27 +270,27 @@ void GraphicRenderer::particleToCube(const std::vector<RigidBody>& particles) {
 			Vector3D& firstPoint = cubePoints[j];
 			for (int i = 0; i < 3; i++) {
 				Vector3D point2 = firstPoint;
-				Vector3D point3 = point2 + ref;
+				Vector3D point3 = point2;
 				fvertices.push_back(static_cast<float>(point3.x));
 				fvertices.push_back(static_cast<float>(point3.y));
 				fvertices.push_back(static_cast<float>(point3.z));
 
-				point2[(i + 1)% 3] *= -1;
-				point3 = point2 + ref;
+				point2[(i + 1) % 3] *= -1;
+				point3 = point2;
 				fvertices.push_back(static_cast<float>(point3.x));
 				fvertices.push_back(static_cast<float>(point3.y));
 				fvertices.push_back(static_cast<float>(point3.z));
 
 				point2[(i + 1) % 3] *= -1;
 				point2[(i + 2) % 3] *= -1;
-				point3 = point2 + ref;
+				point3 = point2;
 				fvertices.push_back(static_cast<float>(point3.x));
 				fvertices.push_back(static_cast<float>(point3.y));
 				fvertices.push_back(static_cast<float>(point3.z));
 			}
-		}
-	});
 
+		}
+	}
 }
 
 //Add a function to execute when key event detected

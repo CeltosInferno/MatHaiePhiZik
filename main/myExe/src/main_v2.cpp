@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+
 #include <iostream>
 #include "world.hpp"
 #include "particle.hpp"
@@ -69,7 +71,8 @@ int main() {
 	case '1':
 		myMainLoop.setZoom(8);
 		//setting up particles
-		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(-1,0,0), Vector3D(0,0,0), Quaternion::FormAxisAngle(0.2, Vector3D(1,1,0).normalize()), Vector3D(0.7,0.7,0)));
+		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(-3,0,0), Vector3D(0,0,0), Quaternion::FormAxisAngle(M_PI / 3.0, Vector3D(2,1,0).normalize()), Vector3D()));
+		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(3,0,0), Vector3D(0,0,0), Quaternion::FormAxisAngle(-M_PI / 3.0, Vector3D(2,1,0).normalize()), Vector3D()));
 		//recording force generators
 		//rigb_gen.push_back(&gravityGenerator);
 		//setting up input's reaction
