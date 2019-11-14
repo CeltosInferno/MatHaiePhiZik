@@ -144,20 +144,12 @@ namespace m_engine {
 
 	};
 
+	inline Matrix4 operator* (double k, const Matrix4& M) {
+		return M * k;
+	}
+
 	//Overiding << for printing
 	std::ostream& operator<<(std::ostream& os, const Matrix4& M);
-	/*{
-		os << "[";
-		for (int i = 0; i < 12; i++) {
-			os << M[i];
-			if (i < 11) {
-				os << ",";
-				if (i % 4 == 3) os << std::endl << " ";
-			}
-		}
-		os << "]";
-		return os;
-	}*/
 	
 	inline double det(const Matrix4& M) {
 		return M.det();
