@@ -1,4 +1,9 @@
 #include "matrix3.hpp"
+#define EPSILON 1e-15
+
+inline bool cmp_double(double a, double b) {
+	return abs(a - b) < EPSILON;
+}
 
 using namespace m_engine;
 
@@ -67,6 +72,13 @@ Matrix3& Matrix3::operator/=(double k) {
 		data[i] /= k;
 	}
 	return *this;
+}
+
+bool Matrix3::operator==(const Matrix3& M) const {
+	for (int i = 0; i < 9; i++) {
+		if (!cmp_double(data[i], M[i])) return false;
+	}
+	return true;
 }
 
 //Multiplication with an other Matrix3

@@ -38,6 +38,14 @@ namespace m_engine {
 		//Return vector[0] if i outbounded
 		double& operator[] (int i);
 
+		inline double operator() (int i, int j) const {
+			return (*this)[i * 4 + j];
+		}
+
+		inline double& operator() (int i, int j) {
+			return (*this)[i * 4 + j];
+		}
+
 		//OPERATORS OVERRIDE
 		//Additions operators
 		inline Matrix4 operator+(const Matrix4& u) const {
@@ -109,13 +117,7 @@ namespace m_engine {
 		Matrix4& operator/=(double k);
 
 		//Equality operators
-		inline bool operator==(const Matrix4& u) const {
-			bool res = true;
-			for (int i = 0; i < 12; i++) {
-				res &= data[i] == u[i];
-			}
-			return res;
-		}
+		bool operator==(const Matrix4& u) const;
 		inline bool operator!=(const Matrix4& u) const {
 			return !(*this == u);
 		}

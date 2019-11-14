@@ -1,4 +1,9 @@
 #include "matrix4.hpp"
+#define EPSILON 1e-15
+
+inline bool cmp_double(double a, double b) {
+	return abs(a - b) < EPSILON;
+}
 
 using namespace m_engine;
 
@@ -90,6 +95,13 @@ Matrix4& Matrix4::operator/=(double k) {
 		data[i] /= k;
 	}
 	return *this;
+}
+
+bool Matrix4::operator==(const Matrix4& M) const {
+	for (int i = 0; i < 12; i++) {
+		if (!cmp_double(data[i], M[i])) return false;
+	}
+	return true;
 }
 
 //Multiplication with an other Matrix4
