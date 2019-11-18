@@ -157,9 +157,12 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 
 	//CONVERT PARTICLES TO CIRCLE
-	renderCubes(particles.size());
+	fvertices.clear();
+	for each  (RigidBody RB in particles)
+	{
+		renderCubes(RB);
+	}
 	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
-
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -221,19 +224,12 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 		// draw triangles
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+
+		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &model[0][0]);
+
+		glDrawArrays(GL_TRIANGLES,0, nb_points);
 		
-		for (unsigned int i = 0; i < particles.size(); i++) {
-
-			Quaternion q = particles[i].getOrientation();
-			glm::mat4 model = glm::toMat4(glm::quat(q.w,q.n.x,q.n.y,q.n.z));
-
-			Vector3D pos = particles[i].getPos();
-			model = glm::translate(model, glm::vec3(pos.x, pos.y, pos.z));
-			//float angle = 20.0f * i;
-			//model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f,0.3f,0.5f));
-			glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &model[0][0]);
-			glDrawArrays(GL_TRIANGLES, 36 * i , 36 * (i+1));
-		}
 		
 		 
 
@@ -251,44 +247,94 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 	
 }
 
+void GraphicRenderer::addVectorToVertices(Vector3D v) {
+	fvertices.push_back(v.x);
+	fvertices.push_back(v.y);
+	fvertices.push_back(v.z);
+}
+
 //turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
-void GraphicRenderer::renderCubes(int nbCubes) {
-	fvertices.clear();
-	for (int i = 0; i < nbCubes; i++) {
+void GraphicRenderer::renderCubes(RigidBody buddy) {
 
 		double a = 0.1;
+		
+		//Translate Matrix
+		Vector3D pos = buddy.getPos();
+		Matrix4 TranslateMat = Matrix4::TranslationOf(pos);
+		Matrix4 RotationMat = buddy.getOrientation().toMatrix4();
 
-		Vector3D cubePoints[4];
-		cubePoints[0] = Vector3D(-a, -a, a);
-		cubePoints[1] = Vector3D(-a, a, -a);
-		cubePoints[2] = Vector3D(a, a, a);
-		cubePoints[3] = Vector3D(a, -a, -a);
-		for (int j = 0; j < 4; j++) {
-			Vector3D& firstPoint = cubePoints[j];
-			for (int i = 0; i < 3; i++) {
-				Vector3D point2 = firstPoint;
-				Vector3D point3 = point2;
-				fvertices.push_back(static_cast<float>(point3.x));
-				fvertices.push_back(static_cast<float>(point3.y));
-				fvertices.push_back(static_cast<float>(point3.z));
 
-				point2[(i + 1) % 3] *= -1;
-				point3 = point2;
-				fvertices.push_back(static_cast<float>(point3.x));
-				fvertices.push_back(static_cast<float>(point3.y));
-				fvertices.push_back(static_cast<float>(point3.z));
+		Vector3D cubePoints[8];
+		cubePoints[0] = TranslateMat * RotationMat * Vector3D(-a, a, a);
+		cubePoints[1] = TranslateMat * RotationMat * Vector3D(-a, a, -a);
+		cubePoints[2] = TranslateMat * RotationMat * Vector3D(-a, -a, -a);
+		cubePoints[3] = TranslateMat * RotationMat * Vector3D(-a, -a, a);
+		cubePoints[4] = TranslateMat * RotationMat * Vector3D(a, a, a);
+		cubePoints[5] = TranslateMat * RotationMat * Vector3D(a, a, -a);
+		cubePoints[6] = TranslateMat * RotationMat * Vector3D(a, -a, -a);
+		cubePoints[7] = TranslateMat * RotationMat * Vector3D(a, -a, a);
 
-				point2[(i + 1) % 3] *= -1;
-				point2[(i + 2) % 3] *= -1;
-				point3 = point2;
-				fvertices.push_back(static_cast<float>(point3.x));
-				fvertices.push_back(static_cast<float>(point3.y));
-				fvertices.push_back(static_cast<float>(point3.z));
-			}
 
-		}
-	}
+		//FACE ONE 2.3.6.7
+		//3.6.7
+		addVectorToVertices(cubePoints[3]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[7]);
+		//3.6.2
+		addVectorToVertices(cubePoints[3]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[2]);
+
+		//FACE TWO 1.2.5.6
+		//1.6.5
+		addVectorToVertices(cubePoints[1]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[5]);
+		//1.6.2
+		addVectorToVertices(cubePoints[1]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[2]);
+
+		//FACE THREE 0.1.2.3
+		//0.2.3
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[2]);
+		addVectorToVertices(cubePoints[3]);
+		//0.2.1
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[2]);
+		addVectorToVertices(cubePoints[1]);
+
+		//FACE FOUR 0.1.4.5
+		//0.5.1
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[1]);
+		addVectorToVertices(cubePoints[5]);
+		//0.5.4
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[5]);
+		addVectorToVertices(cubePoints[4]);
+
+		//FACE FIVE 4.5.6.7
+		//4.6.5
+		addVectorToVertices(cubePoints[4]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[5]);
+		//4.6.7
+		addVectorToVertices(cubePoints[4]);
+		addVectorToVertices(cubePoints[6]);
+		addVectorToVertices(cubePoints[7]);
+
+		//FACE SIX 0.3.4.7
+		//0.7.3
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[7]);
+		addVectorToVertices(cubePoints[3]);
+		//0.7.4
+		addVectorToVertices(cubePoints[0]);
+		addVectorToVertices(cubePoints[7]);
+		addVectorToVertices(cubePoints[4]);
 }
 
 //Add a function to execute when key event detected

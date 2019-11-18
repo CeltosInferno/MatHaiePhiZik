@@ -37,7 +37,8 @@ namespace m_engine {
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
 		unsigned int SCR_HEIGHT;
-		void renderCubes(int nbCubes);
+		void renderCubes(RigidBody buddy);
+		void addVectorToVertices(Vector3D v);
 		void processInput(GLFWwindow* window);
 		std::vector<float> fvertices;
 		int shaderProgram;
