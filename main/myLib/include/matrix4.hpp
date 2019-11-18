@@ -119,6 +119,18 @@ namespace m_engine {
 		//return the inverse of the matrix, if it exists
 		Matrix4 inverse() const;
 
+
+		inline static Matrix4 TranslationOf(Vector3D tr) {
+			return Matrix4(1,0,0,tr.x,
+							0,1,0,tr.y,
+							0,0,1,tr.z);
+		}
+
+		inline static Matrix4 ScaleOf(Vector3D scale) {
+			return Matrix4(scale.x,0,0,0,
+							0,scale.y,0,0,
+							0,0,scale.z,0);
+		}
 	private:
 
 		double data[12];
