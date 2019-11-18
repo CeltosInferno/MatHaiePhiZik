@@ -106,8 +106,9 @@ namespace m_engine {
 
 		
 		inline Quaternion normalize() const {
-			if (w == 0 && n.x == 0 && n.y == 0 && n.z == 0)
-				return *this;
+			if (w == 0 && n.x == 0 && n.y == 0 && n.z == 0) {
+				return *this + Quaternion(1,0,0,0);
+			}
 			else
 				return  *this / norm();
 		}
