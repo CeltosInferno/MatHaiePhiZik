@@ -198,7 +198,6 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& particles) {
 
 		//managing view
 		glm::mat4 view = glm::mat4(1.0f);
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -zoom));
 
 		//managing projection
 		glm::mat4 projection = glm::mat4(1.0f);
@@ -261,19 +260,21 @@ void GraphicRenderer::renderCubes(RigidBody buddy) {
 		
 		//Translate Matrix
 		Vector3D pos = buddy.getPos();
+		Matrix4 ViewTranslate = Matrix4::TranslationOf(Vector3D(0, 0, -zoom));
 		Matrix4 TranslateMat = Matrix4::TranslationOf(pos);
 		Matrix4 RotationMat = buddy.getOrientation().toMatrix4();
 
+		Matrix4 FinalM = ViewTranslate * TranslateMat * RotationMat;
 
 		Vector3D cubePoints[8];
-		cubePoints[0] = TranslateMat * RotationMat * Vector3D(-a, a, a);
-		cubePoints[1] = TranslateMat * RotationMat * Vector3D(-a, a, -a);
-		cubePoints[2] = TranslateMat * RotationMat * Vector3D(-a, -a, -a);
-		cubePoints[3] = TranslateMat * RotationMat * Vector3D(-a, -a, a);
-		cubePoints[4] = TranslateMat * RotationMat * Vector3D(a, a, a);
-		cubePoints[5] = TranslateMat * RotationMat * Vector3D(a, a, -a);
-		cubePoints[6] = TranslateMat * RotationMat * Vector3D(a, -a, -a);
-		cubePoints[7] = TranslateMat * RotationMat * Vector3D(a, -a, a);
+		cubePoints[0] = FinalM * Vector3D(-a, a, a);
+		cubePoints[1] = FinalM * Vector3D(-a, a, -a);
+		cubePoints[2] = FinalM * Vector3D(-a, -a, -a);
+		cubePoints[3] = FinalM * Vector3D(-a, -a, a);
+		cubePoints[4] = FinalM * Vector3D(a, a, a);
+		cubePoints[5] = FinalM * Vector3D(a, a, -a);
+		cubePoints[6] = FinalM * Vector3D(a, -a, -a);
+		cubePoints[7] = FinalM * Vector3D(a, -a, a);
 
 
 		//FACE ONE 2.3.6.7
