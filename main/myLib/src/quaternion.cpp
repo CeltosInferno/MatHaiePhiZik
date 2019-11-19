@@ -31,8 +31,9 @@ Quaternion& Quaternion::operator/=(double k) {
 //rotate the quaternion according to v
 void Quaternion::rotateByVector(const Vector3D& v) {
 	Quaternion new_result = *this *Quaternion(0, v.x, v.y, v.z);
-	w = new_result.w;
-	n = new_result.n;
+	w += new_result.w;
+	n += new_result.n;
+	*this = normalize();
 }
 
 //Update angular velocity
@@ -113,21 +114,21 @@ bool Quaternion::isNormalized() const {
 	return (abs(norm() - 1) < 0.000000000000001);
 }
 
-Matrix3 Quaternion::toMatrix() const{
+Matrix3 Quaternion::toMatrix3() const{
 	double x=n.x;
 	double y=n.y;
 	double z=n.z;
-	double a=1 - (2*y*y  +  2*z*z);
-	double b=2*x*y + 2*z*w;
-	double c=2*x*z - 2*y*w;
+	double a=1 - 2*y*y  -  2*z*z;
+	double b=2*x*y - 2*z*w;
+	double c=2*x*z + 2*y*w;
 
-	double d=2*x*y - 2*z*w;
-	double e=1 - (2*x*x + 2*z*z);
-	double f=2*y*z + 2*x*w;
+	double d=2*x*y + 2*z*w;
+	double e=1 - 2*x*x - 2*z*z;
+	double f=2*y*z - 2*x*w;
 
-	double g=2*x*z + 2*y*w;
-	double h=2*y*z - 2*x*w;
-	double i=1- (2*x*x + 2*y*y);
+	double g=2*x*z - 2*y*w;
+	double h=2*y*z + 2*x*w;
+	double i=1- 2*x*x - 2*y*y;
 
 	return Matrix3(
 		a,b,c,
@@ -136,7 +137,25 @@ Matrix3 Quaternion::toMatrix() const{
 	);
 }
 
-/*Matrix4 Quaternion::toMatrix() const{
-	Matrix3 M=toMatrix();
-	return(Matrix4(M,Vector3D(n.x,n.y,n.z)))
-}*/
+Matrix4 Quaternion::toMatrix4() const{
+	double x=n.x;
+	double y=n.y;
+	double z=n.z;
+	double a = 1 - 2 * y * y - 2 * z * z;
+	double b = 2 * x * y - 2 * z * w;
+	double c = 2 * x * z + 2 * y * w;
+
+	double d = 2 * x * y + 2 * z * w;
+	double e = 1 - 2 * x * x - 2 * z * z;
+	double f = 2 * y * z - 2 * x * w;
+
+	double g = 2 * x * z - 2 * y * w;
+	double h = 2 * y * z + 2 * x * w;
+	double i = 1 - 2 * x * x - 2 * y * y;
+
+	return Matrix4(
+		a, b, c, 0,
+		d,e,f, 0,
+		g,h,i, 0
+	);
+}

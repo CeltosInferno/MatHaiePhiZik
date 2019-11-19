@@ -28,6 +28,9 @@ void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }
 
+void World::addRigidBody(const RigidBody& rb) {
+	rigidbodies.push_back(rb);
+}
 
 //Update all the particles of the world
 void World::update(double time) {
@@ -36,6 +39,10 @@ void World::update(double time) {
 	for (unsigned int i = 0; i < particles.size(); i++) {
 		particles[i].integrate(time);
 		particles[i].cleanAccum();
+	}
+	for (unsigned int i = 0; i < rigidbodies.size(); i++) {
+		rigidbodies[i].integrate(time);
+		rigidbodies[i].cleanAccum();
 	}
 	forceRegister.clear();
 	//check for collision
@@ -74,5 +81,5 @@ void World::renderBash() {
 //2D rendering in OPenGL Window
 //return 0 if everithing is OK, 1 if window should or have close
 int World::render2DWindow() {
-	return renderer.renderCircles(particles);
+	return renderer.renderCubes(rigidbodies, particles);
 }

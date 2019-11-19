@@ -33,9 +33,9 @@ void RigidBody::integrate(double time){
     //update position
     m_pos += m_vel * time;
     //update rotation
-    m_orientation.rotateByVector(m_rotation);
+    m_orientation.rotateByVector(m_rotation * time);
     //Update transformMatrix and InertialTensor for this object
-    Matrix3 m_transformMatrixInv =m_orientation.toMatrix();
+    Matrix3 m_transformMatrixInv =m_orientation.toMatrix3();
 
     m_transformMatrix = m_transformMatrixInv.inverse();
     m_globalInversInertialTensor = m_transformMatrixInv * m_localInversInterialTensor * m_transformMatrix;
