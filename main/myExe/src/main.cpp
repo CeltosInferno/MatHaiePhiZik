@@ -92,7 +92,7 @@ int main() {
 	case '1':
 		myMainLoop.setZoom(8);
 		//setting up particles
-		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(-3, 0, 0), Vector3D(0, 0, 0), Quaternion::FormAxisAngle(M_PI / 3.0, Vector3D(1, 0, 0).normalize()), Vector3D(0, 0, 0)));
+		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(-3, 0, 0), Vector3D(2, 2, 0), Quaternion::FormAxisAngle(M_PI / 3.0, Vector3D(1, 0, 0).normalize()), Vector3D(1, 1, 0)));
 		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(3, 0, 0), Vector3D(0, 0, 0), Quaternion::FormAxisAngle(2 * M_PI / 5.0, Vector3D(1, 0, 0).normalize()), Vector3D()));
 		//recording force generators
 		rigb_gen.push_back(&gravityGenerator);
