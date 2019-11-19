@@ -81,5 +81,5 @@ void World::renderBash() {
 //2D rendering in OPenGL Window
 //return 0 if everithing is OK, 1 if window should or have close
 int World::render2DWindow() {
-	return renderer.renderCubes(rigidbodies);
+	return renderer.renderCubes(rigidbodies, particles);
 }
