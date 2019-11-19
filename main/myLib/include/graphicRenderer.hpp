@@ -28,7 +28,8 @@ namespace m_engine {
 		GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName = "Graphic View");
 		//turn a vector of rigidBody into vertices to render as triangles
 		//return 0 if everithing is OK, 1 if the window should or have close
-		int renderCubes(const std::vector<RigidBody>&);
+		int renderCubes(const std::vector<RigidBody>&,
+						const std::vector<Particle>&);
 		//Add a callback function reaction to arrow key event
 		void OnKeyEvent(std::function<void(std::string dir)> f);
 

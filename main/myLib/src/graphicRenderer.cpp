@@ -155,7 +155,8 @@ GraphicRenderer::GraphicRenderer(unsigned int WIDTH, unsigned int HEIGHT, std::s
 	glEnable(GL_DEPTH_TEST);
 }
 
-int GraphicRenderer::renderCubes(const std::vector<RigidBody>& rbs) {
+int GraphicRenderer::renderCubes(const std::vector<RigidBody>& rbs,
+								const std::vector<Particle>& ps) {
 
 	//CONVERT PARTICLES TO CIRCLE
 	fvertices.clear();
@@ -163,7 +164,11 @@ int GraphicRenderer::renderCubes(const std::vector<RigidBody>& rbs) {
 	{
 		renderCubes(RB);
 	}
-	const unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
+	for each (const Particle & p in ps)
+	{
+		particleToCube(p);
+	}
+	unsigned int nb_points = static_cast<unsigned int>(fvertices.size());
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -346,7 +351,7 @@ void GraphicRenderer::renderCubes(const RigidBody& buddy) {
 //return 0 if everything is OK, 1 if the window should or have close
 void GraphicRenderer::particleToCube(const Particle& p) {
 
-	double a = p.getRadius(); //0.1 or half-ridge of our cube
+	double a = 0.1;// p.getRadius(); //0.1 or half-ridge of our cube
 	if (a <= 0.001f) a = 0.1;
 	Vector3D ref = p.getPos();
 
