@@ -25,7 +25,28 @@ std::vector<ParticleForceGenerator*> part_gen;
 std::vector<RigidBodyForceGenerator*> rigb_gen;
 static char entry = 'a';
 
-
+void arrowKeyEffect(std::string dir) {
+	if (dir == "LEFT") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(-_ArrowIntensity, 0, 0));
+		}
+	}
+	if (dir == "RIGHT") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(_ArrowIntensity, 0, 0));
+		}
+	}
+	if (dir == "UP") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(0, 0, _ArrowIntensity));
+		}
+	}
+	if (dir == "DOWN") {
+		for (Particle& p : myWorld.particles) {
+			p.addForce(Vector3D(0, 0, -_ArrowIntensity));
+		}
+	}
+}
 
 //This function will be bind with the main loop and will be executed at the beginning of each frame
 bool onStartLoop(double time, int id_iteration) {
@@ -74,9 +95,9 @@ int main() {
 		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(-3,0,0), Vector3D(0,0,0), Quaternion::FormAxisAngle(M_PI / 3.0, Vector3D(1,0,0).normalize()), Vector3D(0,0,0)));
 		myWorld.addRigidBody(RigidBody(1, 1, 3, 1, 0.95, 0.95, Vector3D(3,0,0), Vector3D(0,0,0), Quaternion::FormAxisAngle( 2 * M_PI/ 5.0, Vector3D(1,0,0).normalize()), Vector3D()));
 		//recording force generators
-		//rigb_gen.push_back(&gravityGenerator);
+		rigb_gen.push_back(&gravityGenerator);
 		//setting up input's reaction
-		//myWorld.setInput(arrowKeyEffect);
+		myWorld.setInput(arrowKeyEffect);
 		break;
 		//String demonstration
 	case '2':

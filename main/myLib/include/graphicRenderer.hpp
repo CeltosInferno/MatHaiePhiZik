@@ -26,7 +26,7 @@ namespace m_engine {
 	class GraphicRenderer {
 	public:
 		GraphicRenderer(unsigned int WIDTH = 800, unsigned int HEIGHT = 600, std::string WindowName = "Graphic View");
-		//turn a vector of particle into vertices to render as triangles
+		//turn a vector of rigidBody into vertices to render as triangles
 		//return 0 if everithing is OK, 1 if the window should or have close
 		int renderCubes(const std::vector<RigidBody>&);
 		//Add a callback function reaction to arrow key event
@@ -37,8 +37,10 @@ namespace m_engine {
 		GLFWwindow* window;
 		unsigned int SCR_WIDTH;
 		unsigned int SCR_HEIGHT;
-		void renderCubes(RigidBody buddy);
-		void addVectorToVertices(Vector3D v);
+		//turn a vector of particle into vertices to render as triangles
+		void particleToCube(const Particle& p);
+		void renderCubes(const RigidBody& body);
+		void addVectorToVertices(const Vector3D& v);
 		void processInput(GLFWwindow* window);
 		std::vector<float> fvertices;
 		int shaderProgram;
