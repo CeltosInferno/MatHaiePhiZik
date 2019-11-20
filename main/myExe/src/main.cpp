@@ -133,9 +133,9 @@ int main() {
 		//String demonstration
 	case '2':
 		myMainLoop.setZoom(20);
-		myWorld.addRigidBody(RigidBody(3, 2, 1, 1, 0.95, 0.95, 
+		myWorld.addRigidBody(RigidBody(3, 2, 1, 1, 0.95, 0.2, 
 							Vector3D(-10, 0, 0), Vector3D(5, 0, 0), Quaternion::FormAxisAngle(0, Vector3D(1, 0, 0).normalize()), Vector3D()));
-		myWorld.addRigidBody(RigidBody(3, 2.5, 1, 1, 0.95, 0.95, 
+		myWorld.addRigidBody(RigidBody(3, 2.5, 1, 1, 0.95, 0.2, 
 							Vector3D(10, 1, 0), Vector3D(-5, 0, 0), Quaternion::FormAxisAngle(0, Vector3D(1, 0, 0).normalize()), Vector3D()));
 		break;
 	default:
