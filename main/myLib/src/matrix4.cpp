@@ -213,7 +213,7 @@ Matrix4 Matrix4::inverse() const {
 		) / det;
 	}
 	else {
-		std::cerr << "Error : the det of the matrix is 0, there is no inverse" << std::endl;
+		std::cerr << "Error : the det of the matrix4 is 0, there is no inverse" << std::endl;
 		return -1;
 	}
 }

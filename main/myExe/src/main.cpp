@@ -82,7 +82,7 @@ int main() {
 		std::cout << "choisissez une démonstration" << std::endl
 			<< "0 : Quitter" << std::endl
 			<< "1 : RigidBody avec gravité" << std::endl
-			<< "2 : Deux particules avec ressort" << std::endl
+			//<< "2 : Deux particules avec ressort" << std::endl
 			<< "choix :";
 		std::cin >> entry;
 	}
@@ -100,9 +100,9 @@ int main() {
 		myWorld.setInput(arrowKeyEffect);
 		break;
 		//String demonstration
-	case '2':
+	//case '2':
 
-		break;
+	//	break;
 	default:
 		return 0;
 	}

@@ -2,7 +2,6 @@
 #include "world.hpp"
 #include "particle.hpp"
 #include "mainLoop.hpp"
-#include "quaternion.hpp"
 
 #include "particleGravityGenerator.hpp"
 #include "particleFloatingGenerator.hpp"

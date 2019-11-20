@@ -150,7 +150,7 @@ Matrix3 Matrix3::inverse() const {
 			) / det;
 	}
 	else {
-		std::cerr << "Error : the det of the matrix is 0, there is no inverse" << std::endl;
+		std::cerr << "Error : the det of the matrix3 is 0, there is no inverse" << std::endl;
 		return -1;
 	}
 }
