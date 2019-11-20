@@ -55,21 +55,23 @@ void veryBadCollisionRigidBody(RigidBody& rb1, RigidBody& rb2, double penetratio
 	double mb = 1 / rb2.getInversMass();
 	Vector3D delta0 = -mb / (ma + mb) * penetration * n;
 	Vector3D delta1 = ma / (ma + mb) * penetration * n;
-	//déplacement des 2 particules
+	//restores the position of the objects so that they are not merged
 	rb1.setPos(rb1.getPos() + delta0);
 	rb2.setPos(rb2.getPos() + delta1);
 }
 
+//given 2 rigidBodiesm check if collision on x (only if rb1.x < rb2.x, otherwise unexpected behaviour)
 void checkCollisionAndSolve() {
 	RigidBody& rb1 = myWorld.rigidbodies[0];
 	RigidBody& rb2 = myWorld.rigidbodies[1];
+	//get the penetration
 	double penetration = (rb1.dx / 2 + rb2.dx / 2 - rb1.getPos().distance(rb2.getPos()));
-	//std::cout << penetration << std::endl;
-	//std::cout << rb1.getPos() << ", " << rb2.getPos() << std::endl;
-	if (penetration >= 0) {
-		Vector3D n(1, 0, 0);
+	if (penetration >= 0) { //if collision
+		Vector3D n(1, 0, 0); //normal of collision
 
 		veryBadCollisionRigidBody(rb1, rb2, penetration, n);
+		//apply forces where the collision happened 
+		//(center of mass of rb2 projected on rb1 surface and reciprocity)
 		rb1.addForceAtGlobalPoint(Vector3D(-30), rb2.getPos() - Vector3D(rb2.dx/2));
 		rb2.addForceAtGlobalPoint(Vector3D(30), rb1.getPos() + Vector3D(rb1.dx / 2));
 	}
@@ -81,9 +83,11 @@ bool onStartLoop(double time, int id_iteration) {
 	case '1':
 		break;
 	case'2':
+		//only here is "done" the collision
 		checkCollisionAndSolve();
 		break;
 	}
+	//we apply all registered forces each frame
 	for (RigidBodyForceGenerator* g : rigb_gen) {
 		for (RigidBody& p : myWorld.rigidbodies) {
 			myWorld.forceRegister.add(&p, g);
