@@ -265,7 +265,7 @@ void GraphicRenderer::addVectorToVertices(const Vector3D& v) {
 //turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
 void GraphicRenderer::renderCubes(const RigidBody& buddy) {
-	double a = 0.1;
+	double a = 1;
 		
 	//Translate Matrix
 	const Vector3D& pos = buddy.getPos();

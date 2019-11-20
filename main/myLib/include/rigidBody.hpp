@@ -11,16 +11,22 @@ namespace m_engine {
 	public:
 		// CONSTRUCTORS
 		//generate a circle of radius r
-		RigidBody(double r, double mass, double linearDamping = 1, 
-				double angularDamping = 1, Vector3D pos = Vector3D(0, 0, 0), 
+		RigidBody(double r, double mass, 
+				double linearDamping = 1, 
+				double angularDamping = 1, 
+				Vector3D pos = Vector3D(0, 0, 0), 
 				Vector3D vel = Vector3D(0, 0, 0), 
 				Quaternion orientation = Quaternion(0, 0, 0, 0), 
 				Vector3D rotation = Vector3D(0, 0, 0));
 		//generates a rectangle of length (dx,dy,dz) in global space
 		RigidBody(double dx, double dy, double dz, 
-				double mass, double linearDamping, double angularDamping, 
-				Vector3D pos, Vector3D vel, 
-				Quaternion orientation, Vector3D rotation);
+				 double mass, 
+				double linearDamping = 1 , 
+				double angularDamping = 1, 
+				Vector3D pos = Vector3D(0, 0, 0),
+				Vector3D vel = Vector3D(0, 0, 0),
+				Quaternion orientation = Quaternion(0, 0, 0, 0),
+				Vector3D rotation = Vector3D(0, 0, 0));
 		~RigidBody();
 
 		//values used by the graphic renderer to draw renctangles
