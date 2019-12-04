@@ -10,8 +10,6 @@
 
 namespace m_engine {
 
-	//class Primitive;
-
 	class Octree {
 	public:	
 		Octree(int depthMax, Vector3D Center, Vector3D Dimension);

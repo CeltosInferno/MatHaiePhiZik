@@ -4,8 +4,7 @@
 #include <vector>
 #include <utility>
 #include "vector3d.hpp"
-
-class Primitive;
+#include "primitive.hpp"
 
 namespace m_engine {
 
