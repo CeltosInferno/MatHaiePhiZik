@@ -265,7 +265,7 @@ void GraphicRenderer::addVectorToVertices(const Vector3D& v) {
 //turn a vector of particle into vertices to render as a cube composed of triangles
 //return 0 if everything is OK, 1 if the window should or have close
 void GraphicRenderer::renderCubes(const RigidBody& buddy) {
-	double a = 0.1;
+	double a = 1;
 		
 	//Translate Matrix
 	const Vector3D& pos = buddy.getPos();
@@ -275,15 +275,18 @@ void GraphicRenderer::renderCubes(const RigidBody& buddy) {
 
 	Matrix4 FinalM = ViewTranslate * TranslateMat * RotationMat;
 
+	double ax = a * buddy.dx / 2;
+	double ay = a * buddy.dy / 2;
+	double az = a * buddy.dz / 2;
 	Vector3D cubePoints[8];
-	cubePoints[0] = FinalM * Vector3D(-a, a, a);
-	cubePoints[1] = FinalM * Vector3D(-a, a, -a);
-	cubePoints[2] = FinalM * Vector3D(-a, -a, -a);
-	cubePoints[3] = FinalM * Vector3D(-a, -a, a);
-	cubePoints[4] = FinalM * Vector3D(a, a, a);
-	cubePoints[5] = FinalM * Vector3D(a, a, -a);
-	cubePoints[6] = FinalM * Vector3D(a, -a, -a);
-	cubePoints[7] = FinalM * Vector3D(a, -a, a);
+	cubePoints[0] = FinalM * Vector3D(-ax, ay, az);
+	cubePoints[1] = FinalM * Vector3D(-ax, ay, -az);
+	cubePoints[2] = FinalM * Vector3D(-ax, -ay, -az);
+	cubePoints[3] = FinalM * Vector3D(-ax, -ay, az);
+	cubePoints[4] = FinalM * Vector3D(ax, ay, az);
+	cubePoints[5] = FinalM * Vector3D(ax, ay, -az);
+	cubePoints[6] = FinalM * Vector3D(ax, -ay, -az);
+	cubePoints[7] = FinalM * Vector3D(ax, -ay, az);
 
 
 	//FACE ONE 2.3.6.7

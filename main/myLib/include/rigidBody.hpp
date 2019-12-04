@@ -9,19 +9,37 @@ namespace m_engine {
 
 	class RigidBody {
 	public:
-
 		// CONSTRUCTORS
-		RigidBody(double r, double mass, double linearDamping = 1, double angularDamping = 1, Vector3D pos = Vector3D(0, 0, 0), Vector3D vel = Vector3D(0, 0, 0), Quaternion orientation = Quaternion(0, 0, 0, 0), Vector3D rotation = Vector3D(0, 0, 0));
-		RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel, Quaternion orientation, Vector3D rotation);
+		//generate a circle of radius r
+		RigidBody(double r, double mass, 
+				double linearDamping = 1, 
+				double angularDamping = 1, 
+				Vector3D pos = Vector3D(0, 0, 0), 
+				Vector3D vel = Vector3D(0, 0, 0), 
+				Quaternion orientation = Quaternion(0, 0, 0, 0), 
+				Vector3D rotation = Vector3D(0, 0, 0));
+		//generates a rectangle of length (dx,dy,dz) in global space
+		RigidBody(double dx, double dy, double dz, 
+				 double mass, 
+				double linearDamping = 1 , 
+				double angularDamping = 1, 
+				Vector3D pos = Vector3D(0, 0, 0),
+				Vector3D vel = Vector3D(0, 0, 0),
+				Quaternion orientation = Quaternion(0, 0, 0, 0),
+				Vector3D rotation = Vector3D(0, 0, 0));
 		~RigidBody();
+
+		//values used by the graphic renderer to draw renctangles
+		const double dx;
+		const double dy;
+		const double dz;
 
 		// GETTERS
 		double getInversMass() const { return m_inversMass; };
 
 		inline const Vector3D& getPos() const { return m_pos; }
 		inline const Vector3D& getVel() const { return m_vel; }
-		inline const Quaternion& getOrientation() const { return m_orientation;
-		}
+		inline const Quaternion& getOrientation() const { return m_orientation;}
 		inline const Matrix3& getTransform() const { return m_transformMatrix; }
         // SETTERS
         inline void setMass(double mass) {m_inversMass = 1.0/mass;};
@@ -53,7 +71,7 @@ namespace m_engine {
         void addTorque(const Vector3D& torque);
 		//convert a point into local reference to global reference
 		Vector3D localToGlobal(const Vector3D& localPoint);
-    private:        
+    private:
         double m_inversMass;
         double m_linearDamping;
         double m_angularDamping;

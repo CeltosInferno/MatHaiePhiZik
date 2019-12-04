@@ -14,10 +14,10 @@ void ForceRegister::add(RigidBody* r, RigidBodyForceGenerator* frg) {
 }
 
 void ForceRegister::applyForces(double time) {
-	for (ForceStoredParticle fs : m_Preg) {
+	for (ForceStoredParticle& fs : m_Preg) {
 		fs.Fg->updateForce(*(fs.p), time);
 	}
-	for (ForceStoredRigidBody fs : m_Rreg) {
+	for (ForceStoredRigidBody& fs : m_Rreg) {
 		fs.Frg->updateForce(*(fs.r), time);
 	}
 }

@@ -5,13 +5,25 @@ using namespace m_engine;
 
 //Constructor
 RigidBody::RigidBody(double r, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation ,Vector3D rotation):
-    m_inversMass(1/mass), m_linearDamping(linearDamping), m_angularDamping(angularDamping), m_pos(pos), m_vel(vel),m_orientation(orientation),m_rotation(rotation)
+	dx(r*2), dy(r*2), dz(r*2),
+    m_inversMass(1/mass), 
+	m_linearDamping(linearDamping), 
+	m_angularDamping(angularDamping), 
+	m_pos(pos), m_vel(vel),
+	m_orientation(orientation),
+	m_rotation(rotation)
 {
     setInertialTensorSphere(r);
 };
 
 RigidBody::RigidBody(double dx, double dy, double dz, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation,Vector3D rotation):
-    m_inversMass(1/mass), m_linearDamping(linearDamping), m_angularDamping(angularDamping), m_pos(pos), m_vel(vel),m_orientation(orientation),m_rotation(rotation)
+	dx(dx), dy(dy), dz(dz),
+	m_inversMass(1/mass), 
+	m_linearDamping(linearDamping), 
+	m_angularDamping(angularDamping),
+	m_pos(pos), m_vel(vel),
+	m_orientation(orientation),
+	m_rotation(rotation)
 {
     setInertialTensorBox(dx,dy,dz);
 };
@@ -29,7 +41,7 @@ void RigidBody::integrate(double time){
     //update linear velocity
     m_vel = m_vel * pow(m_linearDamping, time) + a * time;
     //update anguJ'ailar velocity
-    m_rotation = m_rotation  * pow(m_linearDamping, time)  + time * theta;
+    m_rotation = m_rotation  * pow(m_angularDamping, time)  + time * theta;
     //update position
     m_pos += m_vel * time;
     //update rotation
@@ -92,11 +104,11 @@ void RigidBody::addTorque(const Vector3D& torque){
 };
 
 void RigidBody::setInertialTensorBox(double dx, double dy, double dz){
-    double k = 1/12 /m_inversMass;
+    double k = 1./12. /m_inversMass;
     m_localInversInterialTensor = Matrix3(k*(dy*dy + dz*dz),0,0, 0,k*(dx*dx + dz*dz),0  ,0,0,k*(dx*dx + dy*dy)).inverse();
 };
 void RigidBody::setInertialTensorSphere(double r){
-    m_localInversInterialTensor =  Matrix3() * 2/5 / m_inversMass * r*r;
+    m_localInversInterialTensor =  Matrix3() * 2./5. / m_inversMass * r*r;
 };
 
 Vector3D RigidBody::localToGlobal(const Vector3D& localPoint) {
