@@ -1,9 +1,5 @@
 #include "OctreeNode.hpp"
 
-/*
-std::vector< std::pair<Primitive*, Primitive*> > resolveNode();
-void insert(Primitive* p);*/
-
 using namespace m_engine;
 
 OctreeNode::OctreeNode(int depthMax, Vector3D Center, Vector3D Dimension): depthMax(depthMax), Center(Center),Dimension(Dimension) {}
@@ -13,10 +9,10 @@ OctreeNode::OctreeNode(int depthMax, Vector3D Center, Vector3D Dimension): depth
 std::vector<std::pair<Primitive*, Primitive*>> OctreeNode::resolveNode() {
 	std::vector < std::pair<Primitive*, Primitive*>> potentialCollisions;
 	//when tree's bottom is reached or there is no children
-	if (depthMax <= 0 || children.size<=0) {
+	if (depthMax <= 0 || children.size()<=0) {
 		//iteration on all primitives recorded on this node
-		for (int i = 0; i < primitives.size; i++) {
-			for (int j = i + 1; j < primitives.size; j++) {
+		for (int i = 0; i < primitives.size(); i++) {
+			for (int j = i + 1; j < primitives.size(); j++) {
 				potentialCollisions.push_back( std::make_pair(primitives[i], primitives[j]) );
 			}
 		}
@@ -41,7 +37,7 @@ void OctreeNode::insert(Primitive* p) {
 	//if not on a leave
 	else {
 		//if child nodes are not created, create them
-		if (children.size == 0) {
+		if (children.size() == 0) {
 			Vector3D halfDimension = Dimension / 2;
 
 			Vector3D center1 = Center + Vector3D(halfDimension.x, halfDimension.y, halfDimension.z);
