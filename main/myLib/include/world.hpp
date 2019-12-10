@@ -8,6 +8,7 @@
 
 #include "rigidBody.hpp"
 #include "primitive.hpp"
+#include "plane.hpp"
 
 #include "forceRegister.hpp"
 
@@ -30,6 +31,9 @@ namespace m_engine {
 
 	//Add a rigidBody in the world
 	void addRigidBody(RigidBody rb);
+
+	//Add a Plane in the world
+	void addPlane(Plane plane);
 
     //Update all the particles of the world
     void update(double time);

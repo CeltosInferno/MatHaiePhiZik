@@ -33,6 +33,11 @@ void World::addRigidBody(RigidBody rb) {
 	primitives.push_back(Primitive(&rb));
 }
 
+//Add a Plane in the world
+void World::addPlane(Plane plane) {
+	primitives.push_back(plane);
+}
+
 
 //Update all the particles of the world
 void World::update(double time) {
