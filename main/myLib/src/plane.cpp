@@ -15,7 +15,7 @@ bool Plane::isInArea(Vector3D middlePoint, Vector3D dim) {
 	double radiusArea = dim.norm();
 	//autre manière de faire : sqrt((dim[0]) * (dim[0]) + (dim[1]) * (dim[1]) + (dim[2]) * (dim[2]));
 	
-	if (planeDist < radiusArea) return true;
+	return (planeDist < radiusArea);
 
 	return false;
 }

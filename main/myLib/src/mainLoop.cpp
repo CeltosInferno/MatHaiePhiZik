@@ -22,7 +22,8 @@ MainLoop::MainLoop(World& world, int fps):
 	wantedTime(1. / fps), 
 	start_loop(basicStartLoop), 
 	end_loop(basicEndLoop), 
-	world(world)
+	world(world),
+	mustStop(false)
 {
 }
 
@@ -38,7 +39,8 @@ void MainLoop::execute() {
 		base_time = system_clock::now();
 	previous_time = base_time;
 	int windowOK = 0;
-	while (windowOK == 0) {
+	mustStop = mustStop || world.collisionDetected;
+	while (windowOK == 0 && !mustStop) {
 		//debut de la frame, on recupere le temps de ref
 		current_time = system_clock::now();
 		double timeRef = duration<double>(current_time - base_time).count();
