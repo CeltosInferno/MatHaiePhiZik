@@ -22,3 +22,4 @@ bool Primitive::isInArea(Vector3D middlePoint, Vector3D dim) {
 	}
 	return false;
 }
+

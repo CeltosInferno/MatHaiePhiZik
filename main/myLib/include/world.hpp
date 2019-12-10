@@ -7,6 +7,7 @@
 #include "particleContactResolver.hpp"
 
 #include "rigidBody.hpp"
+#include "primitive.hpp"
 
 #include "forceRegister.hpp"
 
@@ -28,7 +29,7 @@ namespace m_engine {
     void addParticle(const Particle& part);
 
 	//Add a rigidBody in the world
-	void addRigidBody(const RigidBody& rb);
+	void addRigidBody(RigidBody rb);
 
     //Update all the particles of the world
     void update(double time);
@@ -45,6 +46,7 @@ namespace m_engine {
 	//soit mettre des accesseurs
 	std::vector<Particle> particles;
 	std::vector<RigidBody> rigidbodies;
+	std::vector<Primitive> primitives;
 	ForceRegister forceRegister;
 
 	void World::setInput(std::function<void(std::string)> f);

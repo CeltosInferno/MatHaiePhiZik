@@ -28,9 +28,11 @@ void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }
 
-void World::addRigidBody(const RigidBody& rb) {
+void World::addRigidBody(RigidBody rb) {
 	rigidbodies.push_back(rb);
+	primitives.push_back(Primitive(&rb));
 }
+
 
 //Update all the particles of the world
 void World::update(double time) {

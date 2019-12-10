@@ -20,5 +20,7 @@ namespace m_engine {
 		//the normal of the plane (normalized)
 		Vector3D normal;
 
+
+
 	};
 }
