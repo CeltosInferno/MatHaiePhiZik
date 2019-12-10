@@ -18,6 +18,5 @@ std::vector<std::pair<Primitive*, Primitive*>> Octree::resolveTree() {
 
 //insert a primitive into the tree
 void Octree::insert(Primitive* p) {
-	//std::cout << "Insert2 " << p->getRigidBody() << std::endl;
 	root->insert(p);
 }

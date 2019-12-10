@@ -19,6 +19,10 @@ World::~World() {
 
 void World::start() {
 	renderer.OnKeyEvent(ArrowKeyEffect);
+	int i = 0;
+	for (i = 0; i < rigidbodies.size(); i++) {
+		primitives.push_back(&rigidbodies[i]);
+	}
 }
 
 void World::setInput(std::function<void(std::string)> f) {
@@ -32,8 +36,6 @@ void World::addParticle(const Particle& part) {
 
 void World::addRigidBody(const RigidBody& rb) {
 	rigidbodies.push_back(rb);
-	RigidBody& rb_cpy = rigidbodies.back();
-	primitives.push_back(Primitive(&rb_cpy));
 	//std::cout << "first rb " << rb.getPos() << std::endl;
 	//std::cout << "seecond rb " << rb_cpy.getPos() << std::endl;
 }
@@ -66,6 +68,11 @@ void World::update(double time) {
 	//check for collision between primitives
 	Octree tree = Octree(4, Vector3D(), Vector3D(10, 10, 10));
 	CollisionData Data;
+
+	/*
+	std::cout << "adresse rb1" << &rigidbodies[0] << std::endl;
+	std::cout << "adresse primitive1 " << primitives[0].getRigidBody() << std::endl;*/
+	
 	for (Primitive& prim : primitives)
 	{
 		//std::cout << "Insert " << prim.getRigidBody()->getPos() << std::endl;
@@ -85,6 +92,7 @@ void World::update(double time) {
 		for (Contact& con : Data.contacts)
 		{
 			std::cout << "ContactPoint : " << con.contactPoint << std::endl;
+			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Penetration : " << con.penetration << std::endl;
 		}

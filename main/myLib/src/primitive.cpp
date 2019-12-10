@@ -10,15 +10,13 @@ Primitive::Primitive(RigidBody* body) : rigidBody(body) {
 bool Primitive::isInArea(const Vector3D& middlePoint, const Vector3D& dim) {
 	if (rigidBody != nullptr) {
 		//radius of the sphere representing the body
-		double radiusBody = Vector3D(rigidBody->dx, rigidBody->dy, rigidBody->dz).norm();
+		double radiusBody = Vector3D(rigidBody->dx, rigidBody->dy, rigidBody->dz).norm()/2;
 
 		//radius of the sphere representing the area
 		double radiusArea = dim.norm();
 
 		double dist = (middlePoint - rigidBody->getPos()).norm();
 
-		//std::cout << rigidBody << " " << Vector3D(rigidBody->dx, rigidBody->dy, rigidBody->dz) 
-		//	<< " " << rigidBody->getPos() << " " << middlePoint << " " << dim << std::endl;
 		//if the spheres intersect
 		return (dist < radiusBody + radiusArea);
 	}

@@ -19,6 +19,7 @@ namespace m_engine {
 
 		inline bool isRigidBody() { return rigidBody != nullptr; }
 
+		inline void setAddr(RigidBody* addr) { rigidBody = addr; }
 	private :
 
 		// Rigidbody pointer, null if it is a plan

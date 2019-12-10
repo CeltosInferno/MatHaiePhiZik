@@ -84,10 +84,7 @@ int main() {
 
 	static RigidBodyGravityGenerator gravityGenerator(Vector3D(0, -_G, 0));
 
-	RigidBody rb (3, 2, 1, 1, 0.95, 0.2,
-		Vector3D(-1, 0, 0), Vector3D(5, 0, 0), 
-		Quaternion::FormAxisAngle(0, Vector3D(1, 0, 0).normalize()), 
-		Vector3D());
+	RigidBody rb (3, 2, 1, 1, 0.95, 0.2, Vector3D(-1, 0, 0), Vector3D(5, 0, 0));
 	//std::cout << rb.getPos() << std::endl;
 	RigidBody rb2(1, 1, 1, 1, Vector3D(9, 0, 0));
 	Plane p = Plane(11, Vector3D(1, 0, 0));
@@ -107,7 +104,7 @@ int main() {
 		myMainLoop.setZoom(20);
 		myWorld.addRigidBody(rb);
 		myWorld.addRigidBody(rb2);
-		myWorld.addPlane(p);
+		//myWorld.addPlane(p);
 		myWorld.setInput(arrowKeyEffect);
 		break;
 	default:
