@@ -2,6 +2,9 @@
 
 using namespace m_engine;
 
+/*
+	represent a 3D rectangle based on a rigidBody
+*/
 class Box {
 public:
 	Vector3D vertices[8];
@@ -11,15 +14,26 @@ public:
 		double y = rb.dy;
 		double z = rb.dz;
 		//triple boucle for sinon mais relou
-		vertices[0] = pos + Vector3D(x, y, z);
+		for (int i = 0; i < 8; ++i) {
+			vertices[i] = pos + Vector3D(convert(x,i/4), 
+										convert(y, (i/2)%2), 
+										convert(z, i % 2));
+		}
+		/*vertices[0] = pos + Vector3D(x, y, z);
 		vertices[1] = pos + Vector3D(x, y, -z);
 		vertices[2] = pos + Vector3D(x, -y, z);
 		vertices[3] = pos + Vector3D(x, -y, -z);
 		vertices[4] = pos + Vector3D(-x, y, z);
 		vertices[5] = pos + Vector3D(-x, y, -z);
 		vertices[6] = pos + Vector3D(-x, -y, z);
-		vertices[7] = pos + Vector3D(-x, -y, -z);
+		vertices[7] = pos + Vector3D(-x, -y, -z);*/
 	};
+
+	//if i == 0 return 1, else return -1
+private:
+	static inline double convert(double x, int i) {
+		return (i == 0) ? x : -x;
+	}
 };
 
 bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* collData) {
@@ -51,15 +65,17 @@ bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* coll
 };
 
 bool NarrowSpace::solveContact(RigidBody* rb1, RigidBody* rb2, CollisionData* collData) {
+	Box box1(*rb1);
+	Box box2(*rb2);
 	return false;
 }
 
-bool NarrowSpace::solveContact(RigidBody* rb, Plane* p, CollisionData* collData) {
+bool NarrowSpace::solveContact(RigidBody* rb, const Plane* p, CollisionData* collData) {
 	Box box(*rb);
 	bool isCollided = false;
 	for (const Vector3D& vertice : box.vertices) {
 		double dist = vertice.scalar(p->getNormal());
-		if (dist < 0) {
+		if (dist < p->getOffset()) { //if the vertex is below the plane
 			collData->addContact(Contact(rb, vertice, p->getNormal(), dist));
 			isCollided = true;
 		}
