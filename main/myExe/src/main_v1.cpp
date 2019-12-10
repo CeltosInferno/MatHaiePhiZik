@@ -6,7 +6,10 @@
 using namespace m_engine;
 
 #define FPS 10
-
+/*
+Ce main correspond à la phase 1 du projet
+calcul de forces et de damping manuellement sur des particules avec affichage console
+*/
 int main() {
 
 	World myWorld;

@@ -14,6 +14,12 @@ using namespace m_engine;
 
 #define FPS 30
 
+/*
+Ce main correspond à la phase 2 du projet
+Calcul de divers types de force sur des particles
+Elastiques, floataison, blob ....
+*/
+
 World myWorld;
 
 std::vector<ParticleForceGenerator*> all_gen;

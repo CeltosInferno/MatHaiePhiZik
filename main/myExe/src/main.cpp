@@ -21,6 +21,12 @@ using namespace m_engine;
 
 World myWorld;
 
+/*
+Ce main correspond à la phase 3
+Implémentation des rigidBody et des forces spécifiques
+*/
+
+
 std::vector<ParticleForceGenerator*> part_gen;
 std::vector<RigidBodyForceGenerator*> rigb_gen;
 static char entry = 'a';
