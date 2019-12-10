@@ -1,6 +1,8 @@
 #include "world.hpp"
 #include "vector3d.hpp"
 #include <iostream>
+#include "octree.hpp"
+#include "NarrowSpace.hpp"
 
 #define LINES 10
 #define COLUMNS 20
@@ -52,8 +54,34 @@ void World::update(double time) {
 		rigidbodies[i].cleanAccum();
 	}
 	forceRegister.clear();
-	//check for collision
+
+
+	collisionDetected = false;
+	//check for collision between particles
 	contactResolver.resolveCollisions(time, particles);
+	//check for collision between primitives
+	Octree tree = Octree(4, Vector3D(), Vector3D(10, 10, 10));
+	CollisionData Data;
+	for each  (Primitive prim in primitives)
+	{
+		tree.insert(&prim);
+	}
+
+	std::vector<std::pair<Primitive*, Primitive*>> potentialCollisions = tree.resolveTree();
+	for each  (std::pair<Primitive*,Primitive*> potential in potentialCollisions)
+	{
+		std::cout << "There is a potential collision" << std::endl;
+		collisionDetected = NarrowSpace::solveContact(potential.first, potential.second, &Data) || collisionDetected;
+	}
+
+	if (collisionDetected) {
+		for each (Contact con in Data.contacts)
+		{
+			std::cout << "ContactPoint : " << con.contactPoint << std::endl;
+			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
+			std::cout << "Penetration : " << con.penetration << std::endl;
+		}
+	}
 }
 
 //2D rendering in a terminal

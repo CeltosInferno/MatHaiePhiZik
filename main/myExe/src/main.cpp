@@ -86,7 +86,7 @@ int main() {
 
 	RigidBody rb = (RigidBody(3, 2, 1, 1, 0.95, 0.2,
 		Vector3D(-1, 0, 0), Vector3D(5, 0, 0), Quaternion::FormAxisAngle(0, Vector3D(1, 0, 0).normalize()), Vector3D()));
-	Plane p = Plane(11, Vector3D(-1, 0, 0));
+	Plane p = Plane(-11, Vector3D(-1, 0, 0));
 	//Displaying in a terminal the demonstrations options
 	while (entry != '0' && entry != '1')
 	{
@@ -102,7 +102,7 @@ int main() {
 	case '1':
 		myMainLoop.setZoom(20);
 		myWorld.addRigidBody(rb);
-		//addplane
+		myWorld.addPlane(p);
 		myWorld.setInput(arrowKeyEffect);
 		break;
 	default:
