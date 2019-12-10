@@ -14,7 +14,8 @@ namespace m_engine {
 
 	struct Contact {
 		Contact(RigidBody* rb, const Vector3D& contactPoint, const Vector3D& contactNormal, float penetration):
-			rb(rb), contactPoint(contactPoint), contactNormal(contactNormal), penetration(penetration)
+			rb(rb), contactPoint(contactPoint), 
+			contactNormal(contactNormal), penetration(penetration)
 		{}
 
 		RigidBody* rb; //the object containing the contactPoint
@@ -36,7 +37,7 @@ namespace m_engine {
 		static bool solveContact(Primitive*, Primitive*, CollisionData*);
 	private:
 		static bool solveContact(RigidBody*, RigidBody*, CollisionData*);
-		static bool solveContact(RigidBody*, Plane*, CollisionData*);
+		static bool solveContact(RigidBody*, const Plane*, CollisionData*);
 	};
 
 

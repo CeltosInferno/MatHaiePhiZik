@@ -9,13 +9,18 @@ namespace m_engine {
 	class Plane : public Primitive {
 
 	public :
-		Plane(double offset, Vector3D normal);
+		Plane(double offset, const Vector3D& normal);
 		~Plane() {};
 
-		virtual bool isInArea(Vector3D middlePoint, Vector3D dim);
+		/*
+			Return if a rectangle centered arround middlePoint
+			might collide with this plane 
+			by axproximating it as a sphere of radius norm(dim)
+		*/
+		virtual bool isInArea(const Vector3D& middlePoint, const Vector3D& dim);
 
-		inline Vector3D getNormal() { return normal; };
-		inline double getOffset() { return offset; };
+		inline const Vector3D& getNormal() const { return normal; };
+		inline double getOffset() const { return offset; };
 	private :
 		double offset;
 
