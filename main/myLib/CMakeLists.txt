@@ -33,7 +33,8 @@ set(MY_LIB_SOURCES
 	src/narrowSpace.cpp
 	src/octree.cpp
 	src/octreeNode.cpp
-	src/primitive.cpp)
+	src/primitive.cpp
+	src/plane.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -71,7 +72,8 @@ set(MY_LIB_HEADERS
 	include/narrowSpace.hpp
 	include/octree.hpp
 	include/octreeNode.hpp
-	include/primitive.hpp)
+	include/primitive.hpp
+	include/plane.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})

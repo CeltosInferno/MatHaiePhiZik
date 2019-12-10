@@ -1,5 +1,5 @@
-#ifndef RIGIDBODY
-#define RIGIDBODY
+#ifndef PLANE
+#define PLANE
 
 #include "primitive.hpp"
 #include "vector3d.hpp"
@@ -14,6 +14,8 @@ namespace m_engine {
 
 		virtual bool isInArea(Vector3D middlePoint, Vector3D dim);
 
+		inline Vector3D getNormal() { return normal; };
+		inline double getOffset() { return offset; };
 	private :
 		double offset;
 
@@ -22,3 +24,4 @@ namespace m_engine {
 
 	};
 }
+#endif

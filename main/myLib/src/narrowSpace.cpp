@@ -2,19 +2,6 @@
 
 using namespace m_engine;
 
-class m_engine::Primitive {
-public:
-	RigidBody* rigidBody;
-	virtual ~Primitive() {}
-};
-
-class m_engine::Plane : Primitive {
-public:
-	virtual ~Plane() {}
-	Vector3D normal;
-	double offset;
-};
-
 class Box {
 public:
 	Vector3D vertices[8];
@@ -32,15 +19,15 @@ public:
 		vertices[5] = pos + Vector3D(-x, y, -z);
 		vertices[6] = pos + Vector3D(-x, -y, z);
 		vertices[7] = pos + Vector3D(-x, -y, -z);
-	}
+	};
 };
 
 bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* collData) {
 	Plane* plane1 = dynamic_cast<Plane*>(p1);
-	RigidBody* rb1 = p1->rigidBody;
+	RigidBody* rb1 = p1->getRigidBody();
 
 	Plane* plane2 = dynamic_cast<Plane*>(p2);
-	RigidBody* rb2 = p2->rigidBody;
+	RigidBody* rb2 = p2->getRigidBody();
 
 	//the first 
 	if (rb1 == nullptr && rb2 == nullptr) {
@@ -61,7 +48,7 @@ bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* coll
 	}
 	//should not happen : only if the rb are null but the object is not a plane
 	return false;
-}
+};
 
 bool NarrowSpace::solveContact(RigidBody* rb1, RigidBody* rb2, CollisionData* collData) {
 	return false;
@@ -71,9 +58,9 @@ bool NarrowSpace::solveContact(RigidBody* rb, Plane* p, CollisionData* collData)
 	Box box(*rb);
 	bool isCollided = false;
 	for (const Vector3D& vertice : box.vertices) {
-		double dist = vertice.scalar(p->normal);
+		double dist = vertice.scalar(p->getNormal());
 		if (dist < 0) {
-			collData->addContact(Contact(rb, vertice, p->normal, dist));
+			collData->addContact(Contact(rb, vertice, p->getNormal(), dist));
 			isCollided = true;
 		}
 	}

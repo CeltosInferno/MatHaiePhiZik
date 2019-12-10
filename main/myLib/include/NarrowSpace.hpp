@@ -5,10 +5,12 @@
 #include "rigidBody.hpp"
 #include <vector>
 
+#include "plane.hpp"
+#include "primitive.hpp"
+
 namespace m_engine {
 
-	class Primitive;
-	class Plane;
+
 
 	struct Contact {
 		Contact(RigidBody* rb, const Vector3D& contactPoint, const Vector3D& contactNormal, float penetration):
