@@ -65,6 +65,12 @@ bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* coll
 };
 
 bool NarrowSpace::solveContact(RigidBody* rb1, RigidBody* rb2, CollisionData* collData) {
+	//we check how the 2 objects are colliding and where they are from
+	Vector3D n((rb1->getPos() - rb2->getPos()).normalize());
+	double va = rb1->getVel().scalar(n);
+	double vb = rb2->getVel().scalar(n);
+	double vs = va - vb;
+
 	Box box1(*rb1);
 	Box box2(*rb2);
 	return false;
