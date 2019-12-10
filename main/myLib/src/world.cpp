@@ -30,13 +30,16 @@ void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }
 
-void World::addRigidBody(RigidBody rb) {
+void World::addRigidBody(const RigidBody& rb) {
 	rigidbodies.push_back(rb);
-	primitives.push_back(Primitive(&rb));
+	RigidBody& rb_cpy = rigidbodies.back();
+	primitives.push_back(Primitive(&rb_cpy));
+	//std::cout << "first rb " << rb.getPos() << std::endl;
+	//std::cout << "seecond rb " << rb_cpy.getPos() << std::endl;
 }
 
 //Add a Plane in the world
-void World::addPlane(Plane plane) {
+void World::addPlane(const Plane& plane) {
 	primitives.push_back(plane);
 }
 
@@ -52,6 +55,7 @@ void World::update(double time) {
 	for (unsigned int i = 0; i < rigidbodies.size(); i++) {
 		rigidbodies[i].integrate(time);
 		rigidbodies[i].cleanAccum();
+		//std::cout << "Integrate " <<  rigidbodies[i].getPos() << std::endl;
 	}
 	forceRegister.clear();
 
@@ -62,20 +66,23 @@ void World::update(double time) {
 	//check for collision between primitives
 	Octree tree = Octree(4, Vector3D(), Vector3D(10, 10, 10));
 	CollisionData Data;
-	for each  (Primitive prim in primitives)
+	for (Primitive& prim : primitives)
 	{
+		//std::cout << "Insert " << prim.getRigidBody()->getPos() << std::endl;
 		tree.insert(&prim);
 	}
 
+	//std::cout << primitives.size() << std::endl;
+
 	std::vector<std::pair<Primitive*, Primitive*>> potentialCollisions = tree.resolveTree();
-	for each  (std::pair<Primitive*,Primitive*> potential in potentialCollisions)
+	for  (std::pair<Primitive*,Primitive*>& potential : potentialCollisions)
 	{
 		std::cout << "There is a potential collision" << std::endl;
 		collisionDetected = NarrowSpace::solveContact(potential.first, potential.second, &Data) || collisionDetected;
 	}
 
 	if (collisionDetected) {
-		for each (Contact con in Data.contacts)
+		for (Contact& con : Data.contacts)
 		{
 			std::cout << "ContactPoint : " << con.contactPoint << std::endl;
 			std::cout << "Contact Normale : " << con.contactNormal << std::endl;

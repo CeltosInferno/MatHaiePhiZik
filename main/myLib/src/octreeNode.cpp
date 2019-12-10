@@ -2,7 +2,15 @@
 
 using namespace m_engine;
 
-OctreeNode::OctreeNode(int depthMax, Vector3D Center, Vector3D Dimension): depthMax(depthMax), Center(Center),Dimension(Dimension) {}
+OctreeNode::OctreeNode(int depthMax, const Vector3D& Center, const Vector3D& Dimension): 
+	depthMax(depthMax), Center(Center),Dimension(Dimension) {}
+
+OctreeNode::~OctreeNode() {
+	for (OctreeNode* ON : children) {
+		delete ON;
+	}
+	children.clear();
+}
 
 
 //return all potentials collisions in this area
@@ -30,9 +38,11 @@ std::vector<std::pair<Primitive*, Primitive*>> OctreeNode::resolveNode() {
 }
 
 void OctreeNode::insert(Primitive* p) {
+	//std::cout << "Insert3 " << p->getRigidBody() << " " << depthMax << std::endl;
 	//on a leaf, just store the primitive
 	if (depthMax <= 0) {
 		primitives.push_back(p);
+		//std::cout << "Put a Primitive Here :3 " << p << " " <<primitives.size() << std::endl;
 	}
 	//if not on a leave
 	else {
@@ -60,6 +70,7 @@ void OctreeNode::insert(Primitive* p) {
 		}
 		//checking if primitive is in child nodes
 		for (OctreeNode* ON : children) {
+			//std::cout << "Bleep " << std::endl;
 			if (p->isInArea(ON->Center, ON->Dimension)) {
 				ON->insert(p);
 			}

@@ -15,9 +15,9 @@ namespace m_engine {
 		inline RigidBody* getRigidBody() const { return rigidBody; }
 
 		// tells whether the primitive is in the area or not, described by the point in the middle and the dimensions of the area
-		virtual bool isInArea(Vector3D middlePoint, Vector3D dim);
+		virtual bool isInArea(const Vector3D& middlePoint, const Vector3D& dim);
 
-		bool isRigidBody();
+		inline bool isRigidBody() { return rigidBody != nullptr; }
 
 	private :
 

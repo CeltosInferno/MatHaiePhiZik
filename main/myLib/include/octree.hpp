@@ -12,7 +12,8 @@ namespace m_engine {
 
 	class Octree {
 	public:	
-		Octree(int depthMax, Vector3D Center, Vector3D Dimension);
+		Octree(int depthMax, const Vector3D& Center, const Vector3D& Dimension);
+		~Octree();
 		OctreeNode* root;
 		//the max depth of the tree
 		int depthMax;

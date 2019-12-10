@@ -7,18 +7,20 @@ Primitive::Primitive(RigidBody* body) : rigidBody(body) {
 }
 
 // tells whether the primitive is in the area or not, described by the point in the middle and the dimensions of the area
-bool Primitive::isInArea(Vector3D middlePoint, Vector3D dim) {
-	if (rigidBody) {
+bool Primitive::isInArea(const Vector3D& middlePoint, const Vector3D& dim) {
+	if (rigidBody != nullptr) {
 		//radius of the sphere representing the body
-		double radiusBody = sqrt((rigidBody->dx) * (rigidBody->dx) + (rigidBody->dy) * (rigidBody->dy) + (rigidBody->dz) * (rigidBody->dz));
+		double radiusBody = Vector3D(rigidBody->dx, rigidBody->dy, rigidBody->dz).norm();
 
 		//radius of the sphere representing the area
-		double radiusArea = sqrt((dim[0]) * (dim[0]) + (dim[1]) * (dim[1]) + (dim[2]) * (dim[2]));
+		double radiusArea = dim.norm();
 
+		double dist = (middlePoint - rigidBody->getPos()).norm();
+
+		//std::cout << rigidBody << " " << Vector3D(rigidBody->dx, rigidBody->dy, rigidBody->dz) 
+		//	<< " " << rigidBody->getPos() << " " << middlePoint << " " << dim << std::endl;
 		//if the spheres intersect
-		if (middlePoint.distance(rigidBody->getPos()) < radiusBody + radiusArea) return true;
-
-		return false;
+		return (dist < radiusBody + radiusArea);
 	}
 	return false;
 }

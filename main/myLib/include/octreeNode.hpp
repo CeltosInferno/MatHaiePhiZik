@@ -10,7 +10,8 @@ namespace m_engine {
 
 	class OctreeNode {
 	public:
-		OctreeNode(int depthMax, Vector3D Center, Vector3D Dimension);
+		OctreeNode(int depthMax, const Vector3D& Center, const Vector3D& Dimension);
+		~OctreeNode();
 		//list of the eight children 
 		std::vector<OctreeNode*> children;
 		//liste of the primitives attached to the node

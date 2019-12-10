@@ -30,10 +30,10 @@ namespace m_engine {
     void addParticle(const Particle& part);
 
 	//Add a rigidBody in the world
-	void addRigidBody(RigidBody rb);
+	void addRigidBody(const RigidBody& rb);
 
 	//Add a Plane in the world
-	void addPlane(Plane plane);
+	void addPlane(const Plane& plane);
 
     //Update all the particles of the world
     void update(double time);

@@ -5,7 +5,7 @@ using namespace m_engine;
 
 //Constructor
 RigidBody::RigidBody(double r, double mass, double linearDamping, double angularDamping, Vector3D pos, Vector3D vel,Quaternion orientation ,Vector3D rotation):
-	dx(r*2), dy(r*2), dz(r*2),
+	dx(r), dy(r), dz(r),
     m_inversMass(1/mass), 
 	m_linearDamping(linearDamping), 
 	m_angularDamping(angularDamping), 
