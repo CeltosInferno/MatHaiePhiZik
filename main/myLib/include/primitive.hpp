@@ -9,7 +9,7 @@ namespace m_engine {
 
 	public :
 
-		Primitive(RigidBody* body);
+		Primitive(RigidBody* body = nullptr);
 		~Primitive() {};
 
 		inline RigidBody* getRigidBody() const { return rigidBody; }
@@ -18,7 +18,6 @@ namespace m_engine {
 		virtual bool isInArea(Vector3D middlePoint, Vector3D dim);
 
 		bool isRigidBody();
-
 
 	private :
 

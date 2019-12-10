@@ -50,7 +50,7 @@ namespace m_engine {
 	ForceRegister forceRegister;
 
 	void World::setInput(std::function<void(std::string)> f);
-
+	bool collisionDetected;
   private :
 	ParticleContactResolver contactResolver;
 	GraphicRenderer renderer;

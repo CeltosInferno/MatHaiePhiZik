@@ -11,6 +11,9 @@ target_link_libraries(ExeV1 PUBLIC MyLib GladLib glfw)
 add_executable(ExeV2 src/main_v2.cpp)
 target_link_libraries(ExeV2 PUBLIC MyLib GladLib glfw)
 
+add_executable(ExeV3 src/main_v3.cpp)
+target_link_libraries(ExeV3 PUBLIC MyLib GladLib glfw)
+
 add_executable(TestParticle src/test_particle.cpp)
 target_link_libraries(TestParticle PUBLIC MyLib)
 
