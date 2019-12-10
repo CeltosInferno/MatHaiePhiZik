@@ -45,7 +45,8 @@ void RigidBody::integrate(double time){
     //update position
     m_pos += m_vel * time;
     //update rotation
-    m_orientation.rotateByVector(m_rotation * time);
+    //m_orientation.rotateByVector(m_rotation * time/2); //pas vraiment ce qu'avait mis le prof
+	m_orientation += Quaternion(0, m_rotation) * m_orientation * time / 2;
     //Update transformMatrix and InertialTensor for this object
     Matrix3 m_transformMatrixInv =m_orientation.toMatrix3();
 

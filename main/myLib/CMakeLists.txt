@@ -30,7 +30,10 @@ set(MY_LIB_SOURCES
 	src/rigidBodyStiffSpring.cpp
 	src/rigidBodyString.cpp
 	src/matrix4.cpp
-	src/narrowSpace.cpp)
+	src/narrowSpace.cpp
+	src/octree.cpp
+	src/octreeNode.cpp
+	src/primitive.cpp)
 
 set(MY_LIB_HEADERS 
 	include/world.hpp 
@@ -66,7 +69,9 @@ set(MY_LIB_HEADERS
 	include/rigidBodyString.hpp
 	include/matrix4.hpp
 	include/narrowSpace.hpp
-	)
+	include/octree.hpp
+	include/octreeNode.hpp
+	include/primitive.hpp)
 
 
 add_library(MyLib STATIC ${MY_LIB_SOURCES} ${MY_LIB_HEADERS})
