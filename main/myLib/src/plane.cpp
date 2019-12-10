@@ -8,7 +8,7 @@ Plane::Plane(double offset, Vector3D normal) : offset(offset) {
 
 
 bool Plane::isInArea(Vector3D middlePoint, Vector3D dim) {
-	Vector3D A = k * normal;
+	Vector3D A = offset * normal;
 	double planeDist = normal.scalar(middlePoint - A);
 
 	//radius of the sphere representing the area
