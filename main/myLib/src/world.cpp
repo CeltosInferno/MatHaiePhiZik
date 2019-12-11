@@ -54,7 +54,6 @@ void World::update(double time) {
 	for (unsigned int i = 0; i < rigidbodies.size(); i++) {
 		rigidbodies[i].integrate(time);
 		rigidbodies[i].cleanAccum();
-		//std::cout << "Integrate " <<  rigidbodies[i].getPos() << std::endl;
 	}
 	forceRegister.clear();
 
@@ -66,13 +65,9 @@ void World::update(double time) {
 	Octree tree = Octree(4, Vector3D(), Vector3D(15, 15, 15));
 	CollisionData Data;
 
-	/*
-	std::cout << "adresse rb1" << &rigidbodies[0] << std::endl;
-	std::cout << "adresse primitive1 " << primitives[0].getRigidBody() << std::endl;*/
 	
 	int i;
 	for(i=0;i<planes.size();i++){
-		//std::cout << "Insert " << prim.getRigidBody()->getPos() << std::endl;
 		tree.insert(&planes[i]);
 	}
 	for(i=0; i<rigidbodies.size();i++)
@@ -80,12 +75,12 @@ void World::update(double time) {
 		tree.insert(&Primitive(&rigidbodies[i]));
 	}
 
-	//std::cout << primitives.size() << std::endl;
-
+	//stroging potential collisions
 	std::vector<std::pair<Primitive*, Primitive*>> potentialCollisions = tree.resolveTree();
+
+
 	for  (std::pair<Primitive*,Primitive*>& potential : potentialCollisions)
 	{
-		std::cout << "There is a potential collision" << std::endl;
 		collisionDetected = NarrowSpace::solveContact(potential.first, potential.second, &Data) || collisionDetected;
 	}
 
@@ -96,6 +91,7 @@ void World::update(double time) {
 			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Penetration : " << con.penetration << std::endl;
+			std::cout << "-----------------------------" << std::endl;
 		}
 	}
 }

@@ -33,9 +33,7 @@ namespace m_engine {
 
 		inline void setZoom(double z) {
 			world.renderer.setZoom(z);
-		}
-
-		inline void stop() { mustStop = true; };
+		};
 
 		//lance la boucle principale
 		void execute();
@@ -43,6 +41,5 @@ namespace m_engine {
 		double wantedTime;
 		std::function<bool(double, int)> start_loop, end_loop;
 		World& world;
-		bool mustStop;
 	};
 }
