@@ -85,25 +85,32 @@ int main() {
 	static RigidBodyGravityGenerator gravityGenerator(Vector3D(0, -_G, 0));
 
 	RigidBody rb (3, 2, 1, 1, 0.95, 0.2, Vector3D(-1, 0, 0), Vector3D(5, 0, 0));
-	//std::cout << rb.getPos() << std::endl;
-	RigidBody rb2(1, 1, 1, 1, Vector3D(9, 0, 0));
+	RigidBody rb2(1, 1, 1, 1, Vector3D(-1, 0, 0), Vector3D(5,0,0), Quaternion::FormAxisAngle(M_PI_2, Vector3D(1,1,0).normalize()));
+
 	Plane p = Plane(11, Vector3D(1, 0, 0));
 	//Displaying in a terminal the demonstrations options
-	while (entry != '0' && entry != '1')
+	while (entry != '0' && entry != '1' && entry !='2')
 	{
 		std::cout << "choisissez une démonstration" << std::endl
 			<< "0 : Quitter" << std::endl
-			<< "1 : Collision RigidBody/Plan" << std::endl
+			<< "1 : Collision RigidBody/Plan parallèles" << std::endl
+			<< "2 : Collision RigidBody/Plan avec rotation" << std::endl
 			<< "choix :";
 		std::cin >> entry;
 	}
 
 	switch (entry) {
-		//Floati
+	//Right RigidBody
 	case '1':
 		myMainLoop.setZoom(20);
 		myWorld.addRigidBody(rb);
-		//myWorld.addRigidBody(rb2);
+		myWorld.addPlane(p);
+		myWorld.setInput(arrowKeyEffect);
+		break;
+	//Rotated RigidBody
+	case '2':
+		myMainLoop.setZoom(20);
+		myWorld.addRigidBody(rb2);
 		myWorld.addPlane(p);
 		myWorld.setInput(arrowKeyEffect);
 		break;

@@ -13,24 +13,15 @@ public:
 		double x = rb.dx;
 		double y = rb.dy;
 		double z = rb.dz;
-		//triple boucle for sinon mais relou
 		for (int i = 0; i < 8; ++i) {
 			vertices[i] = pos + Vector3D(convert(x,i/4), 
 										convert(y, (i/2)%2), 
 										convert(z, i % 2));
 		}
-		/*vertices[0] = pos + Vector3D(x, y, z);
-		vertices[1] = pos + Vector3D(x, y, -z);
-		vertices[2] = pos + Vector3D(x, -y, z);
-		vertices[3] = pos + Vector3D(x, -y, -z);
-		vertices[4] = pos + Vector3D(-x, y, z);
-		vertices[5] = pos + Vector3D(-x, y, -z);
-		vertices[6] = pos + Vector3D(-x, -y, z);
-		vertices[7] = pos + Vector3D(-x, -y, -z);*/
 	};
 
-	//if i == 0 return 1, else return -1
 private:
+	//return the opposite of x according to boolean value of i
 	static inline double convert(double x, int i) {
 		return (i == 0) ? x : -x;
 	}
@@ -57,7 +48,7 @@ bool NarrowSpace::solveContact(Primitive* p1, Primitive* p2, CollisionData* coll
 		return solveContact(rb2, plane1, collData);
 	}
 	if (rb1 && rb2) {
-		//rigidBody2 + Plane1
+		//rigidBody2 + rigidBody1
 		return solveContact(rb1, rb2, collData);
 	}
 	//should not happen : only if the rb are null but the object is not a plane

@@ -17,11 +17,12 @@ World::~World() {
 
 }
 
+//Start the world
 void World::start() {
 	renderer.OnKeyEvent(ArrowKeyEffect);
-	int i = 0;
 }
 
+//Setinput in window
 void World::setInput(std::function<void(std::string)> f) {
 	ArrowKeyEffect = f;
 }
@@ -31,10 +32,9 @@ void World::addParticle(const Particle& part) {
 	particles.push_back(part);
 }
 
+//Add a rigidBody in the world
 void World::addRigidBody(const RigidBody& rb) {
 	rigidbodies.push_back(rb);
-	//std::cout << "first rb " << rb.getPos() << std::endl;
-	//std::cout << "seecond rb " << rb_cpy.getPos() << std::endl;
 }
 
 //Add a Plane in the world
@@ -61,11 +61,14 @@ void World::update(double time) {
 	collisionDetected = false;
 	//check for collision between particles
 	contactResolver.resolveCollisions(time, particles);
+
 	//check for collision between primitives
+	//Creating the tree
 	Octree tree = Octree(4, Vector3D(), Vector3D(15, 15, 15));
 	CollisionData Data;
 
 	
+	//insert all colliding items in tree
 	int i;
 	for(i=0;i<planes.size();i++){
 		tree.insert(&planes[i]);
@@ -75,20 +78,20 @@ void World::update(double time) {
 		tree.insert(&Primitive(&rigidbodies[i]));
 	}
 
-	//stroging potential collisions
+	//storing potential collisions
 	std::vector<std::pair<Primitive*, Primitive*>> potentialCollisions = tree.resolveTree();
 
-
+	//solve the contact of potentialCollisions
 	for  (std::pair<Primitive*,Primitive*>& potential : potentialCollisions)
 	{
 		collisionDetected = NarrowSpace::solveContact(potential.first, potential.second, &Data) || collisionDetected;
 	}
 
+	//Display collision data
 	if (collisionDetected) {
 		for (Contact& con : Data.contacts)
 		{
 			std::cout << "ContactPoint : " << con.contactPoint << std::endl;
-			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Contact Normale : " << con.contactNormal << std::endl;
 			std::cout << "Penetration : " << con.penetration << std::endl;
 			std::cout << "-----------------------------" << std::endl;

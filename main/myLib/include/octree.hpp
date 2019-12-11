@@ -10,6 +10,7 @@
 
 namespace m_engine {
 
+	//This class represent a tree hat can find collision between primitives
 	class Octree {
 	public:	
 		Octree(int depthMax, const Vector3D& Center, const Vector3D& Dimension);

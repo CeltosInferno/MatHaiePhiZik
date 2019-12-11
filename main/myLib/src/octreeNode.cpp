@@ -2,6 +2,8 @@
 #include "plane.hpp"
 using namespace m_engine;
 
+//this class represent a Node for the octree
+
 OctreeNode::OctreeNode(int depthMax, const Vector3D& Center, const Vector3D& Dimension): 
 	depthMax(depthMax), Center(Center),Dimension(Dimension) {}
 
@@ -37,14 +39,14 @@ std::vector<std::pair<Primitive*, Primitive*>> OctreeNode::resolveNode() {
 	return potentialCollisions;
 }
 
+
+//Add a primitive in the node
 void OctreeNode::insert(Primitive* p) {
-	//std::cout << "Insert3 " << p->getRigidBody() << " " << depthMax << std::endl;
 	//on a leaf, just store the primitive
 	if (depthMax <= 0) {
 		primitives.push_back(p);
-		//std::cout << "Put a Primitive Here :3 " << p << " " <<primitives.size() << std::endl;
 	}
-	//if not on a leave
+	//if not on a leaf
 	else {
 		//if child nodes are not created, create them
 		if (children.size() == 0) {
@@ -70,7 +72,6 @@ void OctreeNode::insert(Primitive* p) {
 		}
 		//checking if primitive is in child nodes
 		for (OctreeNode* ON : children) {
-			//std::cout << "Bleep " << std::endl;
 			if (p->isInArea(ON->Center, ON->Dimension)) {
 				ON->insert(p);
 			}

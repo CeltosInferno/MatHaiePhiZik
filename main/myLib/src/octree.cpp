@@ -2,6 +2,7 @@
 
 using namespace m_engine;
 
+//This class represent an tree that can find collision between primitives
 
 Octree::Octree(int depthMax, const Vector3D& Center, const Vector3D& Dimension): depthMax(depthMax), Center(Center), Dimension(Dimension){
 	root = new OctreeNode(depthMax, Center, Dimension);

@@ -8,6 +8,11 @@
 using namespace m_engine;
 using namespace std::chrono;
 
+/*
+	Main for the last phase of the project.
+	This demonstration show how we compute collision and associated data between a rigidbody and a plane
+*/
+
 bool basicStartLoop(double time, int id_iteration) {
 	std::cout << "start of loop " << id_iteration << " on time " << time << std::endl;
 	return true;
@@ -38,6 +43,7 @@ void MainLoop::execute() {
 		base_time = system_clock::now();
 	previous_time = base_time;
 	int windowOK = 0;
+	//stop if a collision has been detected
 	while (windowOK == 0 && !world.collisionDetected) {
 		//debut de la frame, on recupere le temps de ref
 		current_time = system_clock::now();
