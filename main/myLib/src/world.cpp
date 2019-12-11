@@ -20,9 +20,6 @@ World::~World() {
 void World::start() {
 	renderer.OnKeyEvent(ArrowKeyEffect);
 	int i = 0;
-	for (i = 0; i < rigidbodies.size(); i++) {
-		primitives.push_back(&rigidbodies[i]);
-	}
 }
 
 void World::setInput(std::function<void(std::string)> f) {
@@ -42,7 +39,7 @@ void World::addRigidBody(const RigidBody& rb) {
 
 //Add a Plane in the world
 void World::addPlane(const Plane& plane) {
-	primitives.push_back(plane);
+	planes.push_back(plane);
 }
 
 
@@ -66,17 +63,21 @@ void World::update(double time) {
 	//check for collision between particles
 	contactResolver.resolveCollisions(time, particles);
 	//check for collision between primitives
-	Octree tree = Octree(4, Vector3D(), Vector3D(10, 10, 10));
+	Octree tree = Octree(4, Vector3D(), Vector3D(15, 15, 15));
 	CollisionData Data;
 
 	/*
 	std::cout << "adresse rb1" << &rigidbodies[0] << std::endl;
 	std::cout << "adresse primitive1 " << primitives[0].getRigidBody() << std::endl;*/
 	
-	for (Primitive& prim : primitives)
-	{
+	int i;
+	for(i=0;i<planes.size();i++){
 		//std::cout << "Insert " << prim.getRigidBody()->getPos() << std::endl;
-		tree.insert(&prim);
+		tree.insert(&planes[i]);
+	}
+	for(i=0; i<rigidbodies.size();i++)
+	{
+		tree.insert(&Primitive(&rigidbodies[i]));
 	}
 
 	//std::cout << primitives.size() << std::endl;

@@ -50,7 +50,7 @@ namespace m_engine {
 	//soit mettre des accesseurs
 	std::vector<Particle> particles;
 	std::vector<RigidBody> rigidbodies;
-	std::vector<Primitive> primitives;
+	std::vector<Plane> planes;
 	ForceRegister forceRegister;
 
 	void World::setInput(std::function<void(std::string)> f);

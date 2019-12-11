@@ -103,8 +103,8 @@ int main() {
 	case '1':
 		myMainLoop.setZoom(20);
 		myWorld.addRigidBody(rb);
-		myWorld.addRigidBody(rb2);
-		//myWorld.addPlane(p);
+		//myWorld.addRigidBody(rb2);
+		myWorld.addPlane(p);
 		myWorld.setInput(arrowKeyEffect);
 		break;
 	default:

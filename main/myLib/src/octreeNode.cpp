@@ -1,5 +1,5 @@
 #include "OctreeNode.hpp"
-
+#include "plane.hpp"
 using namespace m_engine;
 
 OctreeNode::OctreeNode(int depthMax, const Vector3D& Center, const Vector3D& Dimension): 
@@ -74,6 +74,7 @@ void OctreeNode::insert(Primitive* p) {
 			if (p->isInArea(ON->Center, ON->Dimension)) {
 				ON->insert(p);
 			}
+			
 		}
 	}
 }
